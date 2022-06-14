@@ -1,0 +1,14 @@
+
+# Windows Tips
+
+Config powershell as emac style
+
+put this line into powershell's config file(which is in $profile)
+`batch
+Set-PSReadLineOption -EditMode Emacs
+`
+
+*you may run into error about execution policy, then you need to set the policy with this command*
+`
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
+`
