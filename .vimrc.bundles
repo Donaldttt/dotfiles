@@ -1,0 +1,136 @@
+" Modeline and Notes {
+" vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell:
+"
+"   This file imports the various plugins of spf13.
+" }
+
+" Environment {
+
+    " Basics {
+        set nocompatible        " Must be first line
+        set background=dark     " Assume a dark background
+    " }
+
+    " Setup Bundle Support {
+        " The next three lines ensure that the ~/.vim/bundle/ system works
+        filetype off
+        set rtp+=~/.vim/bundle/vundle
+        call vundle#rc()
+    " }
+
+    " Add an UnBundle command {
+    function! UnBundle(arg, ...)
+      let bundle = vundle#config#init_bundle(a:arg, a:000)
+      call filter(g:vundle#bundles, 'v:val["name_spec"] != "' . a:arg . '"')
+    endfunction
+
+    com! -nargs=+         UnBundle
+    \ call UnBundle(<args>)
+    " }
+
+" }
+
+" Bundles {
+
+    " Deps {
+        Bundle 'gmarik/vundle'
+        Bundle 'MarcWeber/vim-addon-mw-utils'
+        Bundle 'tomtom/tlib_vim'
+        if executable('ag')
+            Bundle 'mileszs/ack.vim'
+            let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
+        elseif executable('ack-grep')
+            let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+            Bundle 'mileszs/ack.vim'
+        elseif executable('ack')
+            Bundle 'mileszs/ack.vim'
+        endif
+    " }
+
+    " In your .vimrc.before.local file
+    " list only the plugin groups you will use
+    if !exists('g:spf13_bundle_groups')
+        let g:spf13_bundle_groups=['my_bundle', 'general'] 
+    endif
+
+    " To override all the included bundles, add the following to your
+    " .vimrc.bundles.local file:
+    "   let g:override_spf13_bundles = 1
+    if !exists("g:override_spf13_bundles")
+
+
+    " my bundles {
+        if count(g:spf13_bundle_groups, 'my_bundle')
+            " {
+            "Bundle 'codota/tabnine-vim'
+            Bundle 'neoclide/coc.nvim'
+            Bundle 'rust-lang/rust.vim'
+            " add desired extensions to the following global variable
+            " coc-tsserver: javascript
+            " coc-pyright: python
+            " coc-clangd: c/c++, may need to install clangd seperatly
+            let g:coc_global_extensions = ['coc-pyright', 'coc-rls']
+            " syntax highlighting(and more) for typescript
+            " {
+                Bundle 'leafgarland/typescript-vim'
+            "   }
+            " {
+                Bundle 'alvan/vim-closetag'
+                let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.js'
+            " }
+        endif
+    " }]
+    " General {
+        if count(g:spf13_bundle_groups, 'general')
+            Bundle 'altercation/vim-colors-solarized'
+            "Bundle 'lifepillar/vim-solarized8'
+            "Bundle 'spf13/vim-colors'
+            Bundle 'scrooloose/nerdtree'
+
+            " for markdown{
+            Bundle 'godlygeek/tabular'
+            Bundle 'preservim/vim-markdown'
+            "}
+            " for window resize{
+            Bundle 'simeji/winresizer'
+            let g:winresizer_start_key = '<C-r>'
+            let g:winresizer_vert_resize = 2
+            let g:winresizer_horiz_resize = 2
+            " }
+            
+            Bundle 'tpope/vim-surround'
+            Bundle 'rhysd/conflict-marker.vim'
+            " {
+            Bundle 'jiangmiao/auto-pairs'
+            "let g:AutoPairsFlyMode = 1
+            
+            " }
+            " {
+            Bundle 'mg979/vim-visual-multi'
+            " }
+            Bundle 'matchit.zip'
+            Bundle 'vim-airline/vim-airline'
+            Bundle 'vim-airline/vim-airline-themes'
+
+            " For nvim-bufferline
+            " {
+            "Bundle 'kyazdani42/nvim-web-devicons'
+            "Bundle 'akinsho/nvim-bufferline.lua'
+            " }
+            Bundle 'bling/vim-bufferline'
+            Bundle 'easymotion/vim-easymotion'
+            Bundle 'nathanaelkane/vim-indent-guides'
+            if !exists('g:spf13_no_views')
+                Bundle 'vim-scripts/restore_view.vim'
+            endif
+        endif
+    " }
+    endif
+
+    " Custome script {
+    
+    if filereadable(expand("~/.vim-config/buffer_arrange.vim"))
+        source ~/.vim-config/buffer_arrange.vim
+    endif
+    
+    " }
