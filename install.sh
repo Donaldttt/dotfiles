@@ -1,26 +1,13 @@
 #!/usr/bin/env bash
 
-#   Copyright 2014 Steve Francia
-#
-#   Licensed under the Apache License, Version 2.0 (the "License");
-#   you may not use this file except in compliance with the License.
-#   You may obtain a copy of the License at
-#
-#       http://www.apache.org/licenses/LICENSE-2.0
-#
-#   Unless required by applicable law or agreed to in writing, software
-#   distributed under the License is distributed on an "AS IS" BASIS,
-#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#   See the License for the specific language governing permissions and
-#   limitations under the License.
-
 ############################  SETUP PARAMETERS
 
 app_name='dotfiles'
+
 [ -z "$APP_PATH" ] && APP_PATH="$HOME/.$app_name"
 [ -z "$REPO_URI" ] && REPO_URI="https://github.com/Donaldttt/$app_name"
 [ -z "$REPO_BRANCH" ] && REPO_BRANCH='main'
-[ -z "$VUNDLE_URI" ] && VUNDLE_URI="https://github.com/gmarik/vundle.git"
+
 
 ############################  BASIC SETUP TOOLS
 msg() {
@@ -46,7 +33,6 @@ program_exists() {
     if [ "$ret" -ne 0 ]; then
         return 1
     fi
-
     return 0
 }
 
@@ -59,31 +45,31 @@ program_must_exist() {
     fi
 }
 
-variable_set() {
+env_set() {
     if [ -z "$1" ]; then
-        error "You must have your HOME environmental variable set to continue."
+        error "You must have your $1 environmental variable set to continue."
     fi
 }
 
-lnif() {
-    if [ -e "$1" ]; then
-        ln -sf "$1" "$2"
+try_symlink() {
+    local source_path="$1"
+    local symlink_path="$2"
+    if [ -e "$source_path" ]; then
+        ln -sf "$source_path" "$symlink_path"
     fi
     ret="$?"
 }
 
 ############################ SETUP FUNCTIONS
 
-do_backup() {
-    if [ -e "$1" ] || [ -e "$2" ] || [ -e "$3" ]; then
-        msg "Attempting to back up your original vim configuration."
+backup_file() {
+    original_file=$1
+    if [ -e "$original_file" ]; then
         today=`date +%Y%m%d_%s`
-        for i in "$1" "$2" "$3"; do
-            [ -e "$i" ] && [ ! -L "$i" ] && mv -v "$i" "$i.$today";
-        done
+        [ -e "$i" ] && [ ! -L "$i" ] && mv -v "$original_file" "$original_file.$today";
         ret="$?"
-        success "Your original vim configuration has been backed up."
-   fi
+        success "Your file $original_file has been backed up as $original_file.$today"
+    fi
 }
 
 sync_repo() {
@@ -92,34 +78,28 @@ sync_repo() {
     local repo_branch="$3"
     local repo_name="$4"
 
-    msg "Trying to update $repo_name"
-
     if [ ! -e "$repo_path" ]; then
+        msg "Trying to clone $repo_name"
         mkdir -p "$repo_path"
         git clone -b "$repo_branch" "$repo_uri" "$repo_path"
         ret="$?"
         success "Successfully cloned $repo_name."
     else
+        msg "Trying to update $repo_name"
         cd "$repo_path" && git pull origin "$repo_branch"
         ret="$?"
         success "Successfully updated $repo_name"
     fi
 }
 
-create_symlinks() {
-    local source_path="$1"
-    local target_path="$2"
-
-    lnif "$source_path/.vimrc"         "$target_path/.vimrc"
-    lnif "$source_path/.vimrc.bundles" "$target_path/.vimrc.bundles"
-    lnif "$source_path/.vim"           "$target_path/.vim"
-
-
-    ret="$?"
-    success "Setting up vim symlinks."
-}
-
 setup_vundle() {
+
+    local VUNDLE_URI="https://github.com/gmarik/vundle.git"
+    sync_repo       "$HOME/.vim/bundle/vundle" \
+                    "$VUNDLE_URI" \
+                    "master" \
+                    "vundle"
+
     local system_shell="$SHELL"
     export SHELL='/bin/sh'
 
@@ -129,44 +109,64 @@ setup_vundle() {
         "+BundleInstall!" \
         "+BundleClean" \
         "+qall"
+
     export SHELL="$system_shell"
     success "Now updating/installing plugins using Vundle"
 }
 
 set_up_nvim() {
-  nvim_dir="$HOME/.config/nvim"
-  nvim_config="$nvim_dir/init.vim"
-  mkdir -p $nvim_dir
-  if program_exists "nvim"; then
-    msg "Found neovim."
-    if [ -f "$nvim_config" ]; then
-      msg "Found init.vim. backing up it"
-      mv $nvim_config "${nvim_config}.backup"
-    fi
-    echo "set runtimepath^=~/.vim runtimepath+=~/.vim/after
+    nvim_dir="$HOME/.config/nvim"
+    nvim_config="$nvim_dir/init.vim"
+    mkdir -p $nvim_dir
+    if program_exists "nvim"; then
+        msg "Found neovim."
+        if [ -f "$nvim_config" ]; then
+            msg "Found init.vim. backing up it"
+            mv $nvim_config "${nvim_config}.backup"
+        fi
+        echo "set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath=&runtimepath
 source ~/.vimrc" > $nvim_config
-  fi
+    fi
+    success "neovim config setup successed"
+}
+
+set_up_tmux() {
+    if program_exists "tmux"; then
+        backup_file "$APP_PATH/.tmux.conf"
+        try_symlink "$APP_PATH/.tmux.conf" "$HOME/.tmux.conf"
+        success "tmux config setup successed"
+    else
+        msg "tmux not installed"
+    fi
+}
+
+set_up_vim() {
+
+    program_must_exist "vim"
+    program_must_exist "git"
+
+    sync_repo       "$APP_PATH" \
+                    "$REPO_URI" \
+                    "$REPO_BRANCH" \
+                    "$app_name"
+
+    backup_file "$APP_PATH/.vimrc"
+    backup_file "$APP_PATH/.vimrc.bundles"
+
+    try_symlink "$APP_PATH/.vimrc"         "$HOME/.vimrc"
+    try_symlink "$APP_PATH/.vimrc.bundles" "$HOME/.vimrc.bundles"
+
+    success "Setting up vim symlinks."
+
+    setup_vundle
+    set_up_nvim
 }
 
 ############################ MAIN()
-variable_set "$HOME"
-program_must_exist "vim"
-program_must_exist "git"
+env_set "$HOME"
 
-sync_repo       "$APP_PATH" \
-                "$REPO_URI" \
-                "$REPO_BRANCH" \
-                "$app_name"
-
-create_symlinks "$APP_PATH" \
-                "$HOME"
-
-sync_repo       "$HOME/.vim/bundle/vundle" \
-                "$VUNDLE_URI" \
-                "master" \
-                "vundle"
-
-set_up_nvim
+set_up_tmux
+set_up_vim
 
 msg             "\nThanks for installing $app_name."
