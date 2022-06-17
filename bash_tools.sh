@@ -62,5 +62,12 @@ change_wallpaper(){
     osascript -e "$apple_script_single_desk"
 
 }
-
 fi
+
+#
+#  Command Configuration
+#
+
+# -A: get rid of . and ..
+# -t: Sort by time. Display the newest first
+alias ls=ls -At

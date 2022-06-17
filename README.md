@@ -1,4 +1,4 @@
-# vim-config
+# Dotfiles
 All kind of dot files
 
 # Installation
@@ -8,13 +8,13 @@ All kind of dot files
 Simply copying and pasting the following line into a terminal.
 
 ```bash
-    curl https://raw.githubusercontent.com/Donaldttt/vim-config/3.0/bootstrap.sh -L > spf13-vim.sh && sh spf13-vim.sh
+    curl https://raw.githubusercontent.com/Donaldttt/dotfiles/main/install.sh -L > dotfiles_install.sh && sh dotfiles_install.sh
 ```
 
 or
 
 ```bash
-    sh <(curl https://raw.githubusercontent.com/Donaldttt/vim-config/3.0/bootstrap.sh -L)
+    sh <(curl https://raw.githubusercontent.com/Donaldttt/dotfiles/main/install.sh -L)
 ```
 
 ## Installing on Windows
