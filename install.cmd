@@ -5,7 +5,7 @@ REM
 @if not exist "%HOME%" @set HOME=%USERPROFILE%
 
 @set NVIM_CONFIG_PATH=%HOME%\appdata\local\nvim\init.vim
-@set APP_PATH=%HOME%\dotfiles
+@set APP_PATH=%HOME%\.dotfiles
 IF NOT EXIST "%APP_PATH%" (
 	call git clone "https://github.com/Donaldttt/dotfiles" "%APP_PATH%"
 ) ELSE (
