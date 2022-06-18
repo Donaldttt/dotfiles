@@ -70,4 +70,6 @@ fi
 
 # -A: get rid of . and ..
 # -t: Sort by time. Display the newest first
-alias ls=ls -At
+# alias ls=ls -At
+
+source $HOME/.vim-config/bash_tools/fzf_file_seletor.sh
