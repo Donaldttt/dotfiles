@@ -32,6 +32,21 @@ dp(){
     [ "$debug" = "1" ] && echo $1
 }
 
+# SHELL specific setting
+if [ ! -z "$ZSH_NAME" ]; then 
+    # disable error output when 
+    # wildcard found 0 match
+    setopt +o nomatch
+
+    # show hidden file when using wildcard
+    # use in fzf_selector
+    # only for zsh
+    setopt dotglob
+else
+    # only for bash
+    shopt -s dotglob
+fi
+
 ret=''
 
 # $1 keyword
@@ -40,16 +55,15 @@ ret=''
 #   1: only show directory
 fzf_selector() {
     ret=$1
-    fchar=(${ret[@]})
-    if [ "$1" = "." ] || [ "$1" = ".." ] || [ $fchar = "-" ]; then
+    if [ "$1" = "." ] || [ "$1" = ".." ] || \
+       [[ "$1" == -* ]] || [[ "$1" == */* ]]; then
         return 1
     fi
 
-    shopt -s dotglob
     if [ $2 = 0 ]; then
         all_items=(*)
     elif [ $2 = 1 ]; then
-        all_items=(*/)
+        all_items=(*/) 2>&1
     fi
     #shopt -u dotglob
 
@@ -91,10 +105,11 @@ fzf_command_execute() {
         flag="${args[1]}"
         unset 'args[1]'
     fi
+
     dp "flag: $flag"
     
     if [ "$len" = "2" ]; then 
-        $args
+        ${args[@]}
         return 0
     fi
     # probably work for bash
@@ -108,7 +123,8 @@ fzf_command_execute() {
     unset 'args[-1]'
 
     fzf_selector $keyword $flag
-    $args "$ret"
+    dp "${args[@]} $ret"
+    ${args[@]} "$ret"
 }
 
 for c in "${fzf_command_list_file[@]}"; do
