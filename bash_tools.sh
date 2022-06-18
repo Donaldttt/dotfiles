@@ -28,30 +28,31 @@ odict(){
 # Linux specific functions
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
-    set_wallpaper(){
-        local file=$1
-        # convert to abs path
-        if [[ ! "$file" = /* ]]; then
-            file=$(pwd)/$1
-        fi
-        gsettings set org.gnome.desktop.background picture-uri file://$file
-    }
+function set_wallpaper(){
+    local file=$1
+    # convert to abs path
+    if [[ ! "$file" = /* ]]; then
+        file=$(pwd)/$1
+    fi
+    gsettings set org.gnome.desktop.background picture-uri file://$file
+}
+
 
 fi
 
 # Mac OSX specific functions
 if [[ "$OSTYPE" == "darwin"* ]]; then
 
-    set_wallpaper(){
-        local file=$1
-        # convert to abs path
-        if [[ ! "$file" = /* ]]; then
-            file=$(pwd)/$1
-        fi
+function set_wallpaper(){
+    local file=$1
+    # convert to abs path
+    if [[ ! "$file" = /* ]]; then
+        file=$(pwd)/$1
+    fi
 
-        apple_script_single_desk="tell application \"Finder\" to set desktop picture to POSIX file \"$file\""
-        osascript -e "$apple_script_single_desk"
-    }
+    apple_script_single_desk="tell application \"Finder\" to set desktop picture to POSIX file \"$file\""
+    osascript -e "$apple_script_single_desk"
+}
 
 fi
 
