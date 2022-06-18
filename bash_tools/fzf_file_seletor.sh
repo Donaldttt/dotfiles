@@ -2,6 +2,30 @@
 
 # For any command require a file path, this function
 # helps to select the correct file with key words
+# Usage:
+# Add the command to desired list
+
+# fzf match everything
+fzf_command_list_file=(\
+vim \
+set_wallpaper \
+)
+
+# fzf only match folder
+fzf_command_list_dir=(\
+ls \
+cd \
+)
+
+# in case above functions are broken
+no_fzf(){
+    for c in "${fzf_command_list_file[@]}"; do
+        unalias $c
+    done
+    for c in "${fzf_command_list_dir[@]}"; do
+        unalias $c
+    done
+}
 
 dp(){
     local debug=0
@@ -87,17 +111,6 @@ fzf_command_execute() {
     $args "$ret"
 }
 
-
-fzf_command_list_file=(\
-vim \
-set_wallpaper \
-)
-
-fzf_command_list_dir=(\
-ls \
-cd \
-)
-
 for c in "${fzf_command_list_file[@]}"; do
     alias $c="fzf_command_execute $c 0"
 done
@@ -105,12 +118,3 @@ for c in "${fzf_command_list_dir[@]}"; do
     alias $c="fzf_command_execute $c 1"
 done
 
-# in case above functions are broken
-no_fzf(){
-    for c in "${fzf_command_list_file[@]}"; do
-        unalias $c
-    done
-    for c in "${fzf_command_list_dir[@]}"; do
-        unalias $c
-    done
-}
