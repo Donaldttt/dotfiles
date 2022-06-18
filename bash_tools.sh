@@ -35,7 +35,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
             file=$(pwd)/$1
         fi
         gsettings set org.gnome.desktop.background picture-uri file://$file
-}
+    }
 
 fi
 

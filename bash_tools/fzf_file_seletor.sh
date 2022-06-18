@@ -6,12 +6,17 @@
 # Add the command to desired list
 
 # fzf match everything
+fzf_command_list_all=(\
+)
+
+# fzf match files
 fzf_command_list_file=(\
+cat \
 vim \
 set_wallpaper \
 )
 
-# fzf only match folder
+# fzf only match folders
 fzf_command_list_dir=(\
 ls \
 cd \
@@ -19,6 +24,9 @@ cd \
 
 # in case above functions are broken
 no_fzf(){
+    for c in "${fzf_command_list_all[@]}"; do
+        unalias $c
+    done
     for c in "${fzf_command_list_file[@]}"; do
         unalias $c
     done
@@ -28,12 +36,13 @@ no_fzf(){
 }
 
 dp(){
-    local debug=0
+    local debug=1
     [ "$debug" = "1" ] && echo $1
 }
 
 # SHELL specific setting
 if [ ! -z "$ZSH_NAME" ]; then 
+    dp "[bash_tools]: In ZSH shell"
     # disable error output when 
     # wildcard found 0 match
     setopt +o nomatch
@@ -42,9 +51,20 @@ if [ ! -z "$ZSH_NAME" ]; then
     # use in fzf_selector
     # only for zsh
     setopt dotglob
+    setopt glob_dots
+
 else
+    dp "[bash_tools]: In non-ZSH shell"
     # only for bash
     shopt -s dotglob
+
+    # allow reverse wildcard exp. !(b*)
+    # shopt -u extglob
+
+    # allows filename patterns which match no 
+    # files to expand to a null string, rather 
+    # than themselves
+    shopt -s nullglob
 fi
 
 ret=''
@@ -52,7 +72,8 @@ ret=''
 # $1 keyword
 # $2 
 #   0: show all
-#   1: only show directory
+#   1: only show directories
+#   2: only show files
 fzf_selector() {
     ret=$1
     if [ "$1" = "." ] || [ "$1" = ".." ] || \
@@ -63,8 +84,18 @@ fzf_selector() {
     if [ $2 = 0 ]; then
         all_items=(*)
     elif [ $2 = 1 ]; then
-        all_items=(*/) 2>&1
+        dp "try to find dirs"
+        all_items=(*/)
+    elif [ $2 = 2 ]; then
+        dp "try to find files"
+        all=(*)
+        all_items=()
+        for item in "${all[@]}"; do
+            grep -P *$1*[^/]$ <<< $item > /dev/null 2>&1 && \
+            all_items+=("$item")
+        done
     fi
+    dp "${all_items[@]}"
     #shopt -u dotglob
 
     files=()
@@ -127,8 +158,11 @@ fzf_command_execute() {
     ${args[@]} "$ret"
 }
 
-for c in "${fzf_command_list_file[@]}"; do
+for c in "${fzf_command_list_all[@]}"; do
     alias $c="fzf_command_execute $c 0"
+done
+for c in "${fzf_command_list_file[@]}"; do
+    alias $c="fzf_command_execute $c 2"
 done
 for c in "${fzf_command_list_dir[@]}"; do
     alias $c="fzf_command_execute $c 1"
