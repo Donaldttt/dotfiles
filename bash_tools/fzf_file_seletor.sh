@@ -36,30 +36,34 @@ no_fzf(){
 }
 
 dp(){
-    local debug=1
+    local debug=0
     [ "$debug" = "1" ] && echo $1
 }
 
 # SHELL specific setting
 if [ ! -z "$ZSH_NAME" ]; then 
+    SHELL_NAME=zsh
     dp "[bash_tools]: In ZSH shell"
     # disable error output when 
     # wildcard found 0 match
     setopt +o nomatch
+
+    #setopt extended_glob
 
     # show hidden file when using wildcard
     # use in fzf_selector
     # only for zsh
     setopt dotglob
     setopt glob_dots
-
 else
+    # temporary
+    SHELL_NAME=bash
     dp "[bash_tools]: In non-ZSH shell"
     # only for bash
     shopt -s dotglob
 
     # allow reverse wildcard exp. !(b*)
-    # shopt -u extglob
+    # shopt -s extglob
 
     # allows filename patterns which match no 
     # files to expand to a null string, rather 
@@ -88,13 +92,19 @@ fzf_selector() {
         all_items=(*/)
     elif [ $2 = 2 ]; then
         dp "try to find files"
-        all=(*)
-        all_items=()
-        for item in "${all[@]}"; do
-            grep -P *$1*[^/]$ <<< $item > /dev/null 2>&1 && \
-            all_items+=("$item")
-        done
+        if [ "$SHELL_NAME" = "zsh" ]; then 
+            eval "all_items=(*(^/))"
+        elif [ "$SHELL_NAME" = "bash" ]; then
+            # no easy way to list just regular files
+            # in bash???
+            all=(*)
+            all_items=()
+            for item in "${all[@]}"; do
+                [ -f "$item" ] && all_items+=("$item")
+            done
+        fi
     fi
+
     dp "${all_items[@]}"
     #shopt -u dotglob
 
