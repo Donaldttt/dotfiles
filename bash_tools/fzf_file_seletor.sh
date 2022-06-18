@@ -23,7 +23,7 @@ cd \
 )
 
 # in case above functions are broken
-no_fzf(){
+function no_fzf(){
     for c in "${fzf_command_list_all[@]}"; do
         unalias $c
     done
@@ -35,7 +35,7 @@ no_fzf(){
     done
 }
 
-dp(){
+function dp(){
     local debug=0
     [ "$debug" = "1" ] && echo $1
 }
@@ -78,7 +78,7 @@ ret=''
 #   0: show all
 #   1: only show directories
 #   2: only show files
-fzf_selector() {
+function fzf_selector() {
     ret=$1
     if [ "$1" = "." ] || [ "$1" = ".." ] || \
        [[ "$1" == -* ]] || [[ "$1" == */* ]]; then
@@ -130,7 +130,7 @@ fzf_selector() {
 # $1 command for fzf substuting(like ls)
 # $2 original args pass to function
 # $3 command require file type (file: 0 |directory: 1)
-fzf_command_execute() {
+function fzf_command_execute() {
     local args=($@)
     local len=${#args[@]}
 

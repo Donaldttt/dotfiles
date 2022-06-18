@@ -5,22 +5,22 @@
 # If no argument supplied, the host machine's ip will
 # be used
 # doc for api: https://ip-api.com/docs/api
-ipinfo(){
-    api_str=http://ip-api.com/json/$1?fields=query,country,regionName,city,district,zip,isp,org,reverse,mobile,proxy,hosting
+function ipinfo(){
+    local api_str="http://ip-api.com/json/$1?fields=query,country,regionName,city,district,zip,isp,org,reverse,mobile,proxy,hosting"
     if ! hash python; then
-        curl $api_str
+        curl "$api_str"
     else
-        curl -s $api_str | python -m json.tool
+        curl -s "$api_str" | python -m json.tool
     fi
 }
 
 # find file contain certain text string($2) in certain directory($1)
-fct(){
+function fct(){
     grep -rnw $1 -e $2
 }
 
 # online directory
-odict(){
+function odict(){
    curl dict://dict.org/d:"${1}"
 }
 
