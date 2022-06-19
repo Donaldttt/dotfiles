@@ -110,6 +110,11 @@ function fzf_selector() {
 
     files=()
     for item in "${all_items[@]}"; do
+        # if the keyword equals to a file or folder, returns 
+        # it.
+        if [ "$item" = "$1" ] || [ "$item" = "$1/" ]; then
+            return 0
+        fi
         grep $1 <<< $item > /dev/null 2>&1 && \
         files+=("$item")
     done
