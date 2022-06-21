@@ -110,7 +110,7 @@ function fzf_selector() {
     files=()
     # match 
     # 1. try match file/dir equals to keyword completely
-    # 2. try match file/dir which keyword (contains upper letters) is substring of
+    # 2. try match file/dir which keyword is substring of
     # 3. try match file/dir equals to keyword completely after ignoring cases
     # 4. try match file/dir which keyword is substring of after ignoring cases
 
@@ -121,7 +121,8 @@ function fzf_selector() {
         fi
 
         # 2.
-        [[ $1 =~ [A-Z] ]] && \
+        # this line ignore cases
+        # [[ $1 =~ [A-Z] ]] && \ 
             grep $1 <<< $item > /dev/null 2>&1  && \
             files+=("$item")
     done
