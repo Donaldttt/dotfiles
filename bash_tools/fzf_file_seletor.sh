@@ -106,21 +106,43 @@ function fzf_selector() {
     fi
 
     dp "${all_items[@]}"
-    #shopt -u dotglob
 
     files=()
+    # match 
+    # 1. try match file/dir equals to keyword completely
+    # 2. try match file/dir which keyword (contains upper letters) is substring of
+    # 3. try match file/dir equals to keyword completely after ignoring cases
+    # 4. try match file/dir which keyword is substring of after ignoring cases
+
     for item in "${all_items[@]}"; do
-        # if the keyword equals to a file or folder, returns 
-        # it.
-        if [ "$item" = "$1" ] || [ "$item" = "$1/" ]; then
+        # 1.
+        if [ "$item" = "$1" ] || [ "$item" = "$1/" ]; then 
             return 0
         fi
-        grep $1 <<< $item > /dev/null 2>&1 && \
-        files+=("$item")
+
+        # 2.
+        [[ $1 =~ [A-Z] ]] && \
+            grep $1 <<< $item > /dev/null 2>&1  && \
+            files+=("$item")
     done
 
-    # if grep find zero file
+    dp "len contains upper cases ${#files[@]}"
+
     if [ "${#files[@]}" = "0" ]; then 
+        for item in "${all_items[@]}"; do
+            # 3. 
+            if  ([ "$SHELL_NAME" = "bash" ] && ( [ "${item,,}" = "${1,,}" ] || [ "${item,,}" = "${1,,}/" ] ))  || \
+                ([ "$SHELL_NAME" = "zsh" ] && ( [ "${item:l}" = "${1:l}" ] || [ "${item:l}" = "${1:l}/" ] ))  ; then
+                ret=$item
+                return 0
+            fi
+            # 4.
+           grep -i $1 <<< $item > /dev/null 2>&1 && files+=("$item")
+        done
+    fi
+
+    if [ "${#files[@]}" = "0" ]; then 
+        # if grep find zero file
         ret=$1
     elif [ "${#files[@]}" = "1" ]; then 
         ret=$files
