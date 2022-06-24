@@ -56,8 +56,10 @@ try_symlink() {
     local symlink_path="$2"
     if [ -e "$source_path" ]; then
         ln -sf "$source_path" "$symlink_path"
+        msg "Create symlink $symlink_path points to $source_path"
+        return 0
     fi
-    ret="$?"
+    return 1
 }
 
 ############################ SETUP FUNCTIONS
@@ -104,7 +106,6 @@ setup_vundle() {
     export SHELL='/bin/sh'
 
     vim \
-        -u "$1" \
         "+set nomore" \
         "+BundleInstall!" \
         "+BundleClean" \
@@ -134,7 +135,7 @@ source ~/.vimrc" > $nvim_config
 set_up_tmux() {
     if program_exists "tmux"; then
         backup_file "$APP_PATH/.tmux.conf"
-        try_symlink "$APP_PATH/.tmux.conf" "$HOME/.tmux.conf"
+        try_symlink "$APP_PATH/.tmux.conf" "$HOME/.tmux.conf" && \
         success "tmux config setup successed"
     else
         msg "tmux not installed"
@@ -154,7 +155,7 @@ set_up_vim() {
     backup_file "$APP_PATH/.vimrc"
     backup_file "$APP_PATH/.vimrc.bundles"
 
-    try_symlink "$APP_PATH/.vimrc"         "$HOME/.vimrc"
+    try_symlink "$APP_PATH/.vimrc"         "$HOME/.vimrc" 
     try_symlink "$APP_PATH/.vimrc.bundles" "$HOME/.vimrc.bundles"
 
     success "Setting up vim symlinks."
