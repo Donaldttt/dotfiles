@@ -1,10 +1,13 @@
-source bash_tools/helper.sh
 # args:
 # $1: 
 # The IP address you want to query geo info for.
 # If no argument supplied, the host machine's ip will
 # be used
 # doc for api: https://ip-api.com/docs/api
+DOT_FILE_DIR=$(dirname ${BASH_SOURCE[0]})/
+
+source $DOT_FILE_DIR/bash_tools/helper.sh
+
 function ipinfo(){
     local api_str="http://ip-api.com/json/$1?fields=query,country,regionName,city,district,zip,isp,org,reverse,mobile,proxy,hosting"
     if ! hash python; then
@@ -28,7 +31,6 @@ function odict(){
 function dict(){
     python $
 }
-
 
 # Linux specific functions
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
@@ -68,4 +70,4 @@ fi
 # -t: Sort by time. Display the newest first
 # alias ls=ls -At
 
-source $HOME/.vim-config/bash_tools/fzf_file_seletor.sh
+source $DOT_FILE_DIR/bash_tools/fzf_file_seletor.sh
