@@ -9,6 +9,8 @@ Usage: python3 dict.sh [word]
 HAS_RICH = 0
 try:
     from rich.console import Console
+    from rich.panel import Panel
+    from rich.text import Text
     HAS_RICH = 1
 except:
     pass
@@ -44,7 +46,7 @@ def rich_paring(data):
     ponetic = data["phonetic"]
     samples = data["sample_sentence"]
 
-    console.print(word, style="bold purple")
+    console.print(word, style="bold magenta")
     print()
 
     if len(ponetic.items()) > 0:
@@ -61,9 +63,10 @@ def rich_paring(data):
 
     for s in samples[:2]:
         ens = s['en'].replace('"', '\"')
-        console.print("-", end=" ", style="rgb(154,91,2)")
-        console.print(ens, style="rgb(165,38,28)")
-        print()
+        panel = Panel(Text(ens, style="rgb(12,122,108)", justify="left"))
+
+        #console.print(ens, style="rgb(165,38,28)")
+        console.print(panel)
         #console.print(s['cn'], style="rgb(13,245,86)")
 
 
