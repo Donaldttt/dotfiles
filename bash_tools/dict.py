@@ -17,16 +17,21 @@ def basic_paring(data):
     word = data["word"]
     defs = data["def"]
     samples = data["sample_sentence"]
+    ponetic = data["phonetic"]
+    
     print(word)
 
-    ponetic = data["phonetic"]
-    for _, v in ponetic.items():
-        print(v, end="  ")
-    print("\n")
-
-    for k in defs:
-        print(k, defs[k])
+    if len(ponetic.items()) > 0:
+        for _, v in ponetic.items():
+            print(v, end="  ")
+        print()
     print()
+
+    if len(defs) > 0:
+        for k in defs:
+            print(k, defs[k])
+        print()
+
     for s in samples[:2]:
         print("-", end=" ")
         print(s['en'])
@@ -41,15 +46,18 @@ def rich_paring(data):
 
     console.print(word, style="bold purple")
 
-    for _, v in ponetic.items():
-        v = v.replace('[', '\[').replace(']', ']')
-        console.print(v, style="yellow")
+    if len(ponetic.items()) > 0:
+        for _, v in ponetic.items():
+            v = v.replace('[', '\[').replace(']', ']')
+            console.print(v, style="yellow")
+        print()
     print()
     
-    for k in defs:
-        console.print(k, style="green")
-        console.print(defs[k], style="cyan")
-    print()
+    if len(defs) > 0:
+        for k in defs:
+            console.print(k, style="green")
+            console.print(defs[k], style="cyan")
+        print()
 
     for s in samples[:2]:
         ens = s['en'].replace('"', '\"')
