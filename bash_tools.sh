@@ -1,3 +1,4 @@
+source bash_tools/helper.sh
 # args:
 # $1: 
 # The IP address you want to query geo info for.
@@ -25,6 +26,16 @@ function odict(){
    curl dict://dict.org/d:"${1}"
 }
 
+# self host directory
+function dict(){
+    local api_str="http://$SERVERIP:10008/$1"
+    if ! hash python; then
+        curl "$api_str"
+    else
+        curl -s "$api_str" | python -m json.tool
+    fi
+}
+
 
 # Linux specific functions
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
@@ -37,7 +48,6 @@ function set_wallpaper(){
     fi
     gsettings set org.gnome.desktop.background picture-uri file://$file
 }
-
 
 fi
 
