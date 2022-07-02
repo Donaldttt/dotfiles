@@ -4,9 +4,9 @@
 # If no argument supplied, the host machine's ip will
 # be used
 # doc for api: https://ip-api.com/docs/api
-DOT_FILE_DIR=$(dirname ${BASH_SOURCE[0]})/
+DOTFILE_DIR=$(dirname ${BASH_SOURCE[0]})/
 
-source $DOT_FILE_DIR/bash_tools/helper.sh
+source $DOTFILE_DIR/bash_tools/helper.sh
 
 function ipinfo(){
     local api_str="http://ip-api.com/json/$1?fields=query,country,regionName,city,district,zip,isp,org,reverse,mobile,proxy,hosting"
@@ -29,7 +29,7 @@ function odict(){
 
 # self host directory
 function dict(){
-    python $
+    python $DOTFILE_DIR/bash_tools/dict.py $1
 }
 
 # Linux specific functions
@@ -70,4 +70,4 @@ fi
 # -t: Sort by time. Display the newest first
 # alias ls=ls -At
 
-source $DOT_FILE_DIR/bash_tools/fzf_file_seletor.sh
+source $DOTFILE_DIR/bash_tools/fzf_file_seletor.sh
