@@ -4,9 +4,16 @@
 # If no argument supplied, the host machine's ip will
 # be used
 # doc for api: https://ip-api.com/docs/api
-DOTFILE_DIR=$(dirname ${BASH_SOURCE[0]})/
 
-source $DOTFILE_DIR/bash_tools/helper.sh
+if [ ! -z "$ZSH_NAME" ]; then 
+    SHELL_NAME=zsh
+    DOTFILE_DIR=${0:a:h}/
+else
+    SHELL_NAME=bash
+    DOTFILE_DIR=$(dirname ${BASH_SOURCE[0]})/
+fi
+
+source "$DOTFILE_DIR/bash_tools/helper.sh"
 
 function ipinfo(){
     local api_str="http://ip-api.com/json/$1?fields=query,country,regionName,city,district,zip,isp,org,reverse,mobile,proxy,hosting"
