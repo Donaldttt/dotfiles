@@ -26,12 +26,7 @@ function odict(){
 
 # self host directory
 function dict(){
-    local api_str="http://$SERVERIP:10008/$1"
-    if ! hash python; then
-        curl "$api_str"
-    else
-        curl -s "$api_str" | python -m json.tool
-    fi
+    python $
 }
 
 
