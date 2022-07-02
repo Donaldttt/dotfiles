@@ -1,4 +1,3 @@
-source bash_tools/helper.sh
 # args:
 # $1: 
 # The IP address you want to query geo info for.
@@ -6,6 +5,8 @@ source bash_tools/helper.sh
 # be used
 # doc for api: https://ip-api.com/docs/api
 DOT_FILE_DIR=$(dirname ${BASH_SOURCE[0]})/
+
+source $DOT_FILE_DIR/bash_tools/helper.sh
 
 function ipinfo(){
     local api_str="http://ip-api.com/json/$1?fields=query,country,regionName,city,district,zip,isp,org,reverse,mobile,proxy,hosting"
@@ -35,7 +36,6 @@ function dict(){
         curl -s "$api_str" | python -m json.tool
     fi
 }
-
 
 # Linux specific functions
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
