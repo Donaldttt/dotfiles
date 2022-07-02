@@ -20,12 +20,12 @@ def basic_paring(data):
     ponetic = data["phonetic"]
     
     print(word)
-    print()
 
     if len(ponetic.items()) > 0:
         for _, v in ponetic.items():
             print(v, end="  ")
         print()
+    print()
 
     if len(defs) > 0:
         for k in defs:
