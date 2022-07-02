@@ -20,12 +20,12 @@ def basic_paring(data):
     ponetic = data["phonetic"]
     
     print(word)
+    print()
 
     if len(ponetic.items()) > 0:
         for _, v in ponetic.items():
             print(v, end="  ")
         print()
-    print()
 
     if len(defs) > 0:
         for k in defs:
@@ -45,13 +45,13 @@ def rich_paring(data):
     samples = data["sample_sentence"]
 
     console.print(word, style="bold purple")
+    print()
 
     if len(ponetic.items()) > 0:
         for _, v in ponetic.items():
             v = v.replace('[', '\[').replace(']', ']')
             console.print(v, style="yellow")
         print()
-    print()
     
     if len(defs) > 0:
         for k in defs:
