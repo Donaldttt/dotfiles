@@ -80,7 +80,7 @@ if __name__ == "__main__":
         exit(1)
 
     word = sys.argv[1]
-    url = "http://do.useless.pw:10008/{}".format(word)
+    url = "http://do.useless.pw/{}".format(word)
     r = urlopen(url)
     content = r.read()
     json_content = json.loads(content)
