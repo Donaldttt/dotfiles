@@ -54,14 +54,14 @@ def rich_paring(data):
 
     if len(ponetic.items()) > 0:
         for _, v in ponetic.items():
-            v = v.replace('[', '\[').replace(']', ']')
-            console.print(v, style="yellow")
+            #v = v.replace('[', '\[').replace(']', ']')
+            console.print(Text(v, style="yellow"))
         print()
     
     if len(defs) > 0:
         for k in defs:
-            console.print(k, style="green")
-            console.print(defs[k], style="cyan")
+            console.print(Text(k, style="green"))
+            console.print(Text(defs[k], style="cyan"))
         print()
 
     for s in samples[:2]:
