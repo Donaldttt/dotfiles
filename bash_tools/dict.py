@@ -1,5 +1,7 @@
 import json
 import sys
+import re
+
 from urllib.request import urlopen
 
 Usage = """
@@ -11,6 +13,7 @@ try:
     from rich.console import Console
     from rich.panel import Panel
     from rich.text import Text
+    from rich import print
     HAS_RICH = 1
 except:
     pass
@@ -63,11 +66,12 @@ def rich_paring(data):
 
     for s in samples[:2]:
         ens = s['en'].replace('"', '\"')
-        panel = Panel(Text(ens, style="rgb(12,122,108)", justify="left"))
+        ens = re.sub(r'\*\*([^ ]*?)\*\*', r'[/][red]\1[/][yellow4]', ens)
 
-        #console.print(ens, style="rgb(165,38,28)")
+        text = Text.from_markup("[yellow4]" + ens + "[/]", justify="left")
+        panel = Panel(text)
+
         console.print(panel)
-        #console.print(s['cn'], style="rgb(13,245,86)")
 
 
 if __name__ == "__main__":
