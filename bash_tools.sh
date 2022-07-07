@@ -13,8 +13,6 @@ else
     DOTFILE_DIR=$(dirname ${BASH_SOURCE[0]})/
 fi
 
-source "$DOTFILE_DIR/bash_tools/helper.sh"
-
 function ipinfo(){
     local api_str="http://ip-api.com/json/$1?fields=query,country,regionName,city,district,zip,isp,org,reverse,mobile,proxy,hosting"
     if ! hash python; then
@@ -36,7 +34,7 @@ function odict(){
 
 # self host directory
 function dict(){
-    python $DOTFILE_DIR/bash_tools/dict.py $1
+    python $DOTFILE_DIR/bash_tools/dict.py $1 $2
 }
 
 # Linux specific functions
