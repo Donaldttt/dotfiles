@@ -99,7 +99,7 @@
 
 " Vim UI {
 
-    if filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
+    if filereadable(expand("~/.vim/plugged/vim-colors-solarized/colors/solarized.vim"))
         let g:solarized_termcolors=256
         let g:solarized_termtrans=1
         let g:solarized_contrast="normal"
@@ -268,71 +268,17 @@
 
 " Plugins {
 
-    " Misc {
-        if isdirectory(expand("~/.vim/bundle/nerdtree"))
-            let g:NERDShutUp=1
-        endif
-        if isdirectory(expand("~/.vim/bundle/matchit.zip"))
-            let b:match_ignorecase = 1
-        endif
-    " }
-
     " AutoCloseTag {
         " Make it so AutoCloseTag works for xml and xhtml files as well
         au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
         nmap <Leader>ac <Plug>ToggleAutoCloseMappings
     " }
 
-    " NerdTree {
-        if isdirectory(expand("~/.vim/bundle/nerdtree"))
-            nnoremap <C-e> :NERDTreeToggle<CR>
-            " map <leader>e :NERDTreeFind<CR>
-            nmap <leader>nt :NERDTreeFind<CR>
-
-            let NERDTreeShowBookmarks=1
-            let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
-            let NERDTreeChDirMode=0
-            let NERDTreeQuitOnOpen=1
-            let NERDTreeMouseMode=2
-            let NERDTreeShowHidden=1
-            let NERDTreeKeepTreeInNewTab=1
-        endif
-    " }
     " JSON {
         nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
         let g:vim_json_syntax_conceal = 0
     " }
 
-    " indent_guides {
-        if isdirectory(expand("~/.vim/bundle/vim-indent-guides/"))
-            let g:indent_guides_start_level = 2
-            let g:indent_guides_guide_size = 1
-            let g:indent_guides_enable_on_vim_startup = 0
-            map <leader>f :IndentGuidesToggle<CR>
-            
-        endif
-    " }
-    " vim-airline {
-        " Set configuration options for the statusline plugin vim-airline.
-        " Use the powerline theme and optionally enable powerline symbols.
-        " To use the symbols , , , , , , and .in the statusline
-        " segments add the following to your .vimrc.before.local file:
-        "   let g:airline_powerline_fonts=1
-        " If the previous symbols do not render for you then install a
-        " powerline enabled font.
-
-        " See `:echo g:airline_theme_map` for some more choices
-        " Default in terminal vim is 'dark'
-        let g:airline_section_z = ''
-        let g:airline_section_y = ''
-
-        if isdirectory(expand("~/.vim/bundle/vim-airline-themes/"))
-            if !exists('g:airline_theme')
-                let g:airline_theme = 'solarized'
-            endif
-        endif
-
-    " }
 
 " }
 
@@ -478,7 +424,7 @@
 "  space-d jump to definition if coc is installed
    "nnoremap <silent><nowait> <space>d :call CocAction('jumpDefinition', v:    false)<CR>
    "nnoremap <silent><nowait> <space>r :call CocAction('jumpReferences', v:    false)<CR>
-    if filereadable(expand("~/.vim-config/.exp-coc-config"))
+    if filereadable(expand("~/.dotfile/.exp-coc-config"))
         source ~/.vim-config/.exp-coc-config
     endif
 

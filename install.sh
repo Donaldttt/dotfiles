@@ -15,12 +15,10 @@ msg() {
 }
 
 success() {
-    if [ "$ret" -eq '0' ]; then
-        msg "\33[32m[✔]\33[0m ${1}${2}"
-    fi
+    msg "\33[32m[✔]\33[0m ${1}${2}"
 }
 
-error() {
+function fatal_error() {
     msg "\33[31m[✘]\33[0m ${1}${2}"
     exit 1
 }
@@ -41,13 +39,14 @@ program_must_exist() {
 
     # throw error on non-zero return value
     if [ "$?" -ne 0 ]; then
-        error "You must have '$1' installed to continue."
+        fatal_error "You must have '$1' installed to continue."
     fi
 }
 
 env_set() {
     if [ -z "$1" ]; then
-        error "You must have your $1 environmental variable set to continue."
+        fatal_error "You must have your $1 environmental variable set to continue."
+        exit 1
     fi
 }
 
@@ -65,15 +64,19 @@ try_symlink() {
 ############################ SETUP FUNCTIONS
 
 backup_file() {
-    original_file=$1
-    if [ -e "$original_file" ]; then
+    local original_file=$1
+    if [ -f "$original_file" ] && [ ! -L "$original_file" ]; then
         today=`date +%Y%m%d_%s`
-        [ -e "$i" ] && [ ! -L "$i" ] && mv -v "$original_file" "$original_file.$today";
-        ret="$?"
+        mv -v "$original_file" "$original_file.$today";
         success "Your file $original_file has been backed up as $original_file.$today"
     fi
 }
 
+# Usage: sync_repo path url
+#
+# This function try to clone git repo host in @url 
+# to @path. If @path alreay exsits, it will simply
+# update the repo
 sync_repo() {
     local repo_path="$1"
     local repo_uri="$2"
@@ -96,19 +99,21 @@ sync_repo() {
 
 setup_vundle() {
 
-    local VUNDLE_URI="https://github.com/gmarik/vundle.git"
-    sync_repo       "$HOME/.vim/bundle/vundle" \
-                    "$VUNDLE_URI" \
-                    "master" \
-                    "vundle"
+    # setup for vim 
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim > /dev/null 2>&1
+
+    # setup for neovim
+    #sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+    #   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
     local system_shell="$SHELL"
     export SHELL='/bin/sh'
 
     vim \
         "+set nomore" \
-        "+BundleInstall!" \
-        "+BundleClean" \
+        "+PlugInstall!" \
+        "+PlugClean" \
         "+qall"
 
     export SHELL="$system_shell"
@@ -134,7 +139,7 @@ source ~/.vimrc" > $nvim_config
 
 set_up_tmux() {
     if program_exists "tmux"; then
-        backup_file "$APP_PATH/.tmux.conf"
+        backup_file "$HOME/.tmux.conf"
         try_symlink "$APP_PATH/.tmux.conf" "$HOME/.tmux.conf" && \
         success "tmux config setup successed"
     else
@@ -152,8 +157,8 @@ set_up_vim() {
                     "$REPO_BRANCH" \
                     "$app_name"
 
-    backup_file "$APP_PATH/.vimrc"
-    backup_file "$APP_PATH/.vimrc.bundles"
+    backup_file "$HOME/.vimrc"
+    backup_file "$HOME/.vimrc.bundles"
 
     try_symlink "$APP_PATH/.vimrc"         "$HOME/.vimrc" 
     try_symlink "$APP_PATH/.vimrc.bundles" "$HOME/.vimrc.bundles"
