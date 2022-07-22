@@ -1,11 +1,6 @@
 " Modeline and Notes {
 " vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} nofoldenable foldmethod=marker spell:
-"
-"   This is Nachuan's personal vim config fork from 
-"   spf13/spf13-vim (http://spf13.com)
-
 " Environment {
-
     " The default leader is '\', but many people prefer ',' as it's in a standard
     let mapleader = ','
     let maplocalleader = '_'

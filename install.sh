@@ -97,15 +97,11 @@ sync_repo() {
     fi
 }
 
-setup_vundle() {
+setup_vimplug() {
 
     # setup for vim 
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    curl -fLo $APP_PATH/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim > /dev/null 2>&1
-
-    # setup for neovim
-    #sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-    #   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
     local system_shell="$SHELL"
     export SHELL='/bin/sh'
@@ -117,7 +113,7 @@ setup_vundle() {
         "+qall"
 
     export SHELL="$system_shell"
-    success "Now updating/installing plugins using Vundle"
+    success "Now updating/installing plugins using vim-plug"
 }
 
 set_up_nvim() {
@@ -165,7 +161,7 @@ set_up_vim() {
 
     success "Setting up vim symlinks."
 
-    setup_vundle
+    setup_vimplug
     set_up_nvim
 }
 

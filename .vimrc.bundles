@@ -1,8 +1,10 @@
-
 " Environment {
 
     " Basics {
-        set nocompatible        " Must be first line
+    set nocompatible        " Must be first line
+
+    " So we don't need to put it inside autoload
+    source ~/.dotfiles/autoload/plug.vim
     " }
 " }
 
@@ -81,7 +83,7 @@
         if isdirectory(expand(plugin_dir . "/nerdtree"))
             let g:NERDShutUp=1
             nnoremap <C-e> :NERDTreeToggle<CR>
-            nmap <leader>nt :NERDTreeFind<CR>
+            nmap <leader>e :NERDTreeFind<CR>
 
             let NERDTreeShowBookmarks=1
             "let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
