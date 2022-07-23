@@ -19,6 +19,8 @@ except:
     pass
 
 def basic_paring(data):
+    """ Display data in the most simple way
+    """
     word = data["word"]
     defs = data["def"]
     samples = data["sample_sentence"]
