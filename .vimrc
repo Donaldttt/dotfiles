@@ -77,6 +77,7 @@
     set tabpagemax=15               " Only show 15 tabs
     set showmode                    " Display the current mode
     set cursorline                  " Highlight current line
+    set cmdheight=1                 " get rid of the extra useless line at the bottom(not working, probably a plugin is changing the value)
 
     "highlight clear SignColumn      " SignColumn should match background
     "highlight clear LineNr          " Current line number row will have same background color in relative mode
@@ -86,16 +87,6 @@
         set ruler                   " Show the ruler
         set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
         set showcmd                 " Show partial commands in status line and
-    endif
-
-    if has('statusline')
-        set laststatus=2
-        " Broken down into easily includeable segments
-        set statusline=%<%f\                     " Filename
-        set statusline+=%w%h%m%r                 " Options
-        set statusline+=\ [%{&ff}/%Y]            " Filetype
-        set statusline+=\ [%{getcwd()}]          " Current dir
-        set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
     endif
 
     set backspace=indent,eol,start  " Backspace for dummies
