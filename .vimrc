@@ -1,5 +1,10 @@
 " Modeline and Notes {
 " Environment {
+    " get current neovim version
+    if has('nvim')
+        let g:nvim_version = matchstr(execute('version'), 'NVIM v\zs[^\n]*')
+    endif
+
     " The default leader is '\', but many people prefer ',' as it's in a standard
     let mapleader = ','
     let maplocalleader = '_'
