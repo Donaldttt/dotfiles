@@ -198,6 +198,7 @@
     " Currently only support airline
     function! SetAirlineTheme(theme)
         if has('nvim') && g:vim_version >= 0.5
+            execute('AirlineTheme ' . a:theme)
         else
             execute('AirlineTheme ' . a:theme)
         endif
