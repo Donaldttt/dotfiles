@@ -82,7 +82,6 @@
 
         " vim theme
         " {
-        Plug 'danilo-augusto/vim-afterglow'
         Plug 'NLKNguyen/papercolor-theme'
         " }
 
@@ -90,6 +89,7 @@
             Plug 'xiyaowong/nvim-transparent'
         endif
         Plug 'EdenEast/nightfox.nvim'
+        Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 
     call plug#end()
 
@@ -214,7 +214,13 @@
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             :TransparentEnable
         elseif g:theme_color == 'dark'
-            let g:afterglow_inherit_background=1
+            let g:PaperColor_Theme_Options = {
+            \   'theme': {
+            \       'default.dark': {
+            \           'transparent_background': 1
+            \        }
+            \   }
+            \ }
             execute("colorscheme " . g:dark_theme)
         elseif g:theme_color == 'light'
             let g:PaperColor_Theme_Options = {
@@ -232,7 +238,13 @@
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             :TransparentDisable
         elseif g:theme_color == 'dark'
-            let g:afterglow_inherit_background=0
+            let g:PaperColor_Theme_Options = {
+            \   'theme': {
+            \       'default.dark': {
+            \           'transparent_background': 0
+            \        }
+            \   }
+            \ }
             execute("colorscheme " . g:dark_theme)
         elseif g:theme_color == 'light'
             let g:PaperColor_Theme_Options = {
@@ -276,20 +288,17 @@
         "    let g:dark_theme = 'github_dark'
         "    let g:light_theme = 'github_light'
         if isdirectory(expand(plugin_dir . "/nightfox.nvim")) && has('nvim') && g:vim_version >= 0.5
-            "let g:dark_theme = 'Nightfox'
-            let g:dark_theme = 'Nordfox'
-            let g:light_theme = 'Dayfox'
-
+            "let g:dark_theme = 'nordfox'
+            let g:light_theme = 'dawnfox'
+            let g:dark_theme = 'nightfox'
+            let g:airline_dark_theme = "hybrid"               
     " }    
      
     " {
     " vim theme 
-        elseif isdirectory(expand(plugin_dir . "/vim-afterglow")) 
-            if isdirectory(expand(plugin_dir . "/papercolor-theme")) 
-                let g:light_theme = 'PaperColor'              
-            endif
-            "let g:afterglow_inherit_background=1
-            let g:dark_theme = 'afterglow'
+        elseif isdirectory(expand(plugin_dir . "/papercolor-theme")) 
+            let g:light_theme = 'PaperColor'              
+            let g:dark_theme = 'PaperColor'
         endif
    
     " }    
