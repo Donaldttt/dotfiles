@@ -1,3 +1,7 @@
+" If anything not work as expected. Please make sure all plugins
+" are installed by running:
+" :PlugInstall
+
 " Environment {
 
     " Basics {
@@ -16,14 +20,14 @@
         " syntax highlighting(and more) for typescript
         " {
             Plug 'leafgarland/typescript-vim'
-        "   }
+        " }
         " {
             Plug 'alvan/vim-closetag'
             let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.js'
         " }
         
         "{
-        Plug 'altercation/vim-colors-solarized'
+        "Plug 'altercation/vim-colors-solarized'
         "}
 
         Plug 'scrooloose/nerdtree'
@@ -169,8 +173,6 @@
     
     " }
 " }
-
-
 
 " THEME APPEARANCE
 " {
