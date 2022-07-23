@@ -78,10 +78,17 @@
         Plug 'NLKNguyen/papercolor-theme'
         " }
 
+        if g:vim_type == 'nvim' && g:vim_version > 0.5
+            Plug 'xiyaowong/nvim-transparent'
+        endif
     call plug#end()
 
 " Plugin Preferences
 " {
+    " xiyaowong/nvim-transparent {
+    
+    " }
+
     " NerdTree {
         if isdirectory(expand(plugin_dir . "/nerdtree"))
             let g:NERDShutUp=1
@@ -157,7 +164,7 @@
     
         " has('nvim') check if it's running on nvim rather than 
         " having neovim on your machine 
-        if isdirectory(expand(plugin_dir . "/github-nvim-theme")) && has('nvim') && str2float(g:nvim_version) >= 0.5
+        if isdirectory(expand(plugin_dir . "/github-nvim-theme")) && has('nvim') && g:vim_version >= 0.5
             let g:github_function_style = "italic"
             "let g:github_sidebars = ["qf", "vista_kind", "terminal", "packer"]
             colorscheme github_dark
@@ -180,7 +187,8 @@
     " {
     " vim theme 
     "elseif isdirectory(expand(plugin_dir . "/jellybeans.vim")) && !has('nvim')
-    elseif isdirectory(expand(plugin_dir . "/vim-afterglow"))
+    elseif isdirectory(expand(plugin_dir . "/vim-afterglow")) 
+
             let g:afterglow_inherit_background=1
             colorscheme afterglow 
             let g:airline_theme='afterglow'
