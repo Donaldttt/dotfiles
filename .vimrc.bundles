@@ -49,8 +49,12 @@
         " {
         Plug 'mg979/vim-visual-multi'
         " }
+    "if has('nvim') && str2float(g:nvim_version) >= 0.5 
+    "    Plug 'nvim-lualine/lualine.nvim'
+    "else
         Plug 'vim-airline/vim-airline'
         Plug 'vim-airline/vim-airline-themes'
+    "endif
 
         " For nvim-bufferline
         " {
@@ -80,6 +84,18 @@
 
     call plug#end()
 
+" Helper functions
+" {
+
+    function! SetAirlineTheme(theme)
+        if has('nvim') && str2float(g:nvim_version) >= 0.5
+        else
+            execute("AirlineTheme " . a:theme)
+        endif
+    endfunction
+
+" }
+
 " Plugin Preferences
 " {
     " NerdTree {
@@ -107,6 +123,11 @@
             
         endif
     " }
+     
+    "if has('nvim') && str2float(g:nvim_version) >= 0.5 && isdirectory(expand(plugin_dir . "/lualine.nvim"))
+    " nvim-lualine/lualine.nvim {
+    " }
+    "else
     " vim-airline {
         " Set configuration options for the statusline plugin vim-airline.
         " Use the powerline theme and optionally enable powerline symbols.
@@ -122,7 +143,8 @@
             "let g:airline_theme = 'solarized'
         endif
     " }
-        
+    "endif
+
     " junegunnjunegunn/fzf {
         " [Buffers] Jump to the existing window if possible
         let g:fzf_buffers_jump = 1
@@ -167,10 +189,12 @@
                 " Inversion
                 if g:colors_name == "github_light"
                     colorscheme github_dark
-                    :AirlineTheme afterglow
+                    call SetAirlineTheme("afterglow")
+                    ":AirlineTheme afterglow
                 else
                     colorscheme github_light
-                    :AirlineTheme silver
+                    call SetAirlineTheme("silver")
+                    ":AirlineTheme silver
                 endif
             endfunction
 
@@ -191,11 +215,13 @@
                 if g:colors_name == "afterglow"
                     set background=light
                     colorscheme PaperColor
-                    :AirlineTheme silver
+                    call SetAirlineTheme("silver")
+                    ":AirlineTheme silver
                 else
                     set background=dark
                     colorscheme afterglow
-                    :AirlineTheme afterglow
+                    call SetAirlineTheme("afterglow")
+                    ":AirlineTheme afterglow
                 endif
             endfunction
 
