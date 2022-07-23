@@ -6,15 +6,11 @@
 " }
     "
     " Plugin directory
+    let config_dir = '~/.dotfiles/'
     let plugin_dir = '~/.vim/plugged/'
     call plug#begin(plugin_dir)
 
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
-        " add desired extensions to the following global variable
-        " coc-tsserver: javascript
-        " coc-pyright: python
-        " coc-clangd: c/c++, may need to install clangd seperatly
-        let g:coc_global_extensions = ['coc-pyright', 'coc-rls']
         Plug 'rust-lang/rust.vim'
         " syntax highlighting(and more) for typescript
         " {
@@ -38,7 +34,7 @@
         
         " for window resize{
             Plug 'simeji/winresizer'
-            let g:winresizer_start_key = '<C-r>'
+            let g:winresizer_start_key = '<leader-r>'
             let g:winresizer_vert_resize = 2
             let g:winresizer_horiz_resize = 2
         " }
@@ -54,7 +50,7 @@
         Plug 'mg979/vim-visual-multi'
         " }
         Plug 'vim-airline/vim-airline'
-        "Plug 'vim-airline/vim-airline-themes'
+        Plug 'vim-airline/vim-airline-themes'
 
         " For nvim-bufferline
         " {
@@ -70,8 +66,17 @@
             Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
         endif
 
+        " nvim support only theme
+        " {
         Plug 'projekt0n/github-nvim-theme'
+        " }
+
+        " vim theme
+        " {
         Plug 'nanotech/jellybeans.vim'
+        Plug 'danilo-augusto/vim-afterglow'
+        Plug 'NLKNguyen/papercolor-theme'
+        " }
 
     call plug#end()
 
@@ -105,16 +110,13 @@
     " vim-airline {
         " Set configuration options for the statusline plugin vim-airline.
         " Use the powerline theme and optionally enable powerline symbols.
-        " To use the symbols , , , , , , and .in the statusline
-        " segments add the following to your .vimrc.before.local file:
-        "   let g:airline_powerline_fonts=1
-        " If the previous symbols do not render for you then install a
-        " powerline enabled font.
-
-        " See `:echo g:airline_theme_map` for some more choices
-        " Default in terminal vim is 'dark'
+        let g:airline_section_b = ''
         let g:airline_section_z = ''
         let g:airline_section_y = ''
+        let g:airline_section_x = ''
+        let g:airline_section_warning = ''
+        let g:airline#extensions#tabline#left_sep = ''
+        let g:airline#extensions#tabline#left_alt_sep = '|'
 
         if isdirectory(expand(plugin_dir . "/vim-airline-themes/"))
             "let g:airline_theme = 'solarized'
@@ -124,28 +126,82 @@
     " junegunnjunegunn/fzf {
         " [Buffers] Jump to the existing window if possible
         let g:fzf_buffers_jump = 1
-        let $FZF_DEFAULT_COMMAND = 'find -L'
+        "let $FZF_DEFAULT_COMMAND = 'find -L'
+        let $FZF_DEFAULT_COMMAND='find . \( -name node_modules -o -name .git \) -prune -o -print'
         noremap <leader>f :FZF<CR>
     " }
-        
+    
+    " neoclide/coc.nvim {
+        " add desired extensions to the following global variable
+        " coc-tsserver: javascript
+        " coc-pyright: python
+        " coc-clangd: c/c++, may need to install clangd seperatly
+        let g:coc_global_extensions = ['coc-pyright', 'coc-rls']
+
+       " space-d jump to definition if coc is installed
+       "nnoremap <silent><nowait> <space>d :call CocAction('jumpDefinition', v:    false)<CR>
+       "nnoremap <silent><nowait> <space>r :call CocAction('jumpReferences', v:    false)<CR>
+        if filereadable(expand(config_dir . "/.exp-coc-config"))
+            exec "source " . config_dir . "/.exp-coc-config"
+        endif
+    
+    " }
+" }
+
+
+
+" THEME APPEARANCE
+" {
     " {
-    "projekt0n/github-nvim-theme
+    " nvim only theme
     
         " has('nvim') check if it's running on nvim rather than 
         " having neovim on your machine 
         if isdirectory(expand(plugin_dir . "/github-nvim-theme")) && has('nvim')
             let g:github_function_style = "italic"
-            let g:github_sidebars = ["qf", "vista_kind", "terminal", "packer"]
-            set background=dark
+            "let g:github_sidebars = ["qf", "vista_kind", "terminal", "packer"]
             colorscheme github_dark
+
+            " Allow to trigger background
+            function! ToggleBG()
+                " Inversion
+                if g:colors_name == "github_light"
+                    colorscheme github_dark
+                else
+                    colorscheme github_light
+                endif
+            endfunction
+
+            noremap <leader>bg :call ToggleBG()<CR>
         endif
     " }    
      
     " {
-    " nanotech/jellybeans.vim
-        if isdirectory(expand(plugin_dir . "/jellybeans.vim")) && !has('nvim')
-            colorscheme jellybeans
+    " vim theme 
+        "if isdirectory(expand(plugin_dir . "/jellybeans.vim")) && !has('nvim')
+        if isdirectory(expand(plugin_dir . "/vim-afterglow")) && !has('nvim')
+            colorscheme afterglow 
+            let g:airline_theme='afterglow'
+
+            " Allow to trigger background
+            function! ToggleBG()
+                " Inversion
+                if g:colors_name == "afterglow"
+                    set background=light
+                    colorscheme PaperColor
+                    "let g:airline_theme='papercolor'
+                    :AirlineTheme papercolor
+                else
+                    set background=dark
+                    colorscheme afterglow
+                    "let g:airline_theme='afterglow'
+                    :AirlineTheme afterglow
+                endif
+            endfunction
+
+            noremap <leader>bg :call ToggleBG()<CR>
         endif
    
     " }    
 " }
+

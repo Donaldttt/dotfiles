@@ -1,5 +1,4 @@
 " Modeline and Notes {
-" vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} nofoldenable foldmethod=marker spell:
 " Environment {
     " The default leader is '\', but many people prefer ',' as it's in a standard
     let mapleader = ','
@@ -11,18 +10,6 @@
 
     set background=dark         " Assume a dark background
 
-    " Allow to trigger background
-    function! ToggleBG()
-        let s:tbg = &background
-        " Inversion
-        if s:tbg == "dark"
-            set background=light
-        else
-            set background=dark
-        endif
-    endfunction
-
-    noremap <leader>bg :call ToggleBG()<CR>
     noremap <leader>h :noh<CR>  " turn off highlight
 
     filetype plugin indent on   " Automatically detect file types.
@@ -41,7 +28,6 @@
     set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
     set virtualedit=onemore             " Allow for cursor beyond last character
     set history=1000                    " Store a ton of history (default is 20)
-    set nospell                         " Spell checking off
     set hidden                          " Allow buffer switching without saving
     set iskeyword-=.                    " '.' is an end of word designator
     set iskeyword-=#                    " '#' is an end of word designator
@@ -132,10 +118,13 @@
     set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
     set splitright                  " Puts new vsplit windows to the right of the current
     set splitbelow                  " Puts new split windows to the bottom of the current
-    set nolist                      " let vim not showing '$' or other sign 
+    set nolist                      " let vim not showing '$' or other sign
+    "set list                        " Display unprintable characters f12 - switches
+    "set listchars=tab:•\ ,trail:•,extends:»,precedes:« " Unprintable chars mapping
+    set nospell                     " Spell checking off
 
     set matchpairs+=<:>             " Match, to be used with %
-    set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
+    "set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
     autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
@@ -189,17 +178,6 @@
     nmap <leader>f7 :set foldlevel=7<CR>
     nmap <leader>f8 :set foldlevel=8<CR>
     nmap <leader>f9 :set foldlevel=9<CR>
-
-    " Most prefer to toggle search highlighting rather than clear the current
-    " search results. To clear search highlighting rather than toggle it on
-    " and off, add the following to your .vimrc.before.local file:
-    "   let g:spf13_clear_search_highlight = 1
-    if exists('g:spf13_clear_search_highlight')
-        nmap <silent> <leader>/ :nohlsearch<CR>
-    else
-        nmap <silent> <leader>/ :set invhlsearch<CR>
-    endif
-
 
     " Find merge conflict markers
     map <leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
@@ -291,20 +269,6 @@
     call InitializeDirectories()
     " }
 
-    " Initialize NERDTree as needed {
-    function! NERDTreeInitAsNeeded()
-        redir => bufoutput
-        buffers!
-        redir END
-        let idx = stridx(bufoutput, "NERD_tree")
-        if idx > -1
-            NERDTreeMirror
-            NERDTreeFind
-            wincmd l
-        endif
-    endfunction
-    " }
-
     " Shell command {
     function! s:RunShellCommand(cmdline)
         botright new
@@ -326,7 +290,6 @@
     command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
     " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
     " }
-    
 " Fix file type error for typescript
     autocmd BufNewFile,BufRead *.ts set filetype=typescript
 
@@ -369,15 +332,8 @@
 "   copy to system
     set clipboard=unnamed
 
-"  space-d jump to definition if coc is installed
-   "nnoremap <silent><nowait> <space>d :call CocAction('jumpDefinition', v:    false)<CR>
-   "nnoremap <silent><nowait> <space>r :call CocAction('jumpReferences', v:    false)<CR>
-    if filereadable(expand("~/.dotfile/.exp-coc-config"))
-        source ~/.vim-config/.exp-coc-config
-    endif
-
 "   fix paste mess up when using tmux
-    if &term =~ "screen"                                                   
+    if &term =~ "screen"
         let &t_BE = "\e[?2004h"  
         let &t_BD = "\e[?2004l" 
         exec "set t_PS=\e[200~" 
