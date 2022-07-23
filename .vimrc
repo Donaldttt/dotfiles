@@ -19,8 +19,6 @@
 
 " General {
 
-    set background=dark         " Assume a dark background
-
     noremap <leader>h :noh<CR>  " turn off highlight
 
     filetype plugin indent on   " Automatically detect file types.

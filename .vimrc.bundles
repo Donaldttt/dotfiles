@@ -8,6 +8,7 @@
     " Plugin directory
     let config_dir = '~/.dotfiles/'
     let plugin_dir = '~/.vim/plugged/'
+    let g:vim_dir = '~/.vim/'
     call plug#begin(plugin_dir)
 
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -77,7 +78,6 @@
 
         " vim theme
         " {
-        Plug 'nanotech/jellybeans.vim'
         Plug 'danilo-augusto/vim-afterglow'
         Plug 'NLKNguyen/papercolor-theme'
         " }
@@ -89,13 +89,6 @@
 
 " Helper functions
 " {
-
-    function! SetAirlineTheme(theme)
-        if has('nvim') && str2float(g:nvim_version) >= 0.5
-        else
-            execute("AirlineTheme " . a:theme)
-        endif
-    endfunction
 
 " }
 
@@ -112,7 +105,7 @@
             nnoremap <leader>e :NERDTreeToggle<CR>
             "nmap <leader>e :NERDTreeFind<CR>
 
-            let NERDTreeShowBookmarks=1
+            "let NERDTreeShowBookmarks=1
             "let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
             let NERDTreeChDirMode=0
             let NERDTreeQuitOnOpen=1
@@ -181,6 +174,89 @@
 
 " THEME APPEARANCE
 " {
+    " dark or light
+    if filereadable(expand(g:vim_dir . '.light_theme.signal'))
+        let g:theme_color = 'light'              
+    else
+        let g:theme_color = 'dark'              
+    endif
+
+    " what to use for dark theme
+    let g:dark_theme = ''               
+
+    " what to use for light theme
+    let g:light_theme = ''              
+
+    " transparent backgroud for supported terminal emulator
+    if filereadable(expand(g:vim_dir . '.transparent_theme.signal'))
+        let g:transparent_theme = v:true     
+    else
+        let g:transparent_theme = v:false     
+    endif
+
+    " Change bottom airline/lualine theme
+    " Currently only support airline
+    function! SetAirlineTheme(theme)
+        if has('nvim') && g:vim_version >= 0.5
+        else
+            execute('AirlineTheme ' . a:theme)
+        endif
+    endfunction
+
+    function! EnableTransparent()
+        if g:vim_type == 'nvim' && g:vim_version > 0.5
+            :TransparentEnable
+        elseif g:theme_color == 'dark'
+            let g:afterglow_inherit_background=1
+            execute("colorscheme " . g:dark_theme)
+        elseif g:theme_color == 'light'
+            let g:PaperColor_Theme_Options = {
+            \   'theme': {
+            \       'default.light': {
+            \           'transparent_background': 1
+            \        }
+            \   }
+            \ }
+            execute("colorscheme " . g:light_theme)
+        endif
+    endfunction
+
+    function! DisableTransparent()
+        if g:vim_type == 'nvim' && g:vim_version > 0.5
+            :TransparentDisable
+        elseif g:theme_color == 'dark'
+            let g:afterglow_inherit_background=0
+            execute("colorscheme " . g:dark_theme)
+        elseif g:theme_color == 'light'
+            let g:PaperColor_Theme_Options = {
+            \   'theme': {
+            \       'default.light': {
+            \           'transparent_background': 0
+            \        }
+            \   }
+            \ }
+            execute("colorscheme " . g:light_theme)
+        endif
+    endfunction
+
+    " ToggleTransparent background
+    " only works in dark theme
+    function! ToggleTransparent()
+        if g:transparent_theme == v:true
+            call DisableTransparent()
+            let g:transparent_theme = v:false     
+            if filereadable(expand(g:vim_dir . '.transparent_theme.signal'))
+                call delete(expand(g:vim_dir . ".transparent_theme.signal"))
+            endif
+        else
+            call EnableTransparent()
+            let g:transparent_theme = v:true     
+            call system("touch " . g:vim_dir . ".transparent_theme.signal")
+        endif
+    endfunction
+
+    noremap <leader>tb :call ToggleTransparent()<CR>
+
     " {
     " nvim only theme
     
@@ -189,53 +265,75 @@
         if isdirectory(expand(plugin_dir . "/github-nvim-theme")) && has('nvim') && g:vim_version >= 0.5
             let g:github_function_style = "italic"
             "let g:github_sidebars = ["qf", "vista_kind", "terminal", "packer"]
-            colorscheme github_dark
+            let g:dark_theme = 'github_dark'
+            let g:light_theme = 'github_light'
 
-            " Allow to trigger background
-            function! ToggleBG()
-                " Inversion
-                if g:colors_name == "github_light"
-                    colorscheme github_dark
-                    call SetAirlineTheme("afterglow")
-                    ":AirlineTheme afterglow
-                else
-                    colorscheme github_light
-                    call SetAirlineTheme("silver")
-                    ":AirlineTheme silver
-                endif
-            endfunction
-
-            noremap <leader>bg :call ToggleBG()<CR>
     " }    
      
     " {
     " vim theme 
-    "elseif isdirectory(expand(plugin_dir . "/jellybeans.vim")) && !has('nvim')
-    elseif isdirectory(expand(plugin_dir . "/vim-afterglow")) 
-
-            let g:afterglow_inherit_background=1
-            colorscheme afterglow 
-            let g:airline_theme='afterglow'
-
-            " Allow to trigger background
-            function! ToggleBG()
-                " Inversion
-                if g:colors_name == "afterglow"
-                    set background=light
-                    colorscheme PaperColor
-                    call SetAirlineTheme("silver")
-                    ":AirlineTheme silver
-                else
-                    set background=dark
-                    colorscheme afterglow
-                    call SetAirlineTheme("afterglow")
-                    ":AirlineTheme afterglow
-                endif
-            endfunction
-
-            noremap <leader>bg :call ToggleBG()<CR>
+        elseif isdirectory(expand(plugin_dir . "/vim-afterglow")) 
+            if isdirectory(expand(plugin_dir . "/papercolor-theme")) 
+                let g:light_theme = 'PaperColor'              
+            endif
+            "let g:afterglow_inherit_background=1
+            let g:dark_theme = 'afterglow'
         endif
    
     " }    
+   
+    if g:theme_color == 'dark'
+        set background=dark
+        execute("colorscheme " . g:dark_theme)
+        let g:airline_theme='afterglow'
+    else
+        set background=light
+        execute("colorscheme " . g:light_theme)
+        let g:airline_theme='silver'
+    endif
+
+    " since in .vimrc we cannot call plugin function as they
+    " are not loaded (:help startup)
+    if g:transparent_theme
+        if g:vim_type == 'nvim' && g:vim_version > 0.5
+            let g:transparent_enabled = v:true
+        else
+            call EnableTransparent()
+        endif
+    else
+        if g:vim_type == 'nvim' && g:vim_version > 0.5
+            let g:transparent_enabled = v:false
+        else
+            call DisableTransparent()
+        endif
+    endif
+        
+    " Allow to trigger background
+    function! ToggleBG()
+        " Inversion
+        if g:theme_color == "dark"
+            set background=light
+            execute("colorscheme " . g:light_theme)
+            call SetAirlineTheme("silver")
+            let g:theme_color = 'light'
+            call system("touch " . g:vim_dir . ".light_theme.signal")
+        else
+            set background=dark
+            execute("colorscheme " . g:dark_theme)
+            call SetAirlineTheme("afterglow")
+            let g:theme_color = 'dark'
+            if filereadable(expand(g:vim_dir . '.light_theme.signal'))
+                call delete(expand(g:vim_dir . ".light_theme.signal"))
+            endif
+        endif
+
+        if g:transparent_theme
+            call EnableTransparent()
+        else
+            call DisableTransparent()
+        endif
+    endfunction
+
+    noremap <leader>bg :call ToggleBG()<CR>
 " }
 
