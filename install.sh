@@ -147,6 +147,7 @@ set_up_vim() {
 
     program_must_exist "vim"
     program_must_exist "git"
+    program_must_exist "curl"
 
     sync_repo       "$APP_PATH" \
                     "$REPO_URI" \
