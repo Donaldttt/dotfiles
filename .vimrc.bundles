@@ -160,6 +160,10 @@
         if isdirectory(expand(plugin_dir . "/github-nvim-theme")) && has('nvim') && str2float(g:nvim_version) >= 0.5
             let g:github_function_style = "italic"
             "let g:github_sidebars = ["qf", "vista_kind", "terminal", "packer"]
+            
+            " this doesn't work well
+            "let g:github_transparent = 1
+            
             colorscheme github_dark
 
             " Allow to trigger background
