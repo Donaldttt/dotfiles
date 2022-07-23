@@ -100,7 +100,7 @@ sync_repo() {
 setup_vimplug() {
 
     # setup for vim 
-    curl -fLo $APP_PATH/autoload/plug.vim --create-dirs \
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim > /dev/null 2>&1
 
     local system_shell="$SHELL"

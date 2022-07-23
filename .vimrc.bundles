@@ -3,8 +3,6 @@
     " Basics {
     set nocompatible        " Must be first line
 
-    " So we don't need to put it inside autoload
-    source ~/.dotfiles/autoload/plug.vim
     " }
 " }
 
