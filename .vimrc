@@ -340,6 +340,10 @@
         exec "set t_PE=\e[201~"
     endif
 
+    " Tab navigation.
+    nnoremap <space>q :bprevious<CR>
+    nnoremap <space>e :bnext<CR>
+
 " Use bundles config {
     if filereadable(expand("~/.vimrc.bundles"))
         source ~/.vimrc.bundles
