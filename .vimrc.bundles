@@ -77,7 +77,7 @@
 
         " nvim support only theme
         " {
-        Plug 'projekt0n/github-nvim-theme'
+        "Plug 'projekt0n/github-nvim-theme'
         " }
 
         " vim theme
@@ -89,6 +89,8 @@
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             Plug 'xiyaowong/nvim-transparent'
         endif
+        Plug 'EdenEast/nightfox.nvim'
+
     call plug#end()
 
 " Helper functions
@@ -185,9 +187,11 @@
 
     " what to use for dark theme
     let g:dark_theme = ''               
+    let g:airline_dark_theme = "deus"               
 
     " what to use for light theme
     let g:light_theme = ''              
+    let g:airline_light_theme = "silver"               
 
     " transparent backgroud for supported terminal emulator
     if filereadable(expand(g:vim_dir . '.transparent_theme.signal'))
@@ -265,12 +269,16 @@
     
         " has('nvim') check if it's running on nvim rather than 
         " having neovim on your machine 
-        if isdirectory(expand(plugin_dir . "/github-nvim-theme")) && has('nvim') && g:vim_version >= 0.5
-            let g:github_function_style = "italic"
-            "let g:github_sidebars = ["qf", "vista_kind", "terminal", "packer"]
-            
-            let g:dark_theme = 'github_dark'
-            let g:light_theme = 'github_light'
+        "if isdirectory(expand(plugin_dir . "/github-nvim-theme")) && has('nvim') && g:vim_version >= 0.5
+        "    let g:github_function_style = "italic"
+        "    "let g:github_sidebars = ["qf", "vista_kind", "terminal", "packer"]
+        "    
+        "    let g:dark_theme = 'github_dark'
+        "    let g:light_theme = 'github_light'
+        if isdirectory(expand(plugin_dir . "/nightfox.nvim")) && has('nvim') && g:vim_version >= 0.5
+            "let g:dark_theme = 'Nightfox'
+            let g:dark_theme = 'Nordfox'
+            let g:light_theme = 'Dayfox'
 
     " }    
      
@@ -289,11 +297,11 @@
     if g:theme_color == 'dark'
         set background=dark
         execute("colorscheme " . g:dark_theme)
-        let g:airline_theme='afterglow'
+        let g:airline_theme=g:airline_dark_theme
     else
         set background=light
         execute("colorscheme " . g:light_theme)
-        let g:airline_theme='silver'
+        let g:airline_theme=g:airline_light_theme
     endif
 
     " since in .vimrc we cannot call plugin function as they
@@ -318,14 +326,15 @@
         if g:theme_color == "dark"
             set background=light
             execute("colorscheme " . g:light_theme)
-            call SetAirlineTheme("silver")
+            call SetAirlineTheme(g:airline_light_theme)
             let g:theme_color = 'light'
             call system("touch " . g:vim_dir . ".light_theme.signal")
         else
             set background=dark
             execute("colorscheme " . g:dark_theme)
-            call SetAirlineTheme("afterglow")
+            call SetAirlineTheme(g:airline_dark_theme)
             let g:theme_color = 'dark'
+            " for saving theme state
             if filereadable(expand(g:vim_dir . '.light_theme.signal'))
                 call delete(expand(g:vim_dir . ".light_theme.signal"))
             endif
