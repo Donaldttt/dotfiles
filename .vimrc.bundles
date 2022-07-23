@@ -85,9 +85,9 @@
         Plug 'NLKNguyen/papercolor-theme'
         " }
 
-        if g:vim_type == 'nvim' && g:vim_version > 0.5
-            Plug 'xiyaowong/nvim-transparent'
-        endif
+        " only work with nvim > 0.5
+        Plug 'xiyaowong/nvim-transparent'
+
         Plug 'EdenEast/nightfox.nvim'
         Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 
