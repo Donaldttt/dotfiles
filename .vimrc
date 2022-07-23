@@ -1,9 +1,15 @@
 " Modeline and Notes {
 " Environment {
     " get current neovim version
+    let g:vim_version = -1
     if has('nvim')
-        let g:nvim_version = matchstr(execute('version'), 'NVIM v\zs[^\n]*')
+        let g:vim_type = 'nvim'
+        let g:vim_version = matchstr(execute('version'), 'NVIM v\zs[^\n]*')
+    else
+        let g:vim_type = 'vim'
+        let g:vim_version = matchstr(execute('version'), 'NVIM v\zs[^\n]*')
     endif
+    let g:vim_version = str2float(g:vim_version)
 
     " The default leader is '\', but many people prefer ',' as it's in a standard
     let mapleader = ','
@@ -12,8 +18,6 @@
 " }
 
 " General {
-
-    set background=dark         " Assume a dark background
 
     noremap <leader>h :noh<CR>  " turn off highlight
 
