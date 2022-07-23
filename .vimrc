@@ -7,12 +7,6 @@
 
 " }
 
-" Use bundles config {
-    if filereadable(expand("~/.vimrc.bundles"))
-        source ~/.vimrc.bundles
-    endif
-" }
-
 " General {
 
     set background=dark         " Assume a dark background
@@ -33,26 +27,21 @@
 
     filetype plugin indent on   " Automatically detect file types.
     syntax on                   " Syntax highlighting
-    syntax enable                   " Syntax highlighting
-    set mouse=a                 " Automatically enable mouse usage
+    "set mouse=a                 " Automatically enable mouse usage
     set mousehide               " Hide the mouse cursor while typing
     scriptencoding utf-8
 
 
     " Most prefer to automatically switch to the current file directory when
-    " a new buffer is opened; to prevent this behavior, add the following to
-    " your .vimrc.before.local file:
-    "   let g:spf13_no_autochdir = 1
-    if !exists('g:spf13_no_autochdir')
-        autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
-        " Always switch to the current file directory
-    endif
+    " a new buffer is opened;
+    autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
+    " Always switch to the current file directory
 
     set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
     set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
     set virtualedit=onemore             " Allow for cursor beyond last character
     set history=1000                    " Store a ton of history (default is 20)
-    set spell                           " Spell checking on
+    set nospell                         " Spell checking off
     set hidden                          " Allow buffer switching without saving
     set iskeyword-=.                    " '.' is an end of word designator
     set iskeyword-=#                    " '#' is an end of word designator
@@ -65,9 +54,6 @@
 
     " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
     " Restore cursor to file position in previous editing session
-    " To disable this, add the following to your .vimrc file:
-    "   let g:spf13_no_restore_cursor = 1
-    if !exists('g:spf13_no_restore_cursor')
         function! ResCur()
             if line("'\"") <= line("$")
                 silent! normal! g`"
@@ -79,7 +65,6 @@
             autocmd!
             autocmd BufWinEnter * call ResCur()
         augroup END
-    endif
 
     " Setting up the directories {
         set backup                  " Backups are nice ...
@@ -93,22 +78,13 @@
 " }
 
 " Vim UI {
-
-    if filereadable(expand("~/.vim/plugged/vim-colors-solarized/colors/solarized.vim"))
-        let g:solarized_termcolors=256
-        let g:solarized_termtrans=1
-        let g:solarized_contrast="normal"
-        let g:solarized_visibility="normal"
-        call togglebg#map("<F5>")
-        colorscheme solarized
-    endif
-
+"
     set tabpagemax=15               " Only show 15 tabs
     set showmode                    " Display the current mode
     set cursorline                  " Highlight current line
 
-    highlight clear SignColumn      " SignColumn should match background
-    highlight clear LineNr          " Current line number row will have same background color in relative mode
+    "highlight clear SignColumn      " SignColumn should match background
+    "highlight clear LineNr          " Current line number row will have same background color in relative mode
     "highlight clear CursorLineNr    " Remove highlight color from current line number
 
     if has('cmdline_info')
@@ -160,15 +136,9 @@
 
     set matchpairs+=<:>             " Match, to be used with %
     set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
-    " Remove trailing whitespaces and ^M chars
-    " To disable the stripping of whitespace, add the following to your
-    " .vimrc.before.local file:
-    "   let g:spf13_keep_trailing_whitespace = 1
-    "autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
-    "autocmd FileType go autocmd BufWritePre <buffer> Fmt
+
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
     autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
-    " preceding line best in a plugin but here for now.
 
     autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 
@@ -181,11 +151,9 @@
 
 " Key (re)Mappings {
 
-
     " Wrapped lines goes down/up to next row, rather than next line in file.
     noremap j gj
     noremap k gk
-
 
     " Stupid shift key fixes
     if !exists('g:spf13_no_keyfixes')
@@ -337,20 +305,6 @@
     endfunction
     " }
 
-    " Strip whitespace {
-    function! StripTrailingWhitespace()
-        " Preparation: save last search, and cursor position.
-        let _s=@/
-        let l = line(".")
-        let c = col(".")
-        " do the business:
-        %s/\s\+$//e
-        " clean up: restore previous search history, and cursor position
-        let @/=_s
-        call cursor(l, c)
-    endfunction
-    " }
-
     " Shell command {
     function! s:RunShellCommand(cmdline)
         botright new
@@ -367,7 +321,6 @@
         call setline(2, substitute(a:cmdline, '.', '=', 'g'))
         execute 'silent $read !' . escape(a:cmdline, '%#')
         setlocal nomodifiable
-        1
     endfunction
 
     command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
@@ -407,11 +360,11 @@
 
 "   TIPS: :hi can be used to check current highlight options
 "   Coc has wired floating color, this is an attempt to fix it
-    highlight CocFloating ctermbg=green
-    highlight FgCocErrorFloatBgCocFloating cterm=bold ctermfg=124 guifg=DarkRed ctermbg=green
+"    highlight CocFloating ctermbg=green
+"    highlight FgCocErrorFloatBgCocFloating cterm=bold ctermfg=124 guifg=DarkRed ctermbg=green
 
 "   c highlight fix
-    highlight cComment ctermfg=12 guifg=#458588
+"    highlight cComment ctermfg=12 guifg=#458588
 
 "   copy to system
     set clipboard=unnamed
@@ -430,4 +383,10 @@
         exec "set t_PS=\e[200~" 
         exec "set t_PE=\e[201~"
     endif
+
+" Use bundles config {
+    if filereadable(expand("~/.vimrc.bundles"))
+        source ~/.vimrc.bundles
+    endif
+" }
 

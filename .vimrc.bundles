@@ -2,15 +2,8 @@
 
     " Basics {
     set nocompatible        " Must be first line
-
     " }
 " }
-
-
-    " Deps {
-        "Plug 'MarcWeber/vim-addon-mw-utils'
-        "Plug 'tomtom/tlib_vim'
-    " }
     "
     " Plugin directory
     let plugin_dir = '~/.vim/plugged/'
@@ -31,15 +24,18 @@
             Plug 'alvan/vim-closetag'
             let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.js'
         " }
+        
+        "{
         Plug 'altercation/vim-colors-solarized'
-        "Plug 'lifepillar/vim-solarized8'
-        "Plug 'spf13/vim-colors'
+        "}
+
         Plug 'scrooloose/nerdtree'
 
         " for markdown{
         Plug 'godlygeek/tabular'
         Plug 'preservim/vim-markdown'
         "}
+        
         " for window resize{
             Plug 'simeji/winresizer'
             let g:winresizer_start_key = '<C-r>'
@@ -58,7 +54,7 @@
         Plug 'mg979/vim-visual-multi'
         " }
         Plug 'vim-airline/vim-airline'
-        Plug 'vim-airline/vim-airline-themes'
+        "Plug 'vim-airline/vim-airline-themes'
 
         " For nvim-bufferline
         " {
@@ -73,15 +69,20 @@
         if executable('fzf')
             Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
         endif
+
+        Plug 'projekt0n/github-nvim-theme'
+        Plug 'nanotech/jellybeans.vim'
+
     call plug#end()
 
 " Plugin Preferences
-"
+" {
     " NerdTree {
         if isdirectory(expand(plugin_dir . "/nerdtree"))
             let g:NERDShutUp=1
             nnoremap <C-e> :NERDTreeToggle<CR>
-            nmap <leader>e :NERDTreeFind<CR>
+            nnoremap <leader>e :NERDTreeToggle<CR>
+            "nmap <leader>e :NERDTreeFind<CR>
 
             let NERDTreeShowBookmarks=1
             "let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
@@ -116,10 +117,9 @@
         let g:airline_section_y = ''
 
         if isdirectory(expand(plugin_dir . "/vim-airline-themes/"))
-            if !exists('g:airline_theme')
-                let g:airline_theme = 'solarized'
-            endif
+            "let g:airline_theme = 'solarized'
         endif
+    " }
         
     " junegunnjunegunn/fzf {
         " [Buffers] Jump to the existing window if possible
@@ -128,4 +128,24 @@
         noremap <leader>f :FZF<CR>
     " }
         
-    " }
+    " {
+    "projekt0n/github-nvim-theme
+    
+        " has('nvim') check if it's running on nvim rather than 
+        " having neovim on your machine 
+        if isdirectory(expand(plugin_dir . "/github-nvim-theme")) && has('nvim')
+            let g:github_function_style = "italic"
+            let g:github_sidebars = ["qf", "vista_kind", "terminal", "packer"]
+            set background=dark
+            colorscheme github_dark
+        endif
+    " }    
+     
+    " {
+    " nanotech/jellybeans.vim
+        if isdirectory(expand(plugin_dir . "/jellybeans.vim")) && !has('nvim')
+            colorscheme jellybeans
+        endif
+   
+    " }    
+" }
