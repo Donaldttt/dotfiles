@@ -181,6 +181,7 @@
     " vim theme 
     "elseif isdirectory(expand(plugin_dir . "/jellybeans.vim")) && !has('nvim')
     elseif isdirectory(expand(plugin_dir . "/vim-afterglow"))
+            let g:afterglow_inherit_background=1
             colorscheme afterglow 
             let g:airline_theme='afterglow'
 
@@ -190,7 +191,7 @@
                 if g:colors_name == "afterglow"
                     set background=light
                     colorscheme PaperColor
-                    :AirlineTheme papercolor
+                    :AirlineTheme silver
                 else
                     set background=dark
                     colorscheme afterglow
