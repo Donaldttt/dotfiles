@@ -18,7 +18,7 @@ success() {
     msg "\33[32m[✔]\33[0m ${1}${2}"
 }
 
-function fatal_error() {
+fatal_error() {
     msg "\33[31m[✘]\33[0m ${1}${2}"
     exit 1
 }
