@@ -339,6 +339,11 @@
     nnoremap <space>q :bprevious<CR>
     nnoremap <space>e :bnext<CR>
 
+    " window split mimic tmux and comform to 
+    " other vim window operation
+    nnoremap <C-w>% :vsplit<CR>
+    nnoremap  <C-w>" :split<CR>
+
 " Use bundles config {
     if filereadable(expand("~/.vimrc.bundles"))
         source ~/.vimrc.bundles

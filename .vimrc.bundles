@@ -51,6 +51,7 @@
         Plug 'vim-airline/vim-airline'
         Plug 'vim-airline/vim-airline-themes'
         
+        " The bottom buffer display
         Plug 'bling/vim-bufferline'
         Plug 'easymotion/vim-easymotion'
         Plug 'nathanaelkane/vim-indent-guides'
@@ -73,7 +74,6 @@
         endif
 
         Plug 'EdenEast/nightfox.nvim'
-        Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 
     call plug#end()
 
