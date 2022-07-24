@@ -288,30 +288,11 @@
 " Fix file type error for typescript
     autocmd BufNewFile,BufRead *.ts set filetype=typescript
 
-    " leader s change occurence
-    :nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
-    " leader num change tab
-    nnoremap <Leader>1 :b1<CR>
-    nnoremap <Leader>2 :b2<CR>
-    nnoremap <Leader>3 :b3<CR>
-    nnoremap <Leader>4 :b4<CR>
-    nnoremap <Leader>5 :b5<CR>
-    nnoremap <Leader>6 :b6<CR>
-    nnoremap <Leader>7 :b7<CR>
-    nnoremap <Leader>8 :b8<CR>
-    nnoremap <Leader>9 :b9<CR>
-    "let c = 0
-    "while c <= 100
-    "    execute 'nnoremap <Leader>'.c ':b'.c.'<CR>'
-    "   let c += 1
-    "endwhile
-
 
 "  These are to cancel the default behavior of d, D, c, C
 "  to put the text they delete in the default register.
 "  Note that this means e.g. "ad won't copy the text into
 "  register a anymore.  You have to explicitly yank it.
-"
 "  TIPS: you can type :registers to view value in each registers
     vnoremap p "0p
 
@@ -334,15 +315,6 @@
         exec "set t_PS=\e[200~" 
         exec "set t_PE=\e[201~"
     endif
-
-    " Tab navigation.
-    nnoremap <space>q :bprevious<CR>
-    nnoremap <space>e :bnext<CR>
-
-    " window split mimic tmux and comform to 
-    " other vim window operation
-    nnoremap <C-w>% :vsplit<CR>
-    nnoremap  <C-w>" :split<CR>
 
 " Use bundles config {
     if filereadable(expand("~/.vimrc.bundles"))

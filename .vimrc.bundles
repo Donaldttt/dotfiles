@@ -1,6 +1,15 @@
 " If anything not work as expected. Please make sure all plugins
 " are installed by running:
 " :PlugInstall
+"
+" Content
+" ('#' jump to the topic)
+"
+" Plugin_Install
+" Plugin_Preferences
+" Theme_Appearance
+" Key_Mappings
+
 
 " Environment {
 
@@ -8,8 +17,10 @@
     set nocompatible        " Must be first line
     " }
 " }
-    "
-    " Plugin directory
+    
+" Plugin_Install
+" {
+    " Plugin environment
     let config_dir = '~/.dotfiles/'
     let plugin_dir = '~/.vim/plugged/'
     let g:vim_dir = '~/.vim/'
@@ -44,7 +55,6 @@
 
         " {
             Plug 'jiangmiao/auto-pairs'
-            "let g:AutoPairsFlyMode = 1
         " }
         Plug 'mg979/vim-visual-multi'
 
@@ -61,10 +71,7 @@
             Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
         endif
 
-        " vim theme
-        " {
         Plug 'NLKNguyen/papercolor-theme'
-        " }
 
         " only work with nvim > 0.5
         " For other versions, just loading the plugin may
@@ -76,8 +83,9 @@
         Plug 'EdenEast/nightfox.nvim'
 
     call plug#end()
+" }
 
-" Plugin Preferences
+" Plugin_Preferences
 " {
     " godlygeek/tabular {
         if isdirectory(expand(plugin_dir . "/tabular"))
@@ -166,7 +174,7 @@
     " }
 " }
 
-" THEME APPEARANCE
+" Theme_Appearance
 " {
     " dark or light
     if filereadable(expand(g:vim_dir . '.light_theme.signal'))
@@ -288,7 +296,6 @@
         endif
     endfunction
 
-    noremap <leader>tb :call ToggleTransparent()<CR>
 
     " {
     " nvim only theme
@@ -369,6 +376,34 @@
         endif
     endfunction
 
-    noremap <leader>bg :call ToggleBG()<CR>
 " }
 
+" Key_Mappings
+" (This doesn't include plugin specific mapping.
+" For them please check plugin Preferences)
+" {
+
+    " Toggle dark/light theme
+    noremap <leader>bg :call ToggleBG()<CR>
+
+    " Toggle transparent background
+    noremap <leader>tb :call ToggleTransparent()<CR>
+
+    " Buffer navigation
+    nnoremap <space>q :bprevious<CR>
+    nnoremap <space>e :bnext<CR>
+
+    " leader s change all occurence
+    :nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
+
+    " leader num change tab
+    nnoremap <Leader>1 :b1<CR>
+    nnoremap <Leader>2 :b2<CR>
+    nnoremap <Leader>3 :b3<CR>
+    nnoremap <Leader>4 :b4<CR>
+    nnoremap <Leader>5 :b5<CR>
+    nnoremap <Leader>6 :b6<CR>
+    nnoremap <Leader>7 :b7<CR>
+    nnoremap <Leader>8 :b8<CR>
+    nnoremap <Leader>9 :b9<CR>
+" }
