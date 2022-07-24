@@ -1,3 +1,0 @@
-[submodule "bash_tools/autojump"]
-	path = bash_tools/autojump
-	url = https://github.com/wting/autojump
