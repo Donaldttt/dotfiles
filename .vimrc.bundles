@@ -65,9 +65,13 @@
         Plug 'NLKNguyen/papercolor-theme'
         " }
 
+        " only work with nvim > 0.5
+        " For other versions, just loading the plugin may
+        " cause error
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             Plug 'xiyaowong/nvim-transparent'
         endif
+
         Plug 'EdenEast/nightfox.nvim'
         Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 
@@ -283,6 +287,7 @@
     " {
     " vim theme 
         elseif isdirectory(expand(plugin_dir . "/papercolor-theme")) 
+            " improve coc color in this theme
             let g:light_theme = 'PaperColor'              
             let g:dark_theme = 'PaperColor'
         endif
