@@ -10,6 +10,11 @@ if [ ! -z "$ZSH_NAME" ]; then
     DOTFILE_DIR=${0:a:h}/
 else
     SHELL_NAME=bash
+
+    # display git status
+    export GIT_PS1_SHOWDIRTYSTATE=1
+
+    export PS1='\[\e[01;32m\]\w\[\e[01;35m\]$(__git_ps1 " (%s)")\[\e[00m\] '
     DOTFILE_DIR=$(dirname ${BASH_SOURCE[0]})/
 fi
 
@@ -76,3 +81,4 @@ fi
 #alias ls=ls -At
 
 source $DOTFILE_DIR/bash_tools/fzf_file_seletor.sh
+
