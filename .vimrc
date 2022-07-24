@@ -225,7 +225,8 @@
 
 " Functions {
 
-    " Initialize directories {
+    " Initialize directories for undo, swap, viewdir
+    " to ~/.vim/.vim*
     function! InitializeDirectories()
         let parent = $HOME
         let prefix = 'vim'
@@ -238,11 +239,6 @@
             let dir_list['undo'] = 'undodir'
         endif
 
-        " To specify a different directory in which to place the vimbackup,
-        " vimviews, vimundo, and vimswap files/directories, add the following to
-        " your .vimrc.before.local file:
-        "   let g:spf13_consolidated_directory = <full path to desired directory>
-        "   eg: let g:spf13_consolidated_directory = $HOME . '/.vim/'
         let g:spf13_consolidated_directory = $HOME . '/.vim/.'
         if exists('g:spf13_consolidated_directory')
             let common_dir = g:spf13_consolidated_directory . prefix
@@ -267,9 +263,8 @@
         endfor
     endfunction
     call InitializeDirectories()
-    " }
 
-    " Shell command {
+    " Shell command 
     function! s:RunShellCommand(cmdline)
         botright new
 
@@ -289,7 +284,7 @@
 
     command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
     " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
-    " }
+     
 " Fix file type error for typescript
     autocmd BufNewFile,BufRead *.ts set filetype=typescript
 
