@@ -394,7 +394,7 @@
     nnoremap <space>e :bnext<CR>
 
     " leader s change all occurence
-    :nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
+    nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
 
     " leader num change tab
     nnoremap <Leader>1 :b1<CR>
