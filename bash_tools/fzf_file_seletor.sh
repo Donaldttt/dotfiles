@@ -18,7 +18,6 @@ set_wallpaper \
 
 # fzf only match folders
 fzf_command_list_dir=(\
-ls \
 cd \
 )
 
