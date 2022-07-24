@@ -14,7 +14,7 @@ else
     # display git status
     export GIT_PS1_SHOWDIRTYSTATE=1
 
-    export PS1='\[\e[01;32m\]\w\[\e[01;35m\]$(__git_ps1 " (%s)")\[\e[00m\] '
+    export PS1='\[\e[01;32m\]\w\[\e[01;31m\]$(__git_ps1 " (%s)")\[\e[00m\] '
     DOTFILE_DIR=$(dirname ${BASH_SOURCE[0]})/
 fi
 
