@@ -184,10 +184,15 @@
     let g:airline_light_theme = "silver"               
 
     " transparent backgroud for supported terminal emulator
-    if filereadable(expand(g:vim_dir . '.transparent_theme.signal'))
-        let g:transparent_theme = v:true     
-    else
-        let g:transparent_theme = v:false     
+    " check if transparent_dark_theme.signl or transparent_light_theme.signl
+    " exist and set respect variable
+    let g:transparent_dark_theme = v:false     
+    let g:transparent_light_theme = v:false     
+    if filereadable(expand(g:vim_dir . '.transparent_dark_theme.signal'))
+        let g:transparent_dark_theme = v:true     
+    endif
+    if filereadable(expand(g:vim_dir . '.transparent_light_theme.signal'))
+        let g:transparent_light_theme = v:true     
     endif
 
     " Change bottom airline/lualine theme
@@ -248,19 +253,38 @@
         endif
     endfunction
 
+    " delete signal file if exist
+    function! DeleteSignalFile(name)
+        if filereadable(expand(g:vim_dir . a:name))
+            call delete(expand(g:vim_dir . a:name))
+        endif
+    endfunction
+    
+    " Create signal file if not exist
+    function! CreateSignalFile(name)
+        call system("touch " . g:vim_dir . a:name)
+    endfunction
+
     " ToggleTransparent background
     " only works in dark theme
     function! ToggleTransparent()
-        if g:transparent_theme == v:true
+        if g:transparent_dark_theme && g:theme_color == 'dark'
             call DisableTransparent()
-            let g:transparent_theme = v:false     
-            if filereadable(expand(g:vim_dir . '.transparent_theme.signal'))
-                call delete(expand(g:vim_dir . ".transparent_theme.signal"))
-            endif
+            let g:transparent_dark_theme = v:false     
+            call DeleteSignalFile('.transparent_dark_theme.signal')
+        elseif g:transparent_light_theme && g:theme_color == 'light'
+            call DisableTransparent()
+            let g:transparent_light_theme = v:false     
+            call DeleteSignalFile('.transparent_light_theme.signal')
         else
             call EnableTransparent()
-            let g:transparent_theme = v:true     
-            call system("touch " . g:vim_dir . ".transparent_theme.signal")
+            if g:theme_color == 'dark'
+                let g:transparent_dark_theme = v:true     
+                call CreateSignalFile('.transparent_dark_theme.signal')
+            else
+                let g:transparent_light_theme = v:true     
+                call CreateSignalFile('.transparent_light_theme.signal')
+            endif
         endif
     endfunction
 
@@ -306,13 +330,13 @@
 
     " since in .vimrc we cannot call plugin function as they
     " are not loaded (:help startup)
-    if g:transparent_theme
+    if g:transparent_dark_theme && g:theme_color == 'dark' || g:transparent_light_theme && g:theme_color == 'light'
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             let g:transparent_enabled = v:true
         else
             call EnableTransparent()
         endif
-    else
+    else 
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             let g:transparent_enabled = v:false
         else
@@ -328,19 +352,17 @@
             execute("colorscheme " . g:light_theme)
             call SetAirlineTheme(g:airline_light_theme)
             let g:theme_color = 'light'
-            call system("touch " . g:vim_dir . ".light_theme.signal")
+            call CreateSignalFile('.light_theme.signal') 
         else
             set background=dark
             execute("colorscheme " . g:dark_theme)
             call SetAirlineTheme(g:airline_dark_theme)
             let g:theme_color = 'dark'
             " for saving theme state
-            if filereadable(expand(g:vim_dir . '.light_theme.signal'))
-                call delete(expand(g:vim_dir . ".light_theme.signal"))
-            endif
+            call DeleteSignalFile(".light_theme.signal")
         endif
 
-        if g:transparent_theme
+        if g:transparent_dark_theme && g:theme_color == 'dark' || g:transparent_light_theme && g:theme_color == 'light'
             call EnableTransparent()
         else
             call DisableTransparent()
