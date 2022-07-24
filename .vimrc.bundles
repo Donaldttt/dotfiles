@@ -13,59 +13,44 @@
     let config_dir = '~/.dotfiles/'
     let plugin_dir = '~/.vim/plugged/'
     let g:vim_dir = '~/.vim/'
+
     call plug#begin(plugin_dir)
 
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
         Plug 'rust-lang/rust.vim'
-        " syntax highlighting(and more) for typescript
-        " {
-            Plug 'leafgarland/typescript-vim'
-        " }
+        Plug 'leafgarland/typescript-vim'
+
         " {
             Plug 'alvan/vim-closetag'
             let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.js'
         " }
         
-        "{
-        "Plug 'altercation/vim-colors-solarized'
-        "}
-
         Plug 'scrooloose/nerdtree'
 
-        " for markdown{
         Plug 'godlygeek/tabular'
-        Plug 'preservim/vim-markdown'
+        " for markdown{
+            Plug 'preservim/vim-markdown'
         "}
         
         " for window resize{
             Plug 'simeji/winresizer'
-            let g:winresizer_start_key = '<leader-r>'
-            let g:winresizer_vert_resize = 2
+            let g:winresizer_start_key    = '<leader-r>'
+            let g:winresizer_vert_resize  = 2
             let g:winresizer_horiz_resize = 2
         " }
         
         Plug 'tpope/vim-surround'
         Plug 'rhysd/conflict-marker.vim'
+
         " {
-        Plug 'jiangmiao/auto-pairs'
-        "let g:AutoPairsFlyMode = 1
-        
+            Plug 'jiangmiao/auto-pairs'
+            "let g:AutoPairsFlyMode = 1
         " }
-        " {
         Plug 'mg979/vim-visual-multi'
-        " }
-    "if has('nvim') && str2float(g:nvim_version) >= 0.5 
-    "    Plug 'nvim-lualine/lualine.nvim'
-    "else
+
         Plug 'vim-airline/vim-airline'
         Plug 'vim-airline/vim-airline-themes'
-    "endif
-
-        " For nvim-bufferline
-        " {
-        "Plug 'kyazdani42/nvim-web-devicons'
-        "Plug 'akinsho/nvim-bufferline.lua'
-        " }
+        
         Plug 'bling/vim-bufferline'
         Plug 'easymotion/vim-easymotion'
         Plug 'nathanaelkane/vim-indent-guides'
@@ -74,11 +59,6 @@
         if executable('fzf')
             Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
         endif
-
-        " nvim support only theme
-        " {
-        "Plug 'projekt0n/github-nvim-theme'
-        " }
 
         " vim theme
         " {
@@ -93,13 +73,22 @@
 
     call plug#end()
 
-" Helper functions
-" {
-
-" }
-
 " Plugin Preferences
 " {
+    " godlygeek/tabular {
+        if isdirectory(expand(plugin_dir . "/tabular"))
+            nmap <leader>t= :Tabularize /=<CR>
+            vmap <leader>t= :Tabularize /=<CR>
+
+            nmap <leader>t\| :Tab /\|<CR>
+            vmap <leader>t\| :Tab /\|<CR>
+
+            nmap <leader>t: :Tab /:\zs<CR>
+            vmap <leader>t: :Tab /:\zs<CR>
+        endif
+    
+    " }
+    
     " xiyaowong/nvim-transparent {
     
     " }
@@ -113,17 +102,17 @@
 
             "let NERDTreeShowBookmarks=1
             "let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
-            let NERDTreeChDirMode=0
-            let NERDTreeQuitOnOpen=1
-            let NERDTreeMouseMode=2
-            let NERDTreeShowHidden=1
-            let NERDTreeKeepTreeInNewTab=1
+            let NERDTreeChDirMode        = 0
+            let NERDTreeQuitOnOpen       = 1
+            let NERDTreeMouseMode        = 2
+            let NERDTreeShowHidden       = 1
+            let NERDTreeKeepTreeInNewTab = 1
         endif
     " }
     " indent_guides {
         if isdirectory(expand(plugin_dir . "/vim-indent-guides/"))
-            let g:indent_guides_start_level = 2
-            let g:indent_guides_guide_size = 1
+            let g:indent_guides_start_level           = 2
+            let g:indent_guides_guide_size            = 1
             let g:indent_guides_enable_on_vim_startup = 0
             map <leader>i :IndentGuidesToggle<CR>
             
@@ -137,10 +126,10 @@
     " vim-airline {
         " Set configuration options for the statusline plugin vim-airline.
         " Use the powerline theme and optionally enable powerline symbols.
-        let g:airline_section_b = ''
-        let g:airline_section_z = ''
-        let g:airline_section_y = ''
-        let g:airline_section_x = ''
+        let g:airline_section_b       = ''
+        let g:airline_section_z       = ''
+        let g:airline_section_y       = ''
+        let g:airline_section_x       = ''
         let g:airline_section_warning = ''
         "let g:airline#extensions#tabline#left_sep = ''
         "let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -164,11 +153,8 @@
         " coc-tsserver: javascript
         " coc-pyright: python
         " coc-clangd: c/c++, may need to install clangd seperatly
-        let g:coc_global_extensions = ['coc-pyright', 'coc-rls']
+        let g:coc_global_extensions = ['coc-pyright', 'coc-rls', 'coc-clangd', 'coc-tsserver', 'coc-html', 'coc-cmake', 'coc-sql', 'coc-json']
 
-       " space-d jump to definition if coc is installed
-       "nnoremap <silent><nowait> <space>d :call CocAction('jumpDefinition', v:    false)<CR>
-       "nnoremap <silent><nowait> <space>r :call CocAction('jumpReferences', v:    false)<CR>
         if filereadable(expand(config_dir . "/.exp-coc-config"))
             exec "source " . config_dir . "/.exp-coc-config"
         endif
