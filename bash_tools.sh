@@ -9,7 +9,6 @@ if [ -n "$ZSH_NAME" ]; then
     SHELL_NAME=zsh
     DOTFILE_DIR=${0:a:h}/
     source $DOTFILE_DIR/bash_tools/theme_zsh.sh
-
 elif [ -n "$SHELL" ];then
     SHELL_NAME=bash
     DOTFILE_DIR=$(dirname ${BASH_SOURCE[0]})/
