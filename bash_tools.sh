@@ -19,7 +19,8 @@ fi
 # For references:
 # https://askubuntu.com/questions/466198/how-do-i-change-the-color-for-directories-with-ls-in-the-console
 
-#LS_COLORS=$LS_COLORS:'di=1;35:su=0;31:' 
+# We use vivid to generate configuration for LS_COLORS
+# more info: https://github.com/sharkdp/vivid
 source $DOTFILE_DIR/bash_tools/ls_colors_theme.sh
 alias ls='ls --color=auto'
 
