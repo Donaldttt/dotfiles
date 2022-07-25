@@ -38,10 +38,10 @@ program_exists() {
 # return 0 if exists
 # 1 not contain string
 # 2 file not exist
-file_contain(){
+file_contains(){
     if [ -f "$2" ]; then
         a=`grep "$1" $2`
-        [ -n "$a" ] && return 0
+        [ "$a" != '' ] && return 0
         return 1
     fi
     return 2
@@ -185,11 +185,13 @@ set_up_bash_tool(){
     if program_exists "zsh"; then
         # if not already contain source command
         echo $source_cmd
-        file_contain "$source_cmd" ~/.zshrc 
-        [ $? != '0' ] && file_contain "$source_cmd2" ~/.zshrc 
-
+        file_contains "$source_cmd" ~/.zshrc 
         status_code=$?
-        if [ $status_code != '0' ]; then
+        if [ "$status_code" != '0' ]; then
+            file_contains "$source_cmd2" ~/.zshrc 
+            status_code=$?
+        fi
+        if [ "$status_code" != '0' ]; then
             echo "Install terminal configure script for zsh shell?('y' install; 'q' quit the scrip)"
             read -r respond
             if [ "$respond" = "y" ] || [ "$respond" = "yes" ]; then
@@ -202,10 +204,13 @@ set_up_bash_tool(){
 
     if program_exists "bash"; then
         # if not already contain source command
-        file_contain "$source_cmd" ~/.bashrc 
-        [ $? != '0' ] && file_contain "$source_cmd2" ~/.bashrc 
+        file_contains "$source_cmd" ~/.bashrc 
         status_code=$?
-        if [ $status_code != '0' ]; then
+        if [ "$status_code" != '0' ]; then
+            file_contains "$source_cmd2" ~/.bashrc 
+            status_code=$?
+        fi
+        if [ "$status_code" != '0' ]; then
             echo "Install terminal configure script for bash shell?('y' install; 'q' quit the scrip)"
             read -r respond
             if [ "$respond" = "y" ] || [ "$respond" = "yes" ]; then
