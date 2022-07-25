@@ -1,7 +1,7 @@
 
 # display git status
 export GIT_PS1_SHOWDIRTYSTATE=1
-if [[ $(type -t foo) != function ]]; then
+if [[ $(type -t __git_ps1) != function ]]; then
     __git_ps1(){
 
         local branch=`git branch 2>/dev/null | grep '*' | sed 's/* \(.*\)/\1/'`
