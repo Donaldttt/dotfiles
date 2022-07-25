@@ -192,7 +192,7 @@ set_up_bash_tool(){
         if [ $status_code != '0' ]; then
             echo "Install terminal configure script for zsh shell?('y' install; 'q' quit the scrip)"
             read -r respond
-            if $? && [ "$respond" = "y" ] || [ "$respond" = "yes" ]; then
+            if [ "$respond" = "y" ] || [ "$respond" = "yes" ]; then
                 echo "$source_cmd" >> $HOME/.zshrc
             elif [ "$respond" = "q" ]; then
                 exit 0
