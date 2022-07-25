@@ -34,6 +34,19 @@ program_exists() {
     return 0
 }
 
+# check if file $2 contain string $1
+# return 0 if exists
+# 1 not contain string
+# 2 file not exist
+file_contain(){
+    if [ -f "$2" ]; then
+        a=`grep "$1" $2`
+        [ -n "$a" ] && return 0
+        return 1
+    fi
+    return 2
+}
+
 program_must_exist() {
     program_exists $1
 
@@ -166,10 +179,50 @@ set_up_vim() {
     set_up_nvim
 }
 
+set_up_bash_tool(){
+    source_cmd="source $APP_PATH/bash_tools.sh"
+    source_cmd2="source ~/.$app_name/bash_tools.sh"
+    if program_exists "zsh"; then
+        # if not already contain source command
+        echo $source_cmd
+        file_contain "$source_cmd" ~/.zshrc 
+        [ $? != '0' ] && file_contain "$source_cmd2" ~/.zshrc 
+
+        status_code=$?
+        if [ $status_code != '0' ]; then
+            echo "Install terminal configure script for zsh shell?('y' install; 'q' quit the scrip)"
+            read -r respond
+            if $? && [ "$respond" = "y" ] || [ "$respond" = "yes" ]; then
+                echo "$source_cmd" >> $HOME/.zshrc
+            elif [ "$respond" = "q" ]; then
+                exit 0
+            fi
+        fi
+    fi
+
+    if program_exists "bash"; then
+        # if not already contain source command
+        file_contain "$source_cmd" ~/.bashrc 
+        [ $? != '0' ] && file_contain "$source_cmd2" ~/.bashrc 
+        status_code=$?
+        if [ $status_code != '0' ]; then
+            echo "Install terminal configure script for bash shell?('y' install; 'q' quit the scrip)"
+            read -r respond
+            if [ "$respond" = "y" ] || [ "$respond" = "yes" ]; then
+                echo "$source_cmd" >> $HOME/.bashrc
+            elif [ "$respond" = "q" ]; then
+                exit 0
+            fi
+        fi
+    fi
+}
+
 ############################ MAIN()
 env_set "$HOME"
 
 set_up_tmux
 set_up_vim
+
+set_up_bash_tool
 
 msg             "\nThanks for installing $app_name."
