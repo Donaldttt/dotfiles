@@ -25,7 +25,7 @@ zstyle ':vcs_info:git:*' actionformats '(%b|%a%u%c)'
 local user="%B%(!.%F{red}.%F{green})%n%f "
 
 local user_symbol='%(!.#.$)'
-local current_dir="%B%~ %b"
+local current_dir="%B%~%b"
 local vcs_branch='${vcs_info_msg_0_}'
 
 #PROMPT="╭─${user}${current_dir}${vcs_branch}
