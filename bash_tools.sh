@@ -5,17 +5,15 @@
 # be used
 # doc for api: https://ip-api.com/docs/api
 
-if [ ! -z "$ZSH_NAME" ]; then 
+if [ -n "$ZSH_NAME" ]; then 
     SHELL_NAME=zsh
     DOTFILE_DIR=${0:a:h}/
-else
+    source $DOTFILE_DIR/bash_tools/theme_zsh.sh
+
+elif [ -n "$SHELL" ];then
     SHELL_NAME=bash
-
-    # display git status
-    export GIT_PS1_SHOWDIRTYSTATE=1
-
-    export PS1='\[\e[01;32m\]\w\[\e[01;31m\]$(__git_ps1 " (%s)")\[\e[00m\] '
     DOTFILE_DIR=$(dirname ${BASH_SOURCE[0]})/
+    source $DOTFILE_DIR/bash_tools/theme_bash.sh
 fi
 
 function ipinfo(){
