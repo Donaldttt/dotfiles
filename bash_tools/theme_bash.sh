@@ -6,7 +6,7 @@ if [[ $(type -t foo) != function ]]; then
 
         local branch=`git branch 2>/dev/null | grep '*' | sed 's/* \(.*\)/\1/'`
         
-        if [ $? ]; then
+        if [ -n "$branch" ]; then
             status=`git status 2>/dev/null`
             local stage_info="not staged for commit"
             local commit_info="Changes to be committed"
