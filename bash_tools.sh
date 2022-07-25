@@ -16,6 +16,14 @@ elif [ -n "$SHELL" ];then
     source $DOTFILE_DIR/bash_tools/theme_bash.sh
 fi
 
+# For references:
+# https://askubuntu.com/questions/466198/how-do-i-change-the-color-for-directories-with-ls-in-the-console
+
+#LS_COLORS=$LS_COLORS:'di=1;35:su=0;31:' 
+source $DOTFILE_DIR/bash_tools/ls_colors_theme.sh
+alias ls='ls --color=auto'
+
+# get ipinfo of the machine
 function ipinfo(){
     local api_str="http://ip-api.com/json/$1?fields=query,country,regionName,city,district,zip,isp,org,reverse,mobile,proxy,hosting"
     if ! hash python; then

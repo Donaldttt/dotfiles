@@ -33,6 +33,6 @@ local vcs_branch='${vcs_info_msg_0_}'
 
 #PROMPT="%F{magenta}› ${current_dir}${vcs_branch} "
 
-PROMPT=" %F{106}${current_dir}%f${vcs_branch} "
+PROMPT=" %F{106}${current_dir}%f${vcs_branch}$ "
 
 
