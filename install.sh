@@ -18,6 +18,10 @@ success() {
     msg "\33[32m[✔]\33[0m ${1}${2}"
 }
 
+fail() {
+    msg "\33[31m[✘]\33[0m ${1}${2}"
+}
+
 fatal_error() {
     msg "\33[31m[✘]\33[0m ${1}${2}"
     exit 1
@@ -126,14 +130,14 @@ setup_vimplug() {
         "+qall"
 
     export SHELL="$system_shell"
-    success "Now updating/installing plugins using vim-plug"
+    success "plugins updated/installed using vim-plug"
 }
 
 set_up_nvim() {
-    nvim_dir="$HOME/.config/nvim"
-    nvim_config="$nvim_dir/init.vim"
-    mkdir -p $nvim_dir
     if program_exists "nvim"; then
+        nvim_dir="$HOME/.config/nvim"
+        nvim_config="$nvim_dir/init.vim"
+        mkdir -p $nvim_dir
         msg "Found neovim."
         if [ -f "$nvim_config" ]; then
             msg "Found init.vim. backing up it"
@@ -143,6 +147,8 @@ set_up_nvim() {
 let &packpath=&runtimepath
 source ~/.vimrc" > $nvim_config
         success "neovim config setup successed"
+    else
+        fail "neovim config is not setup(neovim not installed)"
     fi
 }
 
@@ -152,7 +158,7 @@ set_up_tmux() {
         try_symlink "$APP_PATH/.tmux.conf" "$HOME/.tmux.conf" && \
         success "tmux config setup successed"
     else
-        msg "tmux not installed"
+        fail "tmux config is not setup(tmux not installed)"
     fi
 }
 
@@ -199,7 +205,7 @@ set_up_bash_tool(){
                 exit 0
             fi
         fi
-        success "bash tool is sourced in zsh"
+        success "terminal configuration is sourced in zsh"
     fi
 
     if program_exists "bash"; then
@@ -219,7 +225,7 @@ set_up_bash_tool(){
                 exit 0
             fi
         fi
-        success "bash tool is sourced in bash"
+        success "terminal configuration is sourced in bash"
     fi
 }
 
