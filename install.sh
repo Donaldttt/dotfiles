@@ -7,6 +7,7 @@ app_name='dotfiles'
 [ -z "$APP_PATH" ] && APP_PATH="$HOME/.$app_name"
 [ -z "$REPO_URI" ] && REPO_URI="https://github.com/Donaldttt/$app_name"
 [ -z "$REPO_BRANCH" ] && REPO_BRANCH='main'
+[ -z "$VIM_RTPATH" ] && VIM_RTPATH="$HOME/.vim"
 
 
 ############################  BASIC SETUP TOOLS
@@ -116,6 +117,7 @@ sync_repo() {
 
 setup_vimplug() {
 
+    mkdir -p "$VIM_RTPATH/autoload"
     # setup for vim 
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim > /dev/null 2>&1
@@ -163,8 +165,9 @@ set_up_tmux() {
 }
 
 set_up_vim() {
-
-    program_must_exist "vim"
+    if ! program_exists "vim" && ! program_exists "nvim" ; then
+        fatal_error "You must have 'vim' or 'nvim(neovim)' installed to continue."
+    fi
     program_must_exist "git"
     program_must_exist "curl"
 
@@ -179,10 +182,9 @@ set_up_vim() {
     try_symlink "$APP_PATH/.vimrc"         "$HOME/.vimrc" 
     try_symlink "$APP_PATH/.vimrc.bundles" "$HOME/.vimrc.bundles"
 
-    success "Setting up vim symlinks."
-
-    setup_vimplug
+    success "Setting up symlinks for vim configuration"
     set_up_nvim
+    setup_vimplug
 }
 
 set_up_bash_tool(){
