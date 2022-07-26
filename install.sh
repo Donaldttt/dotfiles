@@ -142,8 +142,8 @@ set_up_nvim() {
         echo "set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath=&runtimepath
 source ~/.vimrc" > $nvim_config
+        success "neovim config setup successed"
     fi
-    success "neovim config setup successed"
 }
 
 set_up_tmux() {
@@ -184,7 +184,6 @@ set_up_bash_tool(){
     source_cmd2="source ~/.$app_name/bash_tools.sh"
     if program_exists "zsh"; then
         # if not already contain source command
-        echo $source_cmd
         file_contains "$source_cmd" ~/.zshrc 
         status_code=$?
         if [ "$status_code" != '0' ]; then
@@ -200,6 +199,7 @@ set_up_bash_tool(){
                 exit 0
             fi
         fi
+        success "bash tool is sourced in zsh"
     fi
 
     if program_exists "bash"; then
@@ -219,6 +219,7 @@ set_up_bash_tool(){
                 exit 0
             fi
         fi
+        success "bash tool is sourced in bash"
     fi
 }
 
