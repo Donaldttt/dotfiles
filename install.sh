@@ -199,7 +199,7 @@ set_up_bash_tool(){
             status_code=$?
         fi
         if [ "$status_code" != '0' ]; then
-            echo "Install terminal configure script for zsh shell?('y' install; 'q' quit the scrip)"
+            echo "Install terminal configuration script for zsh shell?('y' install; 'q' quit the scrip)"
             read -r respond
             if [ "$respond" = "y" ] || [ "$respond" = "yes" ]; then
                 echo "$source_cmd" >> $HOME/.zshrc
@@ -219,7 +219,7 @@ set_up_bash_tool(){
             status_code=$?
         fi
         if [ "$status_code" != '0' ]; then
-            echo "Install terminal configure script for bash shell?('y' install; 'q' quit the scrip)"
+            echo "Install terminal configuration script for bash shell?('y' install; 'q' quit the scrip)"
             read -r respond
             if [ "$respond" = "y" ] || [ "$respond" = "yes" ]; then
                 echo "$source_cmd" >> $HOME/.bashrc
@@ -234,9 +234,8 @@ set_up_bash_tool(){
 ############################ MAIN()
 env_set "$HOME"
 
-set_up_tmux
 set_up_vim
-
+set_up_tmux
 set_up_bash_tool
 
 msg             "\nThanks for installing $app_name."
