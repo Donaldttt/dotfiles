@@ -198,11 +198,11 @@
     endif
 
     " what to use for dark theme
-    let g:dark_theme = ''               
+    let g:dark_theme = 'default'               
     let g:airline_dark_theme = "deus"               
 
     " what to use for light theme
-    let g:light_theme = ''              
+    let g:light_theme = 'default'              
     let g:airline_light_theme = "silver"               
 
     " transparent backgroud for supported terminal emulator
@@ -219,17 +219,13 @@
 
     function! SetDarkTheme()
         set background=dark
-        if g:dark_theme != ""
-            execute("colorscheme " . g:dark_theme)
-        endif
+        execute("colorscheme " . g:dark_theme)
         let g:theme_color = 'dark'
     endfunction
 
     function! SetLightTheme()
         set background=light
-        if g:light_theme != ""
-            execute("colorscheme " . g:light_theme)
-        endif
+        execute("colorscheme " . g:light_theme)
         let g:theme_color = 'light'
     endfunction
 
