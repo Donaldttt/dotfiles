@@ -225,6 +225,7 @@
             \   }
             \ }
             execute("colorscheme " . g:dark_theme)
+            highlight SignColumn ctermbg=none
         elseif g:theme_color == 'light'
             let g:PaperColor_Theme_Options = {
             \   'theme': {
@@ -234,6 +235,7 @@
             \   }
             \ }
             execute("colorscheme " . g:light_theme)
+            highlight SignColumn ctermbg=none
         endif
     endfunction
 
