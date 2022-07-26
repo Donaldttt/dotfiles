@@ -213,6 +213,15 @@
         endif
     endfunction
 
+    " Fix colorscheme not working correctly under transparent background
+    " There is no plugin for this for nvim < 0.5 or vim without lua support
+    function! TransparentBackgroundFix()
+        highlight SignColumn ctermbg=none
+        highlight CursorLineNr ctermbg=none
+        highlight CocErrorSign ctermbg=none ctermfg=52 cterm=bold
+        highlight CocErrorHighlight ctermbg=none ctermfg=52 cterm=underline,bold
+    endfunction
+
     function! EnableTransparent()
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             :TransparentEnable
@@ -225,7 +234,7 @@
             \   }
             \ }
             execute("colorscheme " . g:dark_theme)
-            highlight SignColumn ctermbg=none
+            call TransparentBackgroundFix()
         elseif g:theme_color == 'light'
             let g:PaperColor_Theme_Options = {
             \   'theme': {
@@ -235,7 +244,7 @@
             \   }
             \ }
             execute("colorscheme " . g:light_theme)
-            highlight SignColumn ctermbg=none
+            call TransparentBackgroundFix()
         endif
     endfunction
 
@@ -408,4 +417,8 @@
     nnoremap <Leader>7 :b7<CR>
     nnoremap <Leader>8 :b8<CR>
     nnoremap <Leader>9 :b9<CR>
+
+    " split window comform with other window management shortcuts
+    nnoremap <C-w>% :vsplit<CR>
+    nnoremap <C-w>" :split<CR>
 " }
