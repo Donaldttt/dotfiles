@@ -217,6 +217,22 @@
         let g:transparent_light_theme = v:true     
     endif
 
+    function! SetDarkTheme()
+        set background=dark
+        if g:dark_theme != ""
+            execute("colorscheme " . g:dark_theme)
+        endif
+        let g:theme_color = 'dark'
+    endfunction
+
+    function! SetLightTheme()
+        set background=light
+        if g:light_theme != ""
+            execute("colorscheme " . g:light_theme)
+        endif
+        let g:theme_color = 'light'
+    endfunction
+
     " Change bottom airline/lualine theme
     " Currently only support airline
     function! SetAirlineTheme(theme)
@@ -358,13 +374,11 @@
     " }    
    
     if g:theme_color == 'dark'
-        set background=dark
-        execute("colorscheme " . g:dark_theme)
         let g:airline_theme=g:airline_dark_theme
+        call SetDarkTheme()
     else
-        set background=light
-        execute("colorscheme " . g:light_theme)
         let g:airline_theme=g:airline_light_theme
+        call SetLightTheme()
     endif
 
     " Since in .vimrc we cannot call plugin function as they
@@ -388,16 +402,14 @@
     function! ToggleBG()
         " Inversion
         if g:theme_color == "dark"
-            set background=light
-            execute("colorscheme " . g:light_theme)
+
+            call SetLightTheme()
             call SetAirlineTheme(g:airline_light_theme)
-            let g:theme_color = 'light'
             call CreateSignalFile('.light_theme.signal') 
         else
-            set background=dark
-            execute("colorscheme " . g:dark_theme)
+
+            call SetDarkTheme()
             call SetAirlineTheme(g:airline_dark_theme)
-            let g:theme_color = 'dark'
             " for saving theme state
             call DeleteSignalFile(".light_theme.signal")
         endif
