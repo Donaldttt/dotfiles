@@ -176,6 +176,18 @@
 
 " Theme_Appearance
 " {
+"
+
+    " debug function print out highlight group of cursor position
+    function! SynStack()
+      if !exists("*synstack")
+        return
+      endif
+      echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+    endfunc
+
+    nmap <Leader>db :call SynStack()<CR>
+
     " dark or light
     if filereadable(expand(g:vim_dir . '.light_theme.signal'))
         let g:theme_color = 'light'              
@@ -218,8 +230,14 @@
     function! TransparentBackgroundFix()
         highlight SignColumn ctermbg=none
         highlight CursorLineNr ctermbg=none
-        highlight CocErrorSign ctermbg=none ctermfg=52 cterm=bold
-        highlight CocErrorHighlight ctermbg=none ctermfg=52 cterm=underline,bold
+        highlight CocWarningHighlight ctermbg=none
+        highlight CocErrorSign ctermbg=none ctermfg=9 cterm=bold
+        highlight CocErrorHighlight ctermbg=none ctermfg=9 cterm=underline,bold
+        highlight CocInfoHighlight ctermbg=none
+        highlight CocHintHighlight ctermbg=none
+        highlight CocWarningSign ctermbg=none
+        highlight CocInfoSign    ctermbg=none
+        highlight CocHintSign    ctermbg=none
     endfunction
 
     function! EnableTransparent()
