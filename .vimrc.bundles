@@ -10,12 +10,8 @@
 " Theme_Appearance
 " Key_Mappings
 
-
 " Environment {
-
-    " Basics {
     set nocompatible        " Must be first line
-    " }
 " }
     
 " Plugin_Install
@@ -339,18 +335,11 @@
         call TransparentBackgroundFix()
     endfunction
 
-
     " {
     " nvim only theme
     
         " has('nvim') check if it's running on nvim rather than 
         " having neovim on your machine 
-        "if isdirectory(expand(plugin_dir . "/github-nvim-theme")) && has('nvim') && g:vim_version >= 0.5
-        "    let g:github_function_style = "italic"
-        "    "let g:github_sidebars = ["qf", "vista_kind", "terminal", "packer"]
-        "    
-        "    let g:dark_theme = 'github_dark'
-        "    let g:light_theme = 'github_light'
         if isdirectory(expand(plugin_dir . "/nightfox.nvim")) && has('nvim') && g:vim_version >= 0.5
             "let g:dark_theme = 'nordfox'
             let g:light_theme = 'dawnfox'
@@ -378,7 +367,7 @@
         let g:airline_theme=g:airline_light_theme
     endif
 
-    " since in .vimrc we cannot call plugin function as they
+    " Since in .vimrc we cannot call plugin function as they
     " are not loaded (:help startup)
     if g:transparent_dark_theme && g:theme_color == 'dark' || g:transparent_light_theme && g:theme_color == 'light'
         if g:vim_type == 'nvim' && g:vim_version > 0.5
