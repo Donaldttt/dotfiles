@@ -27,7 +27,11 @@
 
     call plug#begin(plugin_dir)
 
-        Plug 'neoclide/coc.nvim', {'branch': 'release'}
+        " make sure to install nodejs to use coc.nvim
+        if executable('node')
+            Plug 'neoclide/coc.nvim', {'branch': 'release'}
+        endif
+
         Plug 'rust-lang/rust.vim'
         Plug 'leafgarland/typescript-vim'
 
@@ -161,6 +165,7 @@
     " }
     
     " neoclide/coc.nvim {
+    if isdirectory(expand(plugin_dir . "/coc.nvim/")) && executable('node')
         " add desired extensions to the following global variable
         " coc-tsserver: javascript
         " coc-pyright: python
@@ -170,6 +175,7 @@
         if filereadable(expand(config_dir . "/.exp-coc-config"))
             exec "source " . config_dir . "/.exp-coc-config"
         endif
+    endif
     
     " }
 " }
