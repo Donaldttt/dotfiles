@@ -239,6 +239,13 @@
             highlight CocWarningSign ctermbg=none
             highlight CocInfoSign    ctermbg=none
             highlight CocHintSign    ctermbg=none
+            if g:theme_color == 'dark'
+                highlight CocFloating ctermbg=237
+                highlight CocErrorFloat ctermbg=237
+                highlight CocWarningFloat ctermbg=237
+                highlight CocInfoFloat ctermbg=237
+                highlight CocHintFloat ctermbg=237
+            endif
         endif
     endfunction
 
