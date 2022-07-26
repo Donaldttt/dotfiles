@@ -228,16 +228,18 @@
     " Fix colorscheme not working correctly under transparent background
     " There is no plugin for this for nvim < 0.5 or vim without lua support
     function! TransparentBackgroundFix()
-        highlight SignColumn ctermbg=none
-        highlight CursorLineNr ctermbg=none
-        highlight CocWarningHighlight ctermbg=none
-        highlight CocErrorSign ctermbg=none ctermfg=9 cterm=bold
-        highlight CocErrorHighlight ctermbg=none ctermfg=9 cterm=underline,bold
-        highlight CocInfoHighlight ctermbg=none
-        highlight CocHintHighlight ctermbg=none
-        highlight CocWarningSign ctermbg=none
-        highlight CocInfoSign    ctermbg=none
-        highlight CocHintSign    ctermbg=none
+        if !has('nvim') || g:vim_version < 0.5
+            highlight SignColumn ctermbg=none
+            highlight CursorLineNr ctermbg=none
+            highlight CocWarningHighlight ctermbg=none
+            highlight CocErrorSign ctermbg=none ctermfg=9 cterm=bold
+            highlight CocErrorHighlight ctermbg=none ctermfg=9 cterm=underline,bold
+            highlight CocInfoHighlight ctermbg=none
+            highlight CocHintHighlight ctermbg=none
+            highlight CocWarningSign ctermbg=none
+            highlight CocInfoSign    ctermbg=none
+            highlight CocHintSign    ctermbg=none
+        endif
     endfunction
 
     function! EnableTransparent()
@@ -252,7 +254,6 @@
             \   }
             \ }
             execute("colorscheme " . g:dark_theme)
-            call TransparentBackgroundFix()
         elseif g:theme_color == 'light'
             let g:PaperColor_Theme_Options = {
             \   'theme': {
@@ -262,7 +263,6 @@
             \   }
             \ }
             execute("colorscheme " . g:light_theme)
-            call TransparentBackgroundFix()
         endif
     endfunction
 
@@ -323,6 +323,7 @@
                 call CreateSignalFile('.transparent_light_theme.signal')
             endif
         endif
+        call TransparentBackgroundFix()
     endfunction
 
 
@@ -380,6 +381,7 @@
         endif
     endif
         
+    call TransparentBackgroundFix()
     " Allow to trigger background
     function! ToggleBG()
         " Inversion
@@ -403,6 +405,7 @@
         else
             call DisableTransparent()
         endif
+        call TransparentBackgroundFix()
     endfunction
 
 " }
