@@ -132,7 +132,7 @@ setup_vimplug() {
         "+qall"
 
     export SHELL="$system_shell"
-    success "plugins updated/installed using vim-plug"
+    success "Plugins' updated/installed using vim-plug"
 }
 
 set_up_nvim() {
@@ -148,9 +148,9 @@ set_up_nvim() {
         echo "set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath=&runtimepath
 source ~/.vimrc" > $nvim_config
-        success "neovim config setup successed"
+        success "Neovim config setup successed"
     else
-        fail "neovim config is not setup(neovim not installed)"
+        fail "Neovim config is not setup(neovim not installed)"
     fi
 }
 
@@ -158,9 +158,9 @@ set_up_tmux() {
     if program_exists "tmux"; then
         backup_file "$HOME/.tmux.conf"
         try_symlink "$APP_PATH/.tmux.conf" "$HOME/.tmux.conf" && \
-        success "tmux config setup successed"
+        success "Tmux config setup successed"
     else
-        fail "tmux config is not setup(tmux not installed)"
+        fail "Tmux config is not setup(tmux not installed)"
     fi
 }
 
@@ -207,7 +207,7 @@ set_up_bash_tool(){
                 exit 0
             fi
         fi
-        success "terminal configuration is sourced in zsh"
+        success "Terminal configuration is sourced in zsh"
     fi
 
     if program_exists "bash"; then
@@ -227,7 +227,7 @@ set_up_bash_tool(){
                 exit 0
             fi
         fi
-        success "terminal configuration is sourced in bash"
+        success "Terminal configuration is sourced in bash"
     fi
 }
 
