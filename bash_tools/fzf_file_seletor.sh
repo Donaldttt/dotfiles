@@ -81,6 +81,7 @@ function fzf_selector() {
     ret=$1
     if [ "$1" = "." ] || [ "$1" = ".." ] || \
        [[ "$1" == -* ]] || [[ "$1" == */* ]]; then
+        dp "fzf return directly"
         return 1
     fi
 
@@ -104,8 +105,8 @@ function fzf_selector() {
         fi
     fi
 
-    dp "${all_items[@]}"
 
+    dp "fzf-keyword: $1"
     files=()
     # match 
     # 1. try match file/dir equals to keyword completely
@@ -114,6 +115,7 @@ function fzf_selector() {
     # 4. try match file/dir which keyword is substring of after ignoring cases
 
     for item in "${all_items[@]}"; do
+        dp "item: $item"
         # 1.
         if [ "$item" = "$1" ] || [ "$item" = "$1/" ]; then 
             return 0
@@ -161,6 +163,7 @@ function fzf_command_execute() {
     local args=($@)
     local len=${#args[@]}
 
+    dp "args: $args"
     dp "lens: $len"
 
     # zsh shell's array starts with 1 rather than 0
@@ -168,31 +171,51 @@ function fzf_command_execute() {
         dp "zsh"
         flag="${args[2]}"
         unset 'args[2]'
+        command_prefix="${args[1]}"
     else
         dp "not zsh"
         flag="${args[1]}"
         unset 'args[1]'
+        command_prefix="${args[0]}"
     fi
 
     dp "flag: $flag"
     
     if [ "$len" = "2" ]; then 
+        # flag will take 1 length
+        # so if len == 2 means no argument is given
         ${args[@]}
         return 0
     fi
     # probably work for bash
     #keyword="${args: -1}"
 
-    keyword="${args[-1]}"
-
+    keyword=""
+    slice_flag=1
+    for arg in "${args[@]:2}"; do
+        dp "argg $arg"
+        if [ "$slice_flag" = "1" ]; then
+            if [ "$keyword" = "" ]; then
+                keyword="$arg"
+            else
+                keyword="$keyword $arg"
+            fi
+        elif [[ "$arg" == "-"* ]]; then
+            command_prefix="$command_prefix $arg"
+        else
+            slice_flag=1
+        fi
+    done
+    dp "command_prefix: $command_prefix"
     dp "keyword: $keyword"
+
     # Delete last argument
     # Here we assume it is a file path
-    unset 'args[-1]'
 
-    fzf_selector $keyword $flag
-    dp "${args[@]} $ret"
-    ${args[@]} "$ret"
+    fzf_selector "$keyword" $flag
+    dp "ret: $ret"
+
+    $command_prefix "$ret"
 }
 
 for c in "${fzf_command_list_all[@]}"; do
