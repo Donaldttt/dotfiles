@@ -48,35 +48,8 @@ function dict(){
     python $DOTFILE_DIR/bash_tools/dict.py $1 $2
 }
 
-# Linux specific functions
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-
-function set_wallpaper(){
-    local file=$1
-    # convert to abs path
-    if [[ ! "$file" = /* ]]; then
-        file=$(pwd)/$1
-    fi
-    gsettings set org.gnome.desktop.background picture-uri file://$file
-}
-
-fi
-
-# Mac OSX specific functions
-if [[ "$OSTYPE" == "darwin"* ]]; then
-
-function set_wallpaper(){
-    local file=$1
-    # convert to abs path
-    if [[ ! "$file" = /* ]]; then
-        file=$(pwd)/$1
-    fi
-
-    apple_script_single_desk="tell application \"Finder\" to set desktop picture to POSIX file \"$file\""
-    osascript -e "$apple_script_single_desk"
-}
-
-fi
+# set_wallpaper() function
+source $DOTFILE_DIR/bash_tools/wallpaper.sh
 
 #
 #  Command Configuration
