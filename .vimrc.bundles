@@ -53,9 +53,7 @@
         Plug 'tpope/vim-surround'
         Plug 'rhysd/conflict-marker.vim'
 
-        " {
-            Plug 'jiangmiao/auto-pairs'
-        " }
+        Plug 'jiangmiao/auto-pairs'
         Plug 'mg979/vim-visual-multi'
 
         Plug 'vim-airline/vim-airline'
