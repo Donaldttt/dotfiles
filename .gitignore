@@ -3,3 +3,4 @@
 *._*
 .vim/
 autoload/
+node_modules/
