@@ -15,6 +15,11 @@ elif [ -n "$SHELL" ];then
     source $DOTFILE_DIR/bash_tools/theme_bash.sh
 fi
 
+## ENVIRONMENT
+
+export EDITOR='vim'
+
+
 # For references:
 # https://askubuntu.com/questions/466198/how-do-i-change-the-color-for-directories-with-ls-in-the-console
 
