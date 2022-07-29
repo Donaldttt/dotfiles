@@ -27,9 +27,6 @@
         if executable('node')
             Plug 'neoclide/coc.nvim', {'branch': 'release'}
         endif
-        if executable('node') && executable('yarn')
-            Plug 'Donaldttt/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
-        endif
 
         Plug 'rust-lang/rust.vim'
         Plug 'leafgarland/typescript-vim'
@@ -105,11 +102,7 @@
     " xiyaowong/nvim-transparent {
     
     " }
-    
-    " iamcco/markdown-preview.nvim {
-        nmap <leader>ms <Plug>MarkdownPreviewToggle
-    " }
-    
+
     " NerdTree {
         if isdirectory(expand(plugin_dir . "/nerdtree"))
             let g:NERDShutUp=1
