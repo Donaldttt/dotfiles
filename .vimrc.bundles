@@ -197,8 +197,7 @@
 
     " what to use for dark theme
     let g:dark_theme = 'default'               
-    let g:airline_dark_theme = "deus"               
-
+    let g:airline_dark_theme = "wombat"
     " what to use for light theme
     let g:light_theme = 'default'              
     let g:airline_light_theme = "silver"               
