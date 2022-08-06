@@ -10,6 +10,7 @@
         let g:vim_version = matchstr(execute('version'), 'NVIM v\zs[^\n]*')
     endif
     let g:vim_version = str2float(g:vim_version)
+    let g:dotfile_path = '~/.dotfiles/'
 
     " The default leader is '\', but many people prefer ',' as it's in a standard
     let mapleader = ','

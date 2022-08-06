@@ -109,16 +109,10 @@ if g:vim_type == 'nvim'
     if g:vim_version >= 0.7
     " nvim-treesitter/nvim-treesitter {
     
-    call v:lua.require'nvim-treesitter.configs'.setup {
-            ensure_installed = { "c", "bash", "lua" },
-            sync_install = false,
-            auto_install = true,
-            ignore_install = { "javascript" },
-            highlight = {
-                enable = true,
-                additional_vim_regex_highlighting = false,
-            },
-        }
+    if filereadable(expand(g:dotfile_path . '.vimrc.lua'))
+        execute('source ' . g:dotfile_path . '/.vimrc.lua')
+    endif
+    
     " }
     endif
 endif
