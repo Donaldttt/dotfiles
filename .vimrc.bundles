@@ -74,8 +74,14 @@
         " only work with nvim > 0.5
         " For other versions, just loading the plugin may
         " cause error
-        if g:vim_type == 'nvim' && g:vim_version > 0.5
+        if g:vim_type == 'nvim'
+        if g:vim_version >= 0.5
             Plug 'xiyaowong/nvim-transparent'
+            Plug 'lukas-reineke/indent-blankline.nvim'
+        endif
+        if g:vim_version >= 0.7
+            Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+        endif
         endif
 
         Plug 'EdenEast/nightfox.nvim'
@@ -85,6 +91,38 @@
 
 " Plugin_Preferences
 " {
+"
+" nvim > 0.5 or above plugin {
+
+if g:vim_type == 'nvim'
+    if g:vim_version >= 0.5
+    " xiyaowong/nvim-transparent {
+    
+    " }
+
+    " lukas-reineke/indent-blankline.nvim {
+        let g:indent_blankline_use_treesitter = v:true
+        let g:indent_blankline_show_current_context = v:true
+    " }
+    endif
+
+    if g:vim_version >= 0.7
+    " nvim-treesitter/nvim-treesitter {
+    
+    call v:lua.require'nvim-treesitter.configs'.setup {
+            ensure_installed = { "c", "bash", "lua" },
+            sync_install = false,
+            auto_install = true,
+            ignore_install = { "javascript" },
+            highlight = {
+                enable = true,
+                additional_vim_regex_highlighting = false,
+            },
+        }
+    " }
+    endif
+endif
+" }
     " godlygeek/tabular {
         if isdirectory(expand(plugin_dir . "/tabular"))
             nmap <leader>t= :Tabularize /=<CR>
@@ -99,10 +137,6 @@
     
     " }
     
-    " xiyaowong/nvim-transparent {
-    
-    " }
-
     " NerdTree {
         if isdirectory(expand(plugin_dir . "/nerdtree"))
             let g:NERDShutUp=1
@@ -197,7 +231,8 @@
 
     " what to use for dark theme
     let g:dark_theme = 'default'               
-    let g:airline_dark_theme = "wombat"
+    let g:airline_dark_theme = "deus"               
+
     " what to use for light theme
     let g:light_theme = 'default'              
     let g:airline_light_theme = "silver"               
