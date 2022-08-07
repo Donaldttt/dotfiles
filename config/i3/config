@@ -4,15 +4,19 @@
 # Set mod key (Mod1=<Alt>, Mod4=<Super>)
 set $mod Mod4
 
+# restore wallpaper with feh
+exec --no-startup-id ~/.fehbg
+
 # set default desktop layout (default is tiling)
 # workspace_layout tabbed <stacking|tabbed>
 
 # Configura keyboard repeat speed
-exec --no-startup-id xset r rate 180 40
+exec --no-startup-id xset r rate 260 40
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
 default_border pixel 1
-default_floating_border normal
+#default_floating_border normal
+default_floating_border pixel 1
 
 # Hide borders
 hide_edge_borders none
@@ -29,7 +33,7 @@ font xft:URWGothic-Book 11
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec terminal
+bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -56,27 +60,33 @@ bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 # bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
 # bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
 
+# Touch pad controls
+#bindsym $mod+F11 exec xinput disable 14
+exec --no-startup-id xinput disable 14
+
+bindsym $mod+F10 exec xinput enable 14
+
 # Start Applications
-bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
+#bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+F2 exec google-chrome-stable
 #bindsym $mod+F3 exec pcmanfm
 #bindsym $mod+F3 exec ranger
 #bindsym $mod+Shift+F3 exec pcmanfm_pkexec
 #bindsym $mod+F5 exec terminal -e 'mocp'
-#bindsym $mod+t exec --no-startup-id pkill picom
-bindsym $mod+Ctrl+t exec --no-startup-id picom -b
+bindsym $mod+t exec --no-startup-id pkill picom
+bindsym $mod+Ctrl+t exec --no-startup-id picom -b --experimental-backends
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
 
 #bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
 #bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
-bindsym $mod+Shift+semicolon exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
+#bindsym $mod+Shift+semicolon exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
-# focus_follows_mouse no
+focus_follows_mouse no
 # run rofi programs
 #bindsym $mod+a exec "rofi -show window -no-default-config -config ~/.config/rofi/main.rasi"
 bindsym $mod+d exec "rofi -show drun -no-default-config -config ~/.config/rofi/main.rasi"
-#bindsym $mod+s exec "rofi -show drun -no-default-config -config ~/.config/rofi/full_screen.rasi"
+#bindsym $mod+a exec "rofi -show drun -no-default-config -config ~/.config/rofi/full_screen.rasi"
 #bindsym $mod+z exec "rofi -show  -modi ':rofi-bookmarks' -no-default-config -config ~/.config/rofi/main.rasi"
 #bindsym $mod+x exec "rofi-powermenu"
 #bindsym $mod+c exec "rofi-screenshot"
@@ -261,10 +271,15 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym h resize shrink width 5 px or 5 ppt
-        bindsym j resize grow height 5 px or 5 ppt
-        bindsym k resize shrink height 5 px or 5 ppt
-        bindsym l resize grow width 5 px or 5 ppt
+        bindsym h resize grow left 5 px or 5 ppt
+        bindsym j resize grow down 5 px or 5 ppt
+        bindsym k resize grow up  5 px or 5 ppt
+        bindsym l resize grow right 5 px or 5 ppt
+
+        bindsym Shift+l resize shrink left 5 px or 5 ppt
+        bindsym Shift+k resize shrink down 5 px or 5 ppt
+        bindsym Shift+j resize shrink up 5 px or 5 ppt
+        bindsym Shift+h resize shrink right 5 px or 5 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
@@ -282,7 +297,7 @@ bindsym $mod+9 exec --no-startup-id blurlock
 
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; picom -b
+exec --no-startup-id nitrogen --restore; sleep 1; picom -b --experimental-backends
 #exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
@@ -290,7 +305,7 @@ exec --no-startup-id pamac-tray
 exec --no-startup-id clipit
 # exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
-exec --no-startup-id start_conky_maia
+#exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
 exec --no-startup-id xautolock -time 10 -locker blurlock
 exec_always --no-startup-id ff-theme-util
@@ -330,43 +345,44 @@ set_from_resource $term_color15    color15
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 
 # use polybar
-
 exec_always --no-startup-id ~/.config/polybar/launch.sh
-bar {
-	i3bar_command i3bar
-	status_command i3status
-	position top
 
-# please set your primary output first. Example: 'xrandr --output eDP1 --primary'
-	tray_output primary
-	tray_output eDP1
-
-	bindsym button4 nop
-	bindsym button5 nop
-#   font xft:URWGothic-Book 11
-	strip_workspace_numbers yes
-
-    colors {
-        background #222D31
-        statusline #F9FAF9
-        separator  #454947
-
-#                      border  backgr. text
-        focused_workspace  #F9FAF9 #16a085 #292F34
-        active_workspace   #595B5B #353836 #FDF6E3
-        inactive_workspace #595B5B #222D31 #EEE8D5
-        binding_mode       #16a085 #2C2C2C #F9FAF9
-        urgent_workspace   #16a085 #FDF6E3 #E5201D
-    }
-}
+#bar {
+#	i3bar_command i3bar
+#	status_command i3status
+#	position top
+#
+## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
+#	tray_output primary
+#	tray_output eDP1
+#
+#	bindsym button4 nop
+#	bindsym button5 nop
+##   font xft:URWGothic-Book 11
+#	strip_workspace_numbers yes
+#
+#    colors {
+#        background #222D31
+#        statusline #F9FAF9
+#        separator  #454947
+#
+##                      border  backgr. text
+#        focused_workspace  #F9FAF9 #16a085 #292F34
+#        active_workspace   #595B5B #353836 #FDF6E3
+#        inactive_workspace #595B5B #222D31 #EEE8D5
+#        binding_mode       #16a085 #2C2C2C #F9FAF9
+#        urgent_workspace   #16a085 #FDF6E3 #E5201D
+#    }
+#}
 
 
 # hide/unhide status bar
-bindsym $mod+m bar mode toggle
+#bindsym $mod+m bar mode toggle
 
 # Theme colors
 # class                   border  backgr. text    indic.   child_border
-  client.focused          #556064 #556064 #80FFF9 #FDF6E3
+  #client.focused          #556064 #556064 #80FFF9 #FDF6E3
+  client.focused #70e85a #70e85a #ffffff #2e9ef4     #70e85a
   client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
   client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
   client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
@@ -399,6 +415,7 @@ set $mode_gaps Gaps: (o) outer, (i) inner
 set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
 set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
 bindsym $mod+Shift+g mode "$mode_gaps"
+
 
 mode "$mode_gaps" {
         bindsym o      mode "$mode_gaps_outer"
