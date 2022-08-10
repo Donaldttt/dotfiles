@@ -62,7 +62,6 @@
         " The bottom buffer display
         Plug 'bling/vim-bufferline'
         Plug 'easymotion/vim-easymotion'
-        Plug 'nathanaelkane/vim-indent-guides'
         Plug 'vim-scripts/restore_view.vim'
 
         if executable('fzf')
@@ -75,16 +74,17 @@
         " For other versions, just loading the plugin may
         " cause error
         if g:vim_type == 'nvim'
-        if g:vim_version >= 0.5
-            Plug 'xiyaowong/nvim-transparent'
-            Plug 'lukas-reineke/indent-blankline.nvim'
+            if g:vim_version >= 0.5
+                Plug 'xiyaowong/nvim-transparent'
+                Plug 'lukas-reineke/indent-blankline.nvim'
+                " nvim theme
+                Plug 'EdenEast/nightfox.nvim'
+                Plug 'projekt0n/github-nvim-theme'
+            endif
+            if g:vim_version >= 0.7
+                Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+            endif
         endif
-        if g:vim_version >= 0.7
-            Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-        endif
-        endif
-
-        Plug 'EdenEast/nightfox.nvim'
 
     call plug#end()
 " }
@@ -100,9 +100,10 @@ if g:vim_type == 'nvim'
     
     " }
 
-    " lukas-reineke/indent-blankline.nvim {
+    " lukas-reineke/indenlukas-reineke/indent-blankline.nvimt-blankline.nvim {
         let g:indent_blankline_use_treesitter = v:true
         let g:indent_blankline_show_current_context = v:true
+        let g:indent_blankline_show_current_context_start = v:true
     " }
     endif
 
@@ -145,15 +146,6 @@ endif
             let NERDTreeMouseMode        = 2
             let NERDTreeShowHidden       = 1
             let NERDTreeKeepTreeInNewTab = 1
-        endif
-    " }
-    " indent_guides {
-        if isdirectory(expand(plugin_dir . "/vim-indent-guides/"))
-            let g:indent_guides_start_level           = 2
-            let g:indent_guides_guide_size            = 1
-            let g:indent_guides_enable_on_vim_startup = 0
-            map <leader>i :IndentGuidesToggle<CR>
-            
         endif
     " }
      
@@ -378,10 +370,10 @@ endif
     
         " has('nvim') check if it's running on nvim rather than 
         " having neovim on your machine 
-        if isdirectory(expand(plugin_dir . "/nightfox.nvim")) && has('nvim') && g:vim_version >= 0.5
-            "let g:dark_theme = 'nordfox'
+        if isdirectory(expand(plugin_dir . "/nightfox.nvim")) && isdirectory(expand(plugin_dir . "/github-nvim-theme")) && has('nvim') && g:vim_version >= 0.5
             let g:light_theme = 'dawnfox'
-            let g:dark_theme = 'nightfox'
+            "let g:dark_theme = 'nightfox'
+            let g:dark_theme = 'github_dark'
             let g:airline_dark_theme = "hybrid"               
     " }    
      
