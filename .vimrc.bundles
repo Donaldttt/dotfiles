@@ -80,6 +80,9 @@
                 " nvim theme
                 Plug 'EdenEast/nightfox.nvim'
                 Plug 'projekt0n/github-nvim-theme'
+
+                " partial code execution
+                Plug 'michaelb/sniprun', {'do': 'bash install.sh'}
             endif
             if g:vim_version >= 0.7
                 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -100,10 +103,18 @@ if g:vim_type == 'nvim'
     
     " }
 
-    " lukas-reineke/indenlukas-reineke/indent-blankline.nvimt-blankline.nvim {
+    " lukas-reineke/indent-blankline.nvimt-blankline.nvim {
         let g:indent_blankline_use_treesitter = v:true
         let g:indent_blankline_show_current_context = v:true
         "let g:indent_blankline_show_current_context_start = v:true
+    " }
+    "
+    " michaelb/sniprun {
+
+        nmap <leader><leader>r <Plug>SnipRun
+        vmap <leader><leader>r <Plug>SnipRun
+        nmap <leader><leader>s <Plug>SnipReset
+        nmap <leader><leader>c <Plug>SnipClose
     " }
     endif
 
