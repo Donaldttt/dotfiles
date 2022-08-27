@@ -19,4 +19,5 @@ if [[ $(type -t __git_ps1) != function ]]; then
         fi
     }
 fi
-export PS1=' \[\e[0;32m\]\w\[\e[01;31m\]$(__git_ps1 "(%s)")\[\e[00m\]$ '
+export PS1=' \[\e[0;32m\]\w\[\e[01;31m\]$(__git_ps1 "(%s)")\[\e[00m\] '
+# »
