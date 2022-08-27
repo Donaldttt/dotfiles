@@ -252,12 +252,14 @@ endif
 
     function! SetDarkTheme()
         set background=dark
+        hi clear
         execute("colorscheme " . g:dark_theme)
         let g:theme_color = 'dark'
     endfunction
 
     function! SetLightTheme()
         set background=light
+        hi clear
         execute("colorscheme " . g:light_theme)
         let g:theme_color = 'light'
     endfunction
@@ -431,12 +433,10 @@ endif
     function! ToggleBG()
         " Inversion
         if g:theme_color == "dark"
-
             call SetLightTheme()
             call SetAirlineTheme(g:airline_light_theme)
             call CreateSignalFile('.light_theme.signal') 
         else
-
             call SetDarkTheme()
             call SetAirlineTheme(g:airline_dark_theme)
             " for saving theme state
