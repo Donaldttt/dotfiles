@@ -131,17 +131,24 @@ if g:vim_type == 'nvim'
     endif
 endif
 " }
+
+    " airblade/vim-rooter {
+    if isdirectory(expand(plugin_dir . "/vim-rooter"))
+        let g:rooter_patterns = ['.vscode', '.git']
+    endif
+    " }
+    
     " godlygeek/tabular {
-        if isdirectory(expand(plugin_dir . "/tabular"))
-            nmap <leader>t= :Tabularize /=<CR>
-            vmap <leader>t= :Tabularize /=<CR>
+    if isdirectory(expand(plugin_dir . "/tabular"))
+        nmap <leader>t= :Tabularize /=<CR>
+        vmap <leader>t= :Tabularize /=<CR>
 
-            nmap <leader>t\| :Tab /\|<CR>
-            vmap <leader>t\| :Tab /\|<CR>
+        nmap <leader>t\| :Tab /\|<CR>
+        vmap <leader>t\| :Tab /\|<CR>
 
-            nmap <leader>t: :Tab /:\zs<CR>
-            vmap <leader>t: :Tab /:\zs<CR>
-        endif
+        nmap <leader>t: :Tab /:\zs<CR>
+        vmap <leader>t: :Tab /:\zs<CR>
+    endif
     
     " }
     
