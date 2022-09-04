@@ -117,6 +117,12 @@ sync_repo() {
 
 setup_vimplug() {
 
+    # if vimplug is already installed
+    # comment out since this can update vimplug
+    #if [ -e "~/.vim/autoload/plug.vim" ]; then
+    #    return 0
+    #fi
+
     mkdir -p "$VIM_RTPATH/autoload"
     # setup for vim 
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
@@ -128,11 +134,10 @@ setup_vimplug() {
     vim \
         "+set nomore" \
         "+PlugInstall!" \
-        "+PlugClean" \
         "+qall"
 
     export SHELL="$system_shell"
-    success "Plugins' updated/installed using vim-plug"
+    success "Plugins' updated/installed using vim-plug \n(Be careful some plugins may not be installed since they require to use neovim or higher vim version. To intall them, run :PlugInstall inside correct version)"
 }
 
 set_up_nvim() {
