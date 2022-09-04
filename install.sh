@@ -6,7 +6,7 @@ app_name='dotfiles'
 
 [ -z "$APP_PATH" ] && APP_PATH="$HOME/.$app_name"
 [ -z "$REPO_URI" ] && REPO_URI="https://github.com/Donaldttt/$app_name"
-[ -z "$REPO_BRANCH" ] && REPO_BRANCH='main'
+[ -z "$REPO_BRANCH" ] && REPO_BRANCH='dev'
 [ -z "$VIM_RTPATH" ] && VIM_RTPATH="$HOME/.vim"
 
 
@@ -187,6 +187,19 @@ set_up_vim() {
     setup_vimplug
 }
 
+set_up_zoxide() {
+    # https://github.com/ajeetdsouza/zoxide
+    echo "Install zoxide (smart cd like autojump)?('y' install; 'q' quit the scrip)"
+    read -r respond
+    if [ "$respond" = "y" ] || [ "$respond" = "yes" ]; then
+        program_must_exist "curl"
+        # This will install zoxide into ~/.local
+        curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+    elif [ "$respond" = "q" ]; then
+        exit 0
+    fi
+}
+
 set_up_bash_tool(){
     source_cmd="source $APP_PATH/bash_tools.sh"
     source_cmd2="source ~/.$app_name/bash_tools.sh"
@@ -237,5 +250,6 @@ env_set "$HOME"
 set_up_vim
 set_up_tmux
 set_up_bash_tool
+set_up_zoxide
 
 msg             "\nThanks for installing $app_name."
