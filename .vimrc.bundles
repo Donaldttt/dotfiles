@@ -65,7 +65,9 @@
         Plug 'vim-scripts/restore_view.vim'
 
         if executable('fzf')
-            Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+            " fzf#install() makes sure that you have the latest binary, comment out because I don't want it to install binary for me
+            Plug 'junegunn/fzf' ", { 'do': { -> fzf#install() } }
+            Plug 'junegunn/fzf.vim'
         endif
 
         Plug 'NLKNguyen/papercolor-theme'
@@ -131,7 +133,7 @@ if g:vim_type == 'nvim'
     endif
 endif
 " }
-
+    
     " airblade/vim-rooter {
     if isdirectory(expand(plugin_dir . "/vim-rooter"))
         let g:rooter_patterns = ['.vscode', '.git']
@@ -190,12 +192,29 @@ endif
     " }
     "endif
 
-    " junegunnjunegunn/fzf {
+    " junegunn/fzf {
         " [Buffers] Jump to the existing window if possible
         let g:fzf_buffers_jump = 1
-        "let $FZF_DEFAULT_COMMAND = 'find -L'
-        let $FZF_DEFAULT_COMMAND='find . \( -name node_modules -o -name .git \) -prune -o -print'
-        noremap <leader>f :FZF<CR>
+
+        "let $FZF_DEFAULT_COMMAND='find . \( -name node_modules -o -name .git \) -prune -o -print'
+
+        "   - Preview window on the right with 50% width
+        "   - CTRL-/ will toggle preview window.
+        let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+
+        noremap <leader>f :Files<CR>
+
+
+        command! -bang -nargs=* Rrg
+          \ call fzf#vim#grep(
+          \   'grep -R --line-number --exclude-dir=".git;.svn" --color=always -- '.shellescape(<q-args>), 1,
+          \   fzf#vim#with_preview(), <bang>0)
+        " check if ripgrep is installed
+        if executable('rg')
+            noremap <leader>rg :Rg<CR>
+        else
+            noremap <leader>rg :Rrg<CR>
+        endif
     " }
     
     " neoclide/coc.nvim {
