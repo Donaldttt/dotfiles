@@ -69,6 +69,7 @@
         endif
 
         Plug 'NLKNguyen/papercolor-theme'
+        Plug 'airblade/vim-rooter'
 
         " only work with nvim > 0.5
         " For other versions, just loading the plugin may
@@ -82,7 +83,7 @@
                 Plug 'projekt0n/github-nvim-theme'
 
                 " partial code execution
-                Plug 'michaelb/sniprun', {'do': 'bash install.sh'}
+                " Plug 'michaelb/sniprun', {'do': 'bash install.sh'}
             endif
             if g:vim_version >= 0.7
                 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -103,18 +104,19 @@ if g:vim_type == 'nvim'
     
     " }
 
-    " lukas-reineke/indent-blankline.nvimt-blankline.nvim {
+    " lukas-reineke/indent-blankline.nvim {
         let g:indent_blankline_use_treesitter = v:true
         let g:indent_blankline_show_current_context = v:true
         "let g:indent_blankline_show_current_context_start = v:true
     " }
     "
     " michaelb/sniprun {
-
-        nmap <leader><leader>r <Plug>SnipRun
-        vmap <leader><leader>r <Plug>SnipRun
-        nmap <leader><leader>s <Plug>SnipReset
-        nmap <leader><leader>c <Plug>SnipClose
+        if isdirectory(expand(plugin_dir . "/sniprun"))
+            nmap <leader><leader>r <Plug>SnipRun
+            vmap <leader><leader>r <Plug>SnipRun
+            nmap <leader><leader>s <Plug>SnipReset
+            nmap <leader><leader>c <Plug>SnipClose
+        endif
     " }
     endif
 
@@ -129,17 +131,24 @@ if g:vim_type == 'nvim'
     endif
 endif
 " }
+
+    " airblade/vim-rooter {
+    if isdirectory(expand(plugin_dir . "/vim-rooter"))
+        let g:rooter_patterns = ['.vscode', '.git']
+    endif
+    " }
+    
     " godlygeek/tabular {
-        if isdirectory(expand(plugin_dir . "/tabular"))
-            nmap <leader>t= :Tabularize /=<CR>
-            vmap <leader>t= :Tabularize /=<CR>
+    if isdirectory(expand(plugin_dir . "/tabular"))
+        nmap <leader>t= :Tabularize /=<CR>
+        vmap <leader>t= :Tabularize /=<CR>
 
-            nmap <leader>t\| :Tab /\|<CR>
-            vmap <leader>t\| :Tab /\|<CR>
+        nmap <leader>t\| :Tab /\|<CR>
+        vmap <leader>t\| :Tab /\|<CR>
 
-            nmap <leader>t: :Tab /:\zs<CR>
-            vmap <leader>t: :Tab /:\zs<CR>
-        endif
+        nmap <leader>t: :Tab /:\zs<CR>
+        vmap <leader>t: :Tab /:\zs<CR>
+    endif
     
     " }
     
