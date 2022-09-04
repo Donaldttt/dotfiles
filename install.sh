@@ -194,20 +194,61 @@ set_up_vim() {
 
 set_up_zoxide() {
     # https://github.com/ajeetdsouza/zoxide
+
+    if program_exists "zoxide"; then
+        success "zoxide is already installed"
+        return 0
+    fi
+
     echo "Install zoxide (smart cd like autojump)?('y' install; 'q' quit the scrip)"
     read -r respond
     if [ "$respond" = "y" ] || [ "$respond" = "yes" ]; then
         program_must_exist "curl"
         # This will install zoxide into ~/.local
         curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+
+        local source_cmd_zsh='eval "$(zoxide init zsh)"'
+        local source_cmd_bash='eval "$(zoxide init bash)"'
+        if program_exists "zsh"; then
+            # if not already contain source command
+            file_contains "$source_cmd_zsh" ~/.zshrc 
+            status_code=$?
+            if [ "$status_code" != '0' ]; then
+                echo "Install zoxide source command ($source_cmd_zsh) for zsh shell?('y' install; 'q' quit the scrip)"
+                read -r respond
+                if [ "$respond" = "y" ] || [ "$respond" = "yes" ]; then
+                    echo "$source_cmd_zsh" >> $HOME/.zshrc
+                elif [ "$respond" = "q" ]; then
+                    exit 0
+                fi
+                success "add ($source_cmd_zsh) to zsh"
+            fi
+        fi
+
+        if program_exists "bash"; then
+            # if not already contain source command
+            file_contains "$source_cmd_bash" ~/.bashrc 
+            status_code=$?
+            if [ "$status_code" != '0' ]; then
+                echo "Install zoxide source command ($source_cmd_bash) for bash shell?('y' install; 'q' quit the scrip)"
+                read -r respond
+                if [ "$respond" = "y" ] || [ "$respond" = "yes" ]; then
+                    echo "$source_cmd_bash" >> $HOME/.bashrc
+                elif [ "$respond" = "q" ]; then
+                    exit 0
+                fi
+                success "add ($source_cmd_bash) to bash"
+            fi
+        fi
+
     elif [ "$respond" = "q" ]; then
         exit 0
     fi
 }
 
 set_up_bash_tool(){
-    source_cmd="source $APP_PATH/bash_tools.sh"
-    source_cmd2="source ~/.$app_name/bash_tools.sh"
+    local source_cmd="source $APP_PATH/bash_tools.sh"
+    local source_cmd2="source ~/.$app_name/bash_tools.sh"
     if program_exists "zsh"; then
         # if not already contain source command
         file_contains "$source_cmd" ~/.zshrc 
@@ -224,8 +265,8 @@ set_up_bash_tool(){
             elif [ "$respond" = "q" ]; then
                 exit 0
             fi
+            success "Terminal configuration is sourced in zsh"
         fi
-        success "Terminal configuration is sourced in zsh"
     fi
 
     if program_exists "bash"; then
@@ -244,8 +285,8 @@ set_up_bash_tool(){
             elif [ "$respond" = "q" ]; then
                 exit 0
             fi
+            success "Terminal configuration is sourced in bash"
         fi
-        success "Terminal configuration is sourced in bash"
     fi
 }
 
