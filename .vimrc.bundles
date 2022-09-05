@@ -72,6 +72,7 @@
 
         Plug 'NLKNguyen/papercolor-theme'
         Plug 'airblade/vim-rooter'
+        Plug 'mbbill/undotree'
 
         " only work with nvim > 0.5
         " For other versions, just loading the plugin may
@@ -134,6 +135,10 @@ if g:vim_type == 'nvim'
 endif
 " }
     
+    " mbbill/undotree {
+        nnoremap <leader>ut :UndotreeToggle<CR>
+    " }
+
     " airblade/vim-rooter {
     if isdirectory(expand(plugin_dir . "/vim-rooter"))
         let g:rooter_patterns = ['.vscode', '.git']
