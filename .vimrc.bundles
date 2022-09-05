@@ -204,17 +204,14 @@ endif
 
         noremap <leader>f :Files<CR>
 
-
-        command! -bang -nargs=* Rrg
-          \ call fzf#vim#grep(
-          \   'grep -R --line-number --exclude-dir=".git;.svn" --color=always -- '.shellescape(<q-args>), 1,
-          \   fzf#vim#with_preview(), <bang>0)
         " check if ripgrep is installed
-        if executable('rg')
-            noremap <leader>rg :Rg<CR>
-        else
-            noremap <leader>rg :Rrg<CR>
+        if ! executable('rg')
+            command! -bang -nargs=* Rg
+              \ call fzf#vim#grep(
+              \   'grep -R --line-number --exclude-dir=".git;.svn" --color=always -- '.shellescape(<q-args>), 1,
+              \   fzf#vim#with_preview(), <bang>0)
         endif
+        noremap <leader>r :Rg<CR>
     " }
     
     " neoclide/coc.nvim {
