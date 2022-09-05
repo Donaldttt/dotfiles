@@ -157,7 +157,11 @@ endif
     " NerdTree {
         if isdirectory(expand(plugin_dir . "/nerdtree"))
             let g:NERDShutUp=1
-            nnoremap <C-e> :NERDTreeToggle<CR>
+
+            " work around for nerdtree bug: https://github.com/preservim/nerdtree/issues/1321
+            let g:NERDTreeMinimalMenu=1
+
+            "nnoremap <C-e> :NERDTreeToggle<CR>
             nnoremap <leader>e :NERDTreeToggle<CR>
             "nmap <leader>e :NERDTreeFind<CR>
 
