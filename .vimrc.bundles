@@ -202,7 +202,6 @@ endif
         "   - CTRL-/ will toggle preview window.
         let g:fzf_preview_window = ['right:50%', 'ctrl-/']
 
-        noremap <leader>f :Files<CR>
 
         " check if ripgrep is installed
         if ! executable('rg')
@@ -211,7 +210,8 @@ endif
               \   'grep -R --line-number --exclude-dir=".git;.svn" --color=always -- '.shellescape(<q-args>), 1,
               \   fzf#vim#with_preview(), <bang>0)
         endif
-        noremap <leader>r :Rg<CR>
+        noremap <leader><leader>r :Rg<CR>
+        noremap <leader><leader>f :Files<CR>
     " }
     
     " neoclide/coc.nvim {
