@@ -133,10 +133,8 @@ endif
         " scrolling with fixed current buffer position
         "let g:bufferline_rotate = 1
 
-        let g:bufferline_active_buffer_left = '['
-        let g:bufferline_active_buffer_right = ']'
-        let g:bufferline_inactive_highlight = 'VimLineComment'
-        let g:bufferline_active_highlight = 'airline_x_bold'
+        let g:bufferline_active_buffer_left = ''
+        let g:bufferline_active_buffer_right = ''
     
     " }
 
@@ -200,7 +198,10 @@ endif
         "let g:airline#extensions#tabline#left_sep = ''
         "let g:airline#extensions#tabline#left_alt_sep = '|'
 
-        let g:airline#extensions#bufferline#overwrite_variables = 0
+        "let g:airline_left_sep='>'
+        "let g:airline_right_sep='<'
+        "let g:airline_skip_empty_sections = 1
+        "let g:airline#extensions#bufferline#overwrite_variables = 0
         if isdirectory(expand(plugin_dir . "/vim-airline-themes/"))
             "let g:airline_theme = 'solarized'
         endif
@@ -262,6 +263,12 @@ endif
     endfunc
 
     nmap <Leader>db :call SynStack()<CR>
+
+    " search and filter highlight group
+    " :call Sh('airline')
+    function! Sh(pattern)
+        execute("filter /" . a:pattern . "/ highlight") 
+    endfunc
 
     " dark or light
     if filereadable(expand(g:vim_dir . '.light_theme.signal'))
@@ -422,27 +429,22 @@ endif
         call TransparentBackgroundFix()
     endfunction
 
-    " {
-    " nvim only theme
-    
-        " has('nvim') check if it's running on nvim rather than 
-        " having neovim on your machine 
+
+    " vim theme 
+        if isdirectory(expand(plugin_dir . "/papercolor-theme")) 
+            " improve coc color in this theme
+            let g:light_theme = 'PaperColor'              
+            let g:dark_theme = 'PaperColor'
+        endif
+
+        " nvim only theme
         if isdirectory(expand(plugin_dir . "/nightfox.nvim")) && isdirectory(expand(plugin_dir . "/github-nvim-theme")) && has('nvim') && g:vim_version >= 0.5
             let g:light_theme = 'dawnfox'
             "let g:dark_theme = 'nightfox'
             let g:dark_theme = 'github_dark'
             let g:airline_dark_theme = "hybrid"               
-    " }    
-     
-    " {
-    " vim theme 
-        elseif isdirectory(expand(plugin_dir . "/papercolor-theme")) 
-            " improve coc color in this theme
-            let g:light_theme = 'PaperColor'              
-            let g:dark_theme = 'PaperColor'
         endif
    
-    " }    
    
     if g:theme_color == 'dark'
         let g:airline_theme=g:airline_dark_theme
