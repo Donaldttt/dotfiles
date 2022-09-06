@@ -131,10 +131,11 @@ endif
         let g:bufferline_modified = '+'
 
         " scrolling with fixed current buffer position
-        "let g:bufferline_rotate = 1
+        let g:bufferline_rotate = 1
 
         let g:bufferline_active_buffer_left = ''
         let g:bufferline_active_buffer_right = ''
+        let g:bufferline_fixed_index = -1 
     
     " }
 
