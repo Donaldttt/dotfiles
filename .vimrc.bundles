@@ -112,15 +112,7 @@ if g:vim_type == 'nvim'
         let g:indent_blankline_show_current_context = v:true
         "let g:indent_blankline_show_current_context_start = v:true
     " }
-    "
-    " michaelb/sniprun {
-        if isdirectory(expand(plugin_dir . "/sniprun"))
-            nmap <leader><leader>r <Plug>SnipRun
-            vmap <leader><leader>r <Plug>SnipRun
-            nmap <leader><leader>s <Plug>SnipReset
-            nmap <leader><leader>c <Plug>SnipClose
-        endif
-    " }
+    
     endif
 
     if g:vim_version >= 0.7
@@ -134,7 +126,20 @@ if g:vim_type == 'nvim'
     endif
 endif
 " }
+    " bling/vim-bufferline {
+        let g:bufferline_echo = 0
+        let g:bufferline_modified = '+'
+
+        " scrolling with fixed current buffer position
+        "let g:bufferline_rotate = 1
+
+        let g:bufferline_active_buffer_left = '['
+        let g:bufferline_active_buffer_right = ']'
+        let g:bufferline_inactive_highlight = 'VimLineComment'
+        let g:bufferline_active_highlight = 'airline_x_bold'
     
+    " }
+
     " mbbill/undotree {
         nnoremap <leader>ut :UndotreeToggle<CR>
     " }
@@ -195,6 +200,7 @@ endif
         "let g:airline#extensions#tabline#left_sep = ''
         "let g:airline#extensions#tabline#left_alt_sep = '|'
 
+        let g:airline#extensions#bufferline#overwrite_variables = 0
         if isdirectory(expand(plugin_dir . "/vim-airline-themes/"))
             "let g:airline_theme = 'solarized'
         endif
