@@ -344,7 +344,8 @@ endif
     " Fix colorscheme not working correctly under transparent background
     " There is no plugin for this for nvim < 0.5 or vim without lua support
     function! TransparentBackgroundFix()
-        if !has('nvim') || g:vim_version < 0.5
+        "if !has('nvim') || g:vim_version < 0.5
+        if v:true
             highlight SignColumn ctermbg=none
             highlight CursorLineNr ctermbg=none
             highlight CocWarningHighlight ctermbg=none
@@ -356,11 +357,11 @@ endif
             highlight CocInfoSign    ctermbg=none
             highlight CocHintSign    ctermbg=none
             if g:theme_color == 'dark'
-                highlight CocFloating ctermbg=237
-                highlight CocErrorFloat ctermbg=237
-                highlight CocWarningFloat ctermbg=237
-                highlight CocInfoFloat ctermbg=237
-                highlight CocHintFloat ctermbg=237
+                highlight! link CocFloating PmenuThumb
+                highlight! link CocErrorFloat PmenuThumb
+                highlight! link CocWarningFloat PmenuThumb
+                highlight! link CocInfoFloat PmenuThumb
+                highlight! link CocHintFloat PmenuThumb
             endif
         endif
     endfunction
