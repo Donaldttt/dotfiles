@@ -68,6 +68,7 @@
             " fzf#install() makes sure that you have the latest binary, comment out because I don't want it to install binary for me
             Plug 'junegunn/fzf' ", { 'do': { -> fzf#install() } }
             Plug 'junegunn/fzf.vim'
+            Plug 'antoinemadec/coc-fzf'
         endif
 
         Plug 'NLKNguyen/papercolor-theme'
@@ -126,6 +127,14 @@ if g:vim_type == 'nvim'
     endif
 endif
 " }
+
+    " antoinemadec/coc-fzf {
+    if isdirectory(expand(plugin_dir . "/coc-fzf"))
+        nnoremap <silent> <space><space> :<C-u>CocFzfList<CR>
+        nnoremap <leader>o       :<C-u>CocFzfList outline<CR>
+    endif
+    " }
+    
     " bling/vim-bufferline {
         let g:bufferline_echo = 0
         let g:bufferline_modified = '+'
