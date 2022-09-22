@@ -74,6 +74,7 @@
         Plug 'NLKNguyen/papercolor-theme'
         Plug 'airblade/vim-rooter'
         Plug 'mbbill/undotree'
+        Plug 'tpope/vim-commentary'
 
         " only work with nvim > 0.5
         " For other versions, just loading the plugin may
