@@ -368,7 +368,7 @@ endif
             highlight CocInfoSign    ctermbg=none
             highlight CocHintSign    ctermbg=none
             if g:theme_color == 'dark'
-                highlight! link TempColor Pmenu
+                highlight! link TempColor Visual
                 highlight! link CocFloating     TempColor
                 highlight! link CocErrorFloat   TempColor
                 highlight! link CocWarningFloat TempColor
