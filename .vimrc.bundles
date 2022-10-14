@@ -9,6 +9,7 @@
 " Plugin_Preferences
 " Theme_Appearance
 " Key_Mappings
+" Useful_Info
 
 " Environment {
     set nocompatible        " Must be first line
@@ -29,7 +30,6 @@
         endif
 
         Plug 'rust-lang/rust.vim'
-        Plug 'leafgarland/typescript-vim'
 
         " {
             Plug 'alvan/vim-closetag'
@@ -75,6 +75,9 @@
         Plug 'airblade/vim-rooter'
         Plug 'mbbill/undotree'
         Plug 'tpope/vim-commentary'
+
+        " put text in neibouring tmux pane into auto complete
+        Plug 'wellle/tmux-complete.vim'
 
         " only work with nvim > 0.5
         " For other versions, just loading the plugin may
@@ -129,6 +132,25 @@ if g:vim_type == 'nvim'
 endif
 " }
 
+    " easymotion/vim-easymotion {
+    
+        " <Leader>f{char} to move to {char}
+        map  <Leader>f <Plug>(easymotion-bd-f)
+        nmap <Leader>f <Plug>(easymotion-overwin-f)
+
+        " s{char}{char} to move to {char}{char}
+        nmap s <Plug>(easymotion-overwin-f2)
+
+        " Move to line
+        map <Leader>L <Plug>(easymotion-bd-jk)
+        nmap <Leader>L <Plug>(easymotion-overwin-line)
+
+        " Move to word
+        map  <Leader>w <Plug>(easymotion-bd-w)
+        nmap <Leader>w <Plug>(easymotion-overwin-w)
+
+    " }
+
     " antoinemadec/coc-fzf {
     if isdirectory(expand(plugin_dir . "/coc-fzf"))
         nnoremap <silent> <space><space> :<C-u>CocFzfList<CR>
@@ -155,7 +177,8 @@ endif
 
     " airblade/vim-rooter {
     if isdirectory(expand(plugin_dir . "/vim-rooter"))
-        let g:rooter_patterns = ['.vscode', '.git']
+        let g:rooter_patterns = ['.vscode', '.git', '*.sln']
+        let g:rooter_change_directory_for_non_project_files = 'current'
     endif
     " }
     
@@ -560,4 +583,9 @@ endif
     " split window comform with other window management shortcuts
     nnoremap <C-w>% :vsplit<CR>
     nnoremap <C-w>" :split<CR>
+" }
+"
+" Useful_Info{
+"   show mapping info
+"   :verbose map ,cf
 " }
