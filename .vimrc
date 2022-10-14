@@ -199,7 +199,7 @@
 
     " Map <Leader>ff to display all lines with keyword under cursor
     " and ask which one to jump to
-    nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+    nmap <Leader>j [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
     " Easier horizontal scrolling
     map zl zL
@@ -215,12 +215,6 @@
         au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
         nmap <Leader>ac <Plug>ToggleAutoCloseMappings
     " }
-
-    " JSON {
-        nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
-        let g:vim_json_syntax_conceal = 0
-    " }
-
 
 " }
 
