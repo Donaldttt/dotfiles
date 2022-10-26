@@ -9,6 +9,7 @@
 " Plugin_Preferences
 " Theme_Appearance
 " Key_Mappings
+" Useful_Info
 
 " Environment {
     set nocompatible        " Must be first line
@@ -29,7 +30,6 @@
         endif
 
         Plug 'rust-lang/rust.vim'
-        Plug 'leafgarland/typescript-vim'
 
         " {
             Plug 'alvan/vim-closetag'
@@ -38,7 +38,6 @@
         
         Plug 'scrooloose/nerdtree'
 
-        Plug 'godlygeek/tabular'
         " for markdown{
             Plug 'preservim/vim-markdown'
         "}
@@ -75,6 +74,11 @@
         Plug 'airblade/vim-rooter'
         Plug 'mbbill/undotree'
         Plug 'tpope/vim-commentary'
+
+        " put text in neibouring tmux pane into auto complete
+        Plug 'wellle/tmux-complete.vim'
+
+        Plug 'ludovicchabant/vim-gutentags'
 
         " only work with nvim > 0.5
         " For other versions, just loading the plugin may
@@ -129,6 +133,30 @@ if g:vim_type == 'nvim'
 endif
 " }
 
+    " ludovicchabant/vim-gutentags {
+        set statusline+=%{gutentags#statusline()}
+        let g:gutentags_cache_dir=g:vim_dir . '/.vimtags/'
+    "}
+
+    " easymotion/vim-easymotion {
+    
+        " <Leader>f{char} to move to {char}
+        map  <Leader>f <Plug>(easymotion-bd-f)
+        nmap <Leader>f <Plug>(easymotion-overwin-f)
+
+        " s{char}{char} to move to {char}{char}
+        nmap s <Plug>(easymotion-overwin-f2)
+
+        " Move to line
+        map <Leader>L <Plug>(easymotion-bd-jk)
+        nmap <Leader>L <Plug>(easymotion-overwin-line)
+
+        " Move to word
+        map  <Leader>w <Plug>(easymotion-bd-w)
+        nmap <Leader>w <Plug>(easymotion-overwin-w)
+
+    " }
+
     " antoinemadec/coc-fzf {
     if isdirectory(expand(plugin_dir . "/coc-fzf"))
         nnoremap <silent> <space><space> :<C-u>CocFzfList<CR>
@@ -155,22 +183,9 @@ endif
 
     " airblade/vim-rooter {
     if isdirectory(expand(plugin_dir . "/vim-rooter"))
-        let g:rooter_patterns = ['.vscode', '.git']
+        let g:rooter_patterns = ['.vscode', '.git', '*.sln']
+        let g:rooter_change_directory_for_non_project_files = 'current'
     endif
-    " }
-    
-    " godlygeek/tabular {
-    if isdirectory(expand(plugin_dir . "/tabular"))
-        nmap <leader>t= :Tabularize /=<CR>
-        vmap <leader>t= :Tabularize /=<CR>
-
-        nmap <leader>t\| :Tab /\|<CR>
-        vmap <leader>t\| :Tab /\|<CR>
-
-        nmap <leader>t: :Tab /:\zs<CR>
-        vmap <leader>t: :Tab /:\zs<CR>
-    endif
-    
     " }
     
     " NerdTree {
@@ -368,11 +383,12 @@ endif
             highlight CocInfoSign    ctermbg=none
             highlight CocHintSign    ctermbg=none
             if g:theme_color == 'dark'
-                highlight! link CocFloating PmenuThumb
-                highlight! link CocErrorFloat PmenuThumb
-                highlight! link CocWarningFloat PmenuThumb
-                highlight! link CocInfoFloat PmenuThumb
-                highlight! link CocHintFloat PmenuThumb
+                highlight! link TempColor Visual
+                highlight! link CocFloating     TempColor
+                highlight! link CocErrorFloat   TempColor
+                highlight! link CocWarningFloat TempColor
+                highlight! link CocInfoFloat    TempColor
+                highlight! link CocHintFloat    TempColor
             endif
         endif
     endfunction
@@ -559,4 +575,9 @@ endif
     " split window comform with other window management shortcuts
     nnoremap <C-w>% :vsplit<CR>
     nnoremap <C-w>" :split<CR>
+" }
+"
+" Useful_Info{
+"   show mapping info
+"   :verbose map ,cf
 " }
