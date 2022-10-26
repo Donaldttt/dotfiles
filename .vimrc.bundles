@@ -38,7 +38,6 @@
         
         Plug 'scrooloose/nerdtree'
 
-        Plug 'godlygeek/tabular'
         " for markdown{
             Plug 'preservim/vim-markdown'
         "}
@@ -78,6 +77,8 @@
 
         " put text in neibouring tmux pane into auto complete
         Plug 'wellle/tmux-complete.vim'
+
+        Plug 'ludovicchabant/vim-gutentags'
 
         " only work with nvim > 0.5
         " For other versions, just loading the plugin may
@@ -132,6 +133,11 @@ if g:vim_type == 'nvim'
 endif
 " }
 
+    " ludovicchabant/vim-gutentags {
+        set statusline+=%{gutentags#statusline()}
+        let g:gutentags_cache_dir=g:vim_dir . '/.vimtags/'
+    "}
+
     " easymotion/vim-easymotion {
     
         " <Leader>f{char} to move to {char}
@@ -180,20 +186,6 @@ endif
         let g:rooter_patterns = ['.vscode', '.git', '*.sln']
         let g:rooter_change_directory_for_non_project_files = 'current'
     endif
-    " }
-    
-    " godlygeek/tabular {
-    if isdirectory(expand(plugin_dir . "/tabular"))
-        nmap <leader>t= :Tabularize /=<CR>
-        vmap <leader>t= :Tabularize /=<CR>
-
-        nmap <leader>t\| :Tab /\|<CR>
-        vmap <leader>t\| :Tab /\|<CR>
-
-        nmap <leader>t: :Tab /:\zs<CR>
-        vmap <leader>t: :Tab /:\zs<CR>
-    endif
-    
     " }
     
     " NerdTree {
