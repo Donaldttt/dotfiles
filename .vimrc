@@ -12,6 +12,9 @@
     let g:vim_version = str2float(g:vim_version)
     let g:dotfile_path = '~/.dotfiles/'
 
+    set runtimepath^=~/.vim runtimepath+=~/.vim/after
+    let &packpath=&runtimepath
+
     " The default leader is '\', but many people prefer ',' as it's in a standard
     let mapleader = ','
     let maplocalleader = '_'
