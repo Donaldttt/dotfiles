@@ -2,13 +2,13 @@
 """
 import subprocess
 import os
-import urllib
+import urllib.request
 
 from os.path import expanduser, join
 from shutil import which
 
 home = expanduser("~") 
-app_name = 'dotfile'
+app_name = 'dotfiles'
 APP_PATH = join(home, '.' + app_name)
 REPO_URL = 'https://github.com/Donaldttt/' + app_name
 REPO_BRANCH = 'dev'
@@ -48,7 +48,11 @@ def sync_repo(repo_path, repo_url, repo_branch, repo_name):
         execute(cmd, cwd=APP_PATH)
 
 def setup_vimplug():
-    urllib.URLopener().retrieve("https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim", VIM_RTPATH + "\\autoload\\plug.vim")
+
+    vimplug_path = VIM_RTPATH + "\\autoload\\plug.vim"
+    if not os.path.isdir(os.path.dirname(vimplug_path)):
+        os.makedirs(os.path.dirname(vimplug_path))
+    urllib.request.urlretrieve("https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim", vimplug_path)
     print("Please execute :PlugInstall in vim")
 
 def setup_nvim():
@@ -68,7 +72,13 @@ def setup_vim():
         fatal_error('Error: vim or nvim has to be installed.')
     program_must_exist('git')
     sync_repo(APP_PATH, REPO_URL, REPO_BRANCH, app_name)
+    path = join(home, '.vimrc')
+    if os.path.exists(path):
+        os.remove(path)
     os.symlink(join(APP_PATH, '.vimrc'), join(home, '.vimrc'))
+    path = join(home, '.vimrc.bundles')
+    if os.path.exists(path):
+        os.remove(path)
     os.symlink(join(APP_PATH, '.vimrc.bundles'), join(home, '.vimrc.bundles'))
     setup_nvim()
     setup_vimplug()
