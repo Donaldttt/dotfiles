@@ -12,9 +12,13 @@ set $mod Mod4
 # workspace_layout tabbed <stacking|tabbed>
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
+
+# this seem to be deprecated, but put it here anyway
 default_border pixel 1
-#default_floating_border normal
 default_floating_border pixel 1
+
+# so use for window
+for_window [class="^.*"] border pixel 1
 
 # Hide borders
 hide_edge_borders none
@@ -408,6 +412,7 @@ exec --no-startup-id xset r rate 260 40
 # start a terminal
 bindsym $mod+Return exec alacritty
 
+
 # restore wallpaper with feh
 exec --no-startup-id ~/.fehbg
 
@@ -431,7 +436,7 @@ bindsym $mod+Ctrl+t exec --no-startup-id picom -b --experimental-backends
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
 
 # Autostart applications
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+#exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id feh
 exec --no-startup-id picom -b --experimental-backends
 #exec --no-startup-id manjaro-hello
@@ -466,3 +471,8 @@ exec --no-startup-id ulauncher --no-window-shadow --hide-window
 # Lock screen
 bindsym $mod+9 exec --no-startup-id blurlock
 
+# kde-connect
+exec --no-startup-id /usr/bin/kdeconnect-indicator
+
+# chinese pinying relies on fcitx5
+exec --no-startup-id /usr/bin/fcitx5
