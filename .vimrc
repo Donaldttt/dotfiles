@@ -168,8 +168,13 @@
     " Yank from the cursor to the end of the line, to be consistent with C and D.
     nnoremap Y y$
 
-    set foldmethod=syntax
-    autocmd FileType python set foldmethod=indent
+    if has('nvim')
+        set foldmethod=expr
+        set foldexpr=nvim_treesitter#foldexpr()
+    else
+        set foldmethod=syntax
+        autocmd FileType python set foldmethod=indent
+    endif
     "set nofoldenable
 
     " Find merge conflict markers
