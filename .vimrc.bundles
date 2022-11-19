@@ -79,6 +79,7 @@
         Plug 'wellle/tmux-complete.vim'
 
         Plug 'ludovicchabant/vim-gutentags'
+        Plug 'lambdalisue/readablefold.vim'
 
         " only work with nvim > 0.5
         " For other versions, just loading the plugin may
@@ -185,6 +186,7 @@ endif
     if isdirectory(expand(plugin_dir . "/vim-rooter"))
         let g:rooter_patterns = ['.vscode', '.git', '*.sln']
         let g:rooter_change_directory_for_non_project_files = 'current'
+        let g:rooter_silent_chdir = 1
     endif
     " }
     
@@ -373,7 +375,7 @@ endif
         "if !has('nvim') || g:vim_version < 0.5
         if v:true
             highlight SignColumn ctermbg=none
-            highlight CursorLineNr ctermbg=none
+            "highlight CursorLineNr ctermbg=none
             highlight CocWarningHighlight ctermbg=none
             highlight CocErrorSign ctermbg=none ctermfg=9 cterm=bold
             highlight CocErrorHighlight ctermbg=none ctermfg=9 cterm=underline,bold
