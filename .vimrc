@@ -175,7 +175,9 @@
         set foldmethod=syntax
         autocmd FileType python set foldmethod=indent
     endif
-    "set nofoldenable
+
+    " so when a buffer open it wouldn't be fold by default
+    set nofoldenable
 
     " Find merge conflict markers
     map <leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
