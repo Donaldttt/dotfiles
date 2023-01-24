@@ -12,6 +12,9 @@
     let g:vim_version = str2float(g:vim_version)
     let g:dotfile_path = '~/.dotfiles/'
 
+    set runtimepath^=~/.vim runtimepath+=~/.vim/after
+    let &packpath=&runtimepath
+
     " The default leader is '\', but many people prefer ',' as it's in a standard
     let mapleader = ','
     let maplocalleader = '_'
@@ -35,7 +38,7 @@
     " Always switch to the current file directory
 
     set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
-    set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
+    " set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
     set virtualedit=onemore             " Allow for cursor beyond last character
     set history=1000                    " Store a ton of history (default is 20)
     set hidden                          " Allow buffer switching without saving
@@ -165,20 +168,16 @@
     " Yank from the cursor to the end of the line, to be consistent with C and D.
     nnoremap Y y$
 
-    set foldmethod=syntax
-    autocmd FileType python set foldmethod=indent
+    if has('nvim')
+        set foldmethod=expr
+        set foldexpr=nvim_treesitter#foldexpr()
+    else
+        set foldmethod=syntax
+        autocmd FileType python set foldmethod=indent
+    endif
+
+    " so when a buffer open it wouldn't be fold by default
     set nofoldenable
-    " Code folding options
-    nmap <leader>f0 :set foldlevel=0<CR>
-    nmap <leader>f1 :set foldlevel=1<CR>
-    nmap <leader>f2 :set foldlevel=2<CR>
-    nmap <leader>f3 :set foldlevel=3<CR>
-    nmap <leader>f4 :set foldlevel=4<CR>
-    nmap <leader>f5 :set foldlevel=5<CR>
-    nmap <leader>f6 :set foldlevel=6<CR>
-    nmap <leader>f7 :set foldlevel=7<CR>
-    nmap <leader>f8 :set foldlevel=8<CR>
-    nmap <leader>f9 :set foldlevel=9<CR>
 
     " Find merge conflict markers
     map <leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
