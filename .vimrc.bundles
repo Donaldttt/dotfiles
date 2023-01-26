@@ -78,7 +78,7 @@
         " put text in neibouring tmux pane into auto complete
         Plug 'wellle/tmux-complete.vim'
 
-        Plug 'ludovicchabant/vim-gutentags'
+        Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
         Plug 'lambdalisue/readablefold.vim'
 
         " only work with nvim > 0.5
@@ -137,6 +137,7 @@ endif
     " ludovicchabant/vim-gutentags {
         set statusline+=%{gutentags#statusline()}
         let g:gutentags_cache_dir=g:vim_dir . '/.vimtags/'
+        let g:gutentags_project_root=['.git', '.hg', '.svn', '.bzr', '_darcs', '_FOSSIL_', '.fslckout', 'src']
     "}
 
     " easymotion/vim-easymotion {
