@@ -55,11 +55,6 @@
         Plug 'jiangmiao/auto-pairs'
         Plug 'mg979/vim-visual-multi'
 
-        Plug 'vim-airline/vim-airline'
-        Plug 'vim-airline/vim-airline-themes'
-        
-        " The bottom buffer display
-        Plug 'bling/vim-bufferline'
         Plug 'easymotion/vim-easymotion'
         Plug 'vim-scripts/restore_view.vim'
 
@@ -77,10 +72,19 @@
 
         " put text in neibouring tmux pane into auto complete
         Plug 'wellle/tmux-complete.vim'
+        Plug 'NoahTheDuke/vim-just'
 
         Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
         Plug 'lambdalisue/readablefold.vim'
 
+        " only work with vim 
+        if g:vim_type == 'vim'
+            Plug 'vim-airline/vim-airline'
+            Plug 'vim-airline/vim-airline-themes'
+        endif
+
+        " The bottom buffer display
+        Plug 'bling/vim-bufferline'
         " only work with nvim > 0.5
         " For other versions, just loading the plugin may
         " cause error
@@ -92,11 +96,18 @@
                 Plug 'EdenEast/nightfox.nvim'
                 Plug 'projekt0n/github-nvim-theme'
 
+                Plug 'nvim-lualine/lualine.nvim'
+                " If you want to have icons in your statusline choose one of these
+                Plug 'kyazdani42/nvim-web-devicons'
+
                 " partial code execution
                 " Plug 'michaelb/sniprun', {'do': 'bash install.sh'}
             endif
             if g:vim_version >= 0.7
                 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+            endif
+            if g:vim_version >= 0.8
+                Plug 'nvim-tree/nvim-tree.lua'
             endif
         endif
 
@@ -192,7 +203,7 @@ endif
     " }
     
     " NerdTree {
-        if isdirectory(expand(plugin_dir . "/nerdtree"))
+        if g:vim_type == 'vim' && isdirectory(expand(plugin_dir . "/nerdtree"))
             let g:NERDShutUp=1
 
             " work around for nerdtree bug: https://github.com/preservim/nerdtree/issues/1321
@@ -209,6 +220,17 @@ endif
             let NERDTreeMouseMode        = 2
             let NERDTreeShowHidden       = 1
             let NERDTreeKeepTreeInNewTab = 1
+        endif
+    " }
+    
+    " nvim-tree.lua {
+        if g:vim_type == 'nvim' && isdirectory(expand(plugin_dir . "/nvim-tree.lua"))
+
+
+            nnoremap <leader>e :NvimTreeFindFileToggle<CR>
+            nnoremap <leader>r :NvimTreeRefresh<CR>
+            " nnoremap <leader>e :NvimTreeFindFile<CR>
+
         endif
     " }
      
