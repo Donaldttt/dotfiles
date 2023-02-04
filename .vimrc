@@ -7,7 +7,7 @@
         let g:vim_version = matchstr(execute('version'), 'NVIM v\zs[^\n]*')
     else
         let g:vim_type = 'vim'
-        let g:vim_version = matchstr(execute('version'), 'NVIM v\zs[^\n]*')
+        let g:vim_version = matchstr(execute('version'), 'Vi IMproved \zs[^\n]*')
     endif
     let g:vim_version = str2float(g:vim_version)
     let g:dotfile_path = '~/.dotfiles/'
