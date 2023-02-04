@@ -343,9 +343,9 @@ endif
 
     " dark or light
     if filereadable(expand(g:vim_dir . '.light_theme.signal'))
-        let g:theme_color = 'light'              
+        let g:dark_or_white_theme = 'light'              
     else
-        let g:theme_color = 'dark'              
+        let g:dark_or_white_theme = 'dark'              
     endif
 
     " what to use for dark theme
@@ -372,20 +372,20 @@ endif
         set background=dark
         hi clear
         execute("colorscheme " . g:dark_theme)
-        let g:theme_color = 'dark'
+        let g:dark_or_white_theme = 'dark'
     endfunction
 
     function! SetLightTheme()
         set background=light
         hi clear
         execute("colorscheme " . g:light_theme)
-        let g:theme_color = 'light'
+        let g:dark_or_white_theme = 'light'
     endfunction
 
     " Change bottom airline/lualine theme
     " Currently only support airline
     function! SetAirlineTheme(theme)
-        if has('nvim') && g:vim_version >= 0.5
+        if g:vim_type == 'nvim' && g:vim_version >= 0.5
             execute('AirlineTheme ' . a:theme)
         else
             execute('AirlineTheme ' . a:theme)
@@ -397,6 +397,7 @@ endif
     function! TransparentBackgroundFix()
         "if !has('nvim') || g:vim_version < 0.5
         if v:true
+        "if v:false
             highlight SignColumn ctermbg=none
             "highlight CursorLineNr ctermbg=none
             highlight CocWarningHighlight ctermbg=none
@@ -407,7 +408,7 @@ endif
             highlight CocWarningSign ctermbg=none
             highlight CocInfoSign    ctermbg=none
             highlight CocHintSign    ctermbg=none
-            if g:theme_color == 'dark'
+            if g:dark_or_white_theme == 'dark'
                 highlight! link TempColor Visual
                 highlight! link CocFloating     TempColor
                 highlight! link CocErrorFloat   TempColor
@@ -421,7 +422,7 @@ endif
     function! EnableTransparent()
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             :TransparentEnable
-        elseif g:theme_color == 'dark'
+        elseif g:dark_or_white_theme == 'dark'
             let g:PaperColor_Theme_Options = {
             \   'theme': {
             \       'default.dark': {
@@ -430,7 +431,7 @@ endif
             \   }
             \ }
             execute("colorscheme " . g:dark_theme)
-        elseif g:theme_color == 'light'
+        elseif g:dark_or_white_theme == 'light'
             let g:PaperColor_Theme_Options = {
             \   'theme': {
             \       'default.light': {
@@ -445,7 +446,7 @@ endif
     function! DisableTransparent()
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             :TransparentDisable
-        elseif g:theme_color == 'dark'
+        elseif g:dark_or_white_theme == 'dark'
             let g:PaperColor_Theme_Options = {
             \   'theme': {
             \       'default.dark': {
@@ -454,7 +455,7 @@ endif
             \   }
             \ }
             execute("colorscheme " . g:dark_theme)
-        elseif g:theme_color == 'light'
+        elseif g:dark_or_white_theme == 'light'
             let g:PaperColor_Theme_Options = {
             \   'theme': {
             \       'default.light': {
@@ -481,17 +482,17 @@ endif
     " ToggleTransparent background
     " only works in dark theme
     function! ToggleTransparent()
-        if g:transparent_dark_theme && g:theme_color == 'dark'
+        if g:transparent_dark_theme && g:dark_or_white_theme == 'dark'
             call DisableTransparent()
             let g:transparent_dark_theme = v:false     
             call DeleteSignalFile('.transparent_dark_theme.signal')
-        elseif g:transparent_light_theme && g:theme_color == 'light'
+        elseif g:transparent_light_theme && g:dark_or_white_theme == 'light'
             call DisableTransparent()
             let g:transparent_light_theme = v:false     
             call DeleteSignalFile('.transparent_light_theme.signal')
         else
             call EnableTransparent()
-            if g:theme_color == 'dark'
+            if g:dark_or_white_theme == 'dark'
                 let g:transparent_dark_theme = v:true     
                 call CreateSignalFile('.transparent_dark_theme.signal')
             else
@@ -504,22 +505,30 @@ endif
 
 
     " vim theme 
-        if isdirectory(expand(plugin_dir . "/papercolor-theme")) 
-            " improve coc color in this theme
-            let g:light_theme = 'PaperColor'              
-            let g:dark_theme = 'PaperColor'
-        endif
+    if !has('nvim') && isdirectory(expand(plugin_dir . "/papercolor-theme")) 
+        set t_Co=256
+        " improve coc color in this theme
+        let g:light_theme = 'PaperColor'              
+        let g:dark_theme = 'PaperColor'
+        "let g:airline_dark_theme = "papercolor"               
+        "let g:airline_light_theme = "papercolor"               
+    endif
 
         " nvim only theme
-        if isdirectory(expand(plugin_dir . "/nightfox.nvim")) && isdirectory(expand(plugin_dir . "/github-nvim-theme")) && has('nvim') && g:vim_version >= 0.5
+    if has('nvim')
+        if g:vim_version >= 0.8 && isdirectory(expand(plugin_dir . "/nightfox.nvim"))
             let g:light_theme = 'dawnfox'
             "let g:dark_theme = 'nightfox'
+        end   
+
+        if g:vim_version >= 0.5 && isdirectory(expand(plugin_dir . "/github-nvim-theme"))
             let g:dark_theme = 'github_dark'
             let g:airline_dark_theme = "hybrid"               
-        endif
+        end
+    endif
    
    
-    if g:theme_color == 'dark'
+    if g:dark_or_white_theme == 'dark'
         let g:airline_theme=g:airline_dark_theme
         call SetDarkTheme()
     else
@@ -529,7 +538,7 @@ endif
 
     " Since in .vimrc we cannot call plugin function as they
     " are not loaded (:help startup)
-    if g:transparent_dark_theme && g:theme_color == 'dark' || g:transparent_light_theme && g:theme_color == 'light'
+    if g:transparent_dark_theme && g:dark_or_white_theme == 'dark' || g:transparent_light_theme && g:dark_or_white_theme == 'light'
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             let g:transparent_enabled = v:true
         else
@@ -547,7 +556,7 @@ endif
     " Allow to trigger background
     function! ToggleBG()
         " Inversion
-        if g:theme_color == "dark"
+        if g:dark_or_white_theme == "dark"
             call SetLightTheme()
             call SetAirlineTheme(g:airline_light_theme)
             call CreateSignalFile('.light_theme.signal') 
@@ -558,7 +567,7 @@ endif
             call DeleteSignalFile(".light_theme.signal")
         endif
 
-        if g:transparent_dark_theme && g:theme_color == 'dark' || g:transparent_light_theme && g:theme_color == 'light'
+        if g:transparent_dark_theme && g:dark_or_white_theme == 'dark' || g:transparent_light_theme && g:dark_or_white_theme == 'light'
             call EnableTransparent()
         else
             call DisableTransparent()
