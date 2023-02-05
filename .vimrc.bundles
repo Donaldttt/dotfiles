@@ -229,8 +229,11 @@ endif
 
             nnoremap <leader>e :NvimTreeFindFileToggle<CR>
             nnoremap <leader>r :NvimTreeRefresh<CR>
-            " nnoremap <leader>e :NvimTreeFindFile<CR>
 
+            " Hide vim bottom statusline
+            " autocmd FileType NvimTree setlocal noshowmode noruler laststatus=0 noshowcmd
+            set noshowmode noruler laststatus=0 noshowcmd
+            " autocmd BufRead,BufNewFile NvimTree set laststatus=0 " This will work instead
         endif
     " }
      
@@ -239,6 +242,7 @@ endif
     " }
     "else
     " vim-airline {
+    if g:vim_type == 'vim' && isdirectory(expand(plugin_dir . "/airline"))
         " Set configuration options for the statusline plugin vim-airline.
         " Use the powerline theme and optionally enable powerline symbols.
         let g:airline_section_b       = ''
@@ -276,6 +280,7 @@ endif
         if isdirectory(expand(plugin_dir . "/vim-airline-themes/"))
             "let g:airline_theme = 'solarized'
         endif
+    endif
     " }
     "endif
 
@@ -386,7 +391,7 @@ endif
     " Currently only support airline
     function! SetAirlineTheme(theme)
         if g:vim_type == 'nvim' && g:vim_version >= 0.5
-            execute('AirlineTheme ' . a:theme)
+            "execute('AirlineTheme ' . a:theme)
         else
             execute('AirlineTheme ' . a:theme)
         endif

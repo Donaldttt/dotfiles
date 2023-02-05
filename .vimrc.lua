@@ -11,6 +11,14 @@ require('nvim-treesitter.configs').setup {
 }
 
 require('lualine').setup {
+    options = {
+        theme = 'auto', -- lualine theme
+        disabled_filetypes = {     -- Filetypes to disable lualine for.
+          statusline = {},       -- only ignores the ft for statusline.
+          winbar = {},           -- only ignores the ft for winbar.
+          'NvimTree'
+        },
+    },
     sections = {
         lualine_a = {'mode'},
         lualine_b = {},
@@ -18,6 +26,14 @@ require('lualine').setup {
             {
             'buffers',
             mode = 4,
+            filetype_names = {
+                TelescopePrompt = 'Telescope',
+                dashboard = 'Dashboard',
+                packer = 'Packer',
+                fzf = 'FZF',
+                alpha = 'Alpha',
+                NvimTree = 'NvimTree'
+            },
             }
         },
         -- lualine_x = {'encoding', 'fileformat', 'filetype'},
@@ -60,23 +76,35 @@ vim.opt.termguicolors = true
 
 -- setup with some options
 require("nvim-tree").setup({
-  sort_by = "case_sensitive",
-  view = {
-    width = 30,
-    mappings = {
-      list = {
-        { key = "C-[", action = "dir_up" },
-        { key = "C-]", action = "cd" },
-        { key = "<C-k>", action = "toggle_file_info" },
-      },
+    sort_by = "case_sensitive",
+    view = {
+        width = 30,
+        mappings = {
+            list = {
+                { key = "C-[", action = "dir_up" },
+                { key = "C-]", action = "cd" },
+                { key = "<C-k>", action = "toggle_file_info" },
+            },
+        },
     },
-  },
-  renderer = {
-    group_empty = true,
-  },
-  filters = {
-    dotfiles = false,
-  },
+    renderer = {
+        group_empty = true,
+    },
+    filters = {
+        dotfiles = false,
+    },
+    actions = {
+        open_file = {
+            quit_on_open = true,
+            resize_window = true,
+            window_picker = {
+                exclude = {
+                    filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
+                    buftype = { "nofile", "terminal", "help" },
+                },
+            },
+        },
+    },
 })
 
 --

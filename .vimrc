@@ -78,8 +78,8 @@
 
 " Vim UI {
 "
-    set tabpagemax=15               " Only show 15 tabs
-    set showmode                    " Display the current mode
+    " set tabpagemax=15               " Only show 15 tabs
+    " set showmode                    " Display the current mode
     set cursorline                  " Highlight current line
     set cmdheight=1                 " get rid of the extra useless line at the bottom(not working, probably a plugin is changing the value)
 
@@ -91,6 +91,7 @@
         set ruler                   " Show the ruler
         set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
         set showcmd                 " Show partial commands in status line and
+
     endif
 
     set backspace=indent,eol,start  " Backspace for dummies
@@ -108,6 +109,7 @@
     set scrolljump=1                " Lines to scroll when cursor leaves screen
     set scrolloff=5                 " Minimum lines to keep above and below cursor
     set sidescrolloff=5            " Minimum lines to keep at the left or right of the cursor
+
 
 " }
 
