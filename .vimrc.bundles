@@ -277,12 +277,23 @@ endif
     if g:vim_type == 'vim' && isdirectory(expand(plugin_dir . "/vim-airline"))
         " Set configuration options for the statusline plugin vim-airline.
         " Use the powerline theme and optionally enable powerline symbols.
+        
+        " This must using my fork version of bufferline
+        "
+        let g:bufferline_max_length   = &columns - 25
+        function! BufferNumber()
+            return len(g:index_to_buffer)
+        endfunction
+        call airline#parts#define_function('bufnum', 'BufferNumber')
+
         let g:airline_section_b       = ''
         let g:airline_section_x       = ''
-        let g:airline_section_y       = ''
-        "let g:airline_section_z       = ''
+        "let g:airline_section_gutter  = ''
+        let g:airline_section_y       = airline#section#create(['bufnum'])
+        let g:airline_section_z       = airline#section#create(['filetype'])
         let g:airline_section_warning = ''
-        let g:airline_exclude_filetypes = ['nerdtree'] " see source for current list
+        let g:airline_section_error   = ''
+        "let g:airline_exclude_filetypes = ['nerdtree'] " see source for current list
         let g:airline#extensions#nerdtree_statusline = 0
         "let g:airline#extensions#bufferline#overwrite_variables = 0
         let g:airline_mode_map = {
@@ -655,6 +666,10 @@ endif
         nnoremap <Leader>7 :call bufferline#jump(7)<CR>
         nnoremap <Leader>8 :call bufferline#jump(8)<CR>
         nnoremap <Leader>9 :call bufferline#jump(9)<CR>
+        nnoremap <Space>10 :call bufferline#jump(10)<CR>
+        nnoremap <Space>11 :call bufferline#jump(11)<CR>
+        nnoremap <Space>12 :call bufferline#jump(12)<CR>
+        nnoremap <Space>13 :call bufferline#jump(13)<CR>
     end
 
     " split window comform with other window management shortcuts

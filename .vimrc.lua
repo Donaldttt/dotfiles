@@ -40,6 +40,10 @@ if vim_version_minor >= 5 then
         vim.api.nvim_set_keymap('n', '<Leader>'..i, ':LualineBuffersJump '..i..'<CR>', { noremap = true, silent = true })
         -- :nnoremap <silent> <Leader>1 :LualineBuffersJump 1<CR>
     end
+    for i=10,20 do
+        vim.api.nvim_set_keymap('n', '<Space>'..i, ':LualineBuffersJump '..i..'<CR>', { noremap = true, silent = true })
+        -- :nnoremap <silent> <Leader>1 :LualineBuffersJump 1<CR>
+    end
 
     local disabled_filetypes_data = {}
     if vim_version_minor < 7 then
