@@ -36,18 +36,12 @@
             let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.js'
         " }
         
-        Plug 'scrooloose/nerdtree'
 
         " for markdown{
             Plug 'preservim/vim-markdown'
         "}
         
-        " for window resize{
-            Plug 'simeji/winresizer'
-            let g:winresizer_start_key    = '<leader-r>'
-            let g:winresizer_vert_resize  = 2
-            let g:winresizer_horiz_resize = 2
-        " }
+        Plug 'simeji/winresizer'
         
         Plug 'tpope/vim-surround'
         Plug 'rhysd/conflict-marker.vim'
@@ -55,12 +49,7 @@
         Plug 'jiangmiao/auto-pairs'
         Plug 'mg979/vim-visual-multi'
 
-        Plug 'vim-airline/vim-airline'
-        Plug 'vim-airline/vim-airline-themes'
-        
-        " The bottom buffer display
-        Plug 'bling/vim-bufferline'
-        Plug 'easymotion/vim-easymotion'
+        "Plug 'easymotion/vim-easymotion'
         Plug 'vim-scripts/restore_view.vim'
 
         if executable('fzf')
@@ -77,10 +66,20 @@
 
         " put text in neibouring tmux pane into auto complete
         Plug 'wellle/tmux-complete.vim'
+        Plug 'NoahTheDuke/vim-just'
 
         Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
         Plug 'lambdalisue/readablefold.vim'
 
+        " only work with vim 
+        if g:vim_type == 'vim'
+            Plug 'scrooloose/nerdtree'
+            Plug 'vim-airline/vim-airline'
+            Plug 'vim-airline/vim-airline-themes'
+        endif
+
+        " The bottom buffer display
+        Plug 'bling/vim-bufferline'
         " only work with nvim > 0.5
         " For other versions, just loading the plugin may
         " cause error
@@ -92,11 +91,15 @@
                 Plug 'EdenEast/nightfox.nvim'
                 Plug 'projekt0n/github-nvim-theme'
 
-                " partial code execution
-                " Plug 'michaelb/sniprun', {'do': 'bash install.sh'}
+                Plug 'nvim-lualine/lualine.nvim'
+
             endif
             if g:vim_version >= 0.7
                 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+                Plug 'nvim-tree/nvim-web-devicons'
+            endif
+            if g:vim_version >= 0.8
+                Plug 'nvim-tree/nvim-tree.lua'
             endif
         endif
 
@@ -133,11 +136,21 @@ if g:vim_type == 'nvim'
     endif
 endif
 " }
+    " simeji/winresizer {
+    if isdirectory(expand(plugin_dir . "/winresizer"))
+        let g:winresizer_vert_resize  = 2
+        let g:winresizer_horiz_resize = 2
+        nnoremap <C-w>r :WinResizerStartResize<CR>
+    endif
 
     " ludovicchabant/vim-gutentags {
-        set statusline+=%{gutentags#statusline()}
+    if isdirectory(expand(plugin_dir . "/vim-gutentags"))
+        if exists("*gutentags#statusline()")
+            set statusline+=%{gutentags#statusline()}
+        endif
         let g:gutentags_cache_dir=g:vim_dir . '/.vimtags/'
         let g:gutentags_project_root=['.git', '.hg', '.svn', '.bzr', '_darcs', '_FOSSIL_', '.fslckout', 'src']
+    endif
     "}
 
     " easymotion/vim-easymotion {
@@ -192,7 +205,7 @@ endif
     " }
     
     " NerdTree {
-        if isdirectory(expand(plugin_dir . "/nerdtree"))
+        if g:vim_type == 'vim' && isdirectory(expand(plugin_dir . "/nerdtree"))
             let g:NERDShutUp=1
 
             " work around for nerdtree bug: https://github.com/preservim/nerdtree/issues/1321
@@ -211,12 +224,27 @@ endif
             let NERDTreeKeepTreeInNewTab = 1
         endif
     " }
+    
+    " nvim-tree.lua {
+        if g:vim_type == 'nvim' && isdirectory(expand(plugin_dir . "/nvim-tree.lua"))
+
+
+            nnoremap <leader>e :NvimTreeFindFileToggle<CR>
+            nnoremap <leader>r :NvimTreeRefresh<CR>
+
+            " Hide vim bottom statusline
+            " autocmd FileType NvimTree setlocal noshowmode noruler laststatus=0 noshowcmd
+            set noshowmode noruler laststatus=0 noshowcmd
+            " autocmd BufRead,BufNewFile NvimTree set laststatus=0 " This will work instead
+        endif
+    " }
      
     "if has('nvim') && str2float(g:nvim_version) >= 0.5 && isdirectory(expand(plugin_dir . "/lualine.nvim"))
     " nvim-lualine/lualine.nvim {
     " }
     "else
     " vim-airline {
+    if g:vim_type == 'vim' && isdirectory(expand(plugin_dir . "/vim-airline"))
         " Set configuration options for the statusline plugin vim-airline.
         " Use the powerline theme and optionally enable powerline symbols.
         let g:airline_section_b       = ''
@@ -254,6 +282,7 @@ endif
         if isdirectory(expand(plugin_dir . "/vim-airline-themes/"))
             "let g:airline_theme = 'solarized'
         endif
+    endif
     " }
     "endif
 
@@ -285,7 +314,7 @@ endif
         " coc-tsserver: javascript
         " coc-pyright: python
         " coc-clangd: c/c++, may need to install clangd seperatly
-        let g:coc_global_extensions = ['coc-pyright', 'coc-rls', 'coc-clangd', 'coc-tsserver', 'coc-html', 'coc-cmake', 'coc-json', 'coc-sh']
+        let g:coc_global_extensions = ['coc-pyright', 'coc-rls', 'coc-clangd', 'coc-tsserver', 'coc-html', 'coc-cmake', 'coc-json', 'coc-sh', 'coc-java']
 
         let g:coc_user_config = {
         \   'suggest.noselect': v:true,
@@ -302,7 +331,6 @@ endif
 " Theme_Appearance
 " {
 "
-
     " debug function print out highlight group of cursor position
     function! SynStack()
       if !exists("*synstack")
@@ -321,9 +349,9 @@ endif
 
     " dark or light
     if filereadable(expand(g:vim_dir . '.light_theme.signal'))
-        let g:theme_color = 'light'              
+        let g:dark_or_white_theme = 'light'              
     else
-        let g:theme_color = 'dark'              
+        let g:dark_or_white_theme = 'dark'              
     endif
 
     " what to use for dark theme
@@ -350,21 +378,21 @@ endif
         set background=dark
         hi clear
         execute("colorscheme " . g:dark_theme)
-        let g:theme_color = 'dark'
+        let g:dark_or_white_theme = 'dark'
     endfunction
 
     function! SetLightTheme()
         set background=light
         hi clear
         execute("colorscheme " . g:light_theme)
-        let g:theme_color = 'light'
+        let g:dark_or_white_theme = 'light'
     endfunction
 
     " Change bottom airline/lualine theme
     " Currently only support airline
     function! SetAirlineTheme(theme)
-        if has('nvim') && g:vim_version >= 0.5
-            execute('AirlineTheme ' . a:theme)
+        if g:vim_type == 'nvim' && g:vim_version >= 0.5
+            "execute('AirlineTheme ' . a:theme)
         else
             execute('AirlineTheme ' . a:theme)
         endif
@@ -375,6 +403,7 @@ endif
     function! TransparentBackgroundFix()
         "if !has('nvim') || g:vim_version < 0.5
         if v:true
+        "if v:false
             highlight SignColumn ctermbg=none
             "highlight CursorLineNr ctermbg=none
             highlight CocWarningHighlight ctermbg=none
@@ -385,7 +414,7 @@ endif
             highlight CocWarningSign ctermbg=none
             highlight CocInfoSign    ctermbg=none
             highlight CocHintSign    ctermbg=none
-            if g:theme_color == 'dark'
+            if g:dark_or_white_theme == 'dark'
                 highlight! link TempColor Visual
                 highlight! link CocFloating     TempColor
                 highlight! link CocErrorFloat   TempColor
@@ -399,7 +428,7 @@ endif
     function! EnableTransparent()
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             :TransparentEnable
-        elseif g:theme_color == 'dark'
+        elseif g:dark_or_white_theme == 'dark'
             let g:PaperColor_Theme_Options = {
             \   'theme': {
             \       'default.dark': {
@@ -408,7 +437,7 @@ endif
             \   }
             \ }
             execute("colorscheme " . g:dark_theme)
-        elseif g:theme_color == 'light'
+        elseif g:dark_or_white_theme == 'light'
             let g:PaperColor_Theme_Options = {
             \   'theme': {
             \       'default.light': {
@@ -423,7 +452,7 @@ endif
     function! DisableTransparent()
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             :TransparentDisable
-        elseif g:theme_color == 'dark'
+        elseif g:dark_or_white_theme == 'dark'
             let g:PaperColor_Theme_Options = {
             \   'theme': {
             \       'default.dark': {
@@ -432,7 +461,7 @@ endif
             \   }
             \ }
             execute("colorscheme " . g:dark_theme)
-        elseif g:theme_color == 'light'
+        elseif g:dark_or_white_theme == 'light'
             let g:PaperColor_Theme_Options = {
             \   'theme': {
             \       'default.light': {
@@ -459,17 +488,17 @@ endif
     " ToggleTransparent background
     " only works in dark theme
     function! ToggleTransparent()
-        if g:transparent_dark_theme && g:theme_color == 'dark'
+        if g:transparent_dark_theme && g:dark_or_white_theme == 'dark'
             call DisableTransparent()
             let g:transparent_dark_theme = v:false     
             call DeleteSignalFile('.transparent_dark_theme.signal')
-        elseif g:transparent_light_theme && g:theme_color == 'light'
+        elseif g:transparent_light_theme && g:dark_or_white_theme == 'light'
             call DisableTransparent()
             let g:transparent_light_theme = v:false     
             call DeleteSignalFile('.transparent_light_theme.signal')
         else
             call EnableTransparent()
-            if g:theme_color == 'dark'
+            if g:dark_or_white_theme == 'dark'
                 let g:transparent_dark_theme = v:true     
                 call CreateSignalFile('.transparent_dark_theme.signal')
             else
@@ -482,22 +511,30 @@ endif
 
 
     " vim theme 
-        if isdirectory(expand(plugin_dir . "/papercolor-theme")) 
-            " improve coc color in this theme
-            let g:light_theme = 'PaperColor'              
-            let g:dark_theme = 'PaperColor'
-        endif
+    if !has('nvim') && isdirectory(expand(plugin_dir . "/papercolor-theme")) 
+        set t_Co=256
+        " improve coc color in this theme
+        let g:light_theme = 'PaperColor'              
+        let g:dark_theme = 'PaperColor'
+        "let g:airline_dark_theme = "papercolor"               
+        "let g:airline_light_theme = "papercolor"               
+    endif
 
         " nvim only theme
-        if isdirectory(expand(plugin_dir . "/nightfox.nvim")) && isdirectory(expand(plugin_dir . "/github-nvim-theme")) && has('nvim') && g:vim_version >= 0.5
+    if has('nvim')
+        if g:vim_version >= 0.8 && isdirectory(expand(plugin_dir . "/nightfox.nvim"))
             let g:light_theme = 'dawnfox'
             "let g:dark_theme = 'nightfox'
+        end   
+
+        if g:vim_version >= 0.5 && isdirectory(expand(plugin_dir . "/github-nvim-theme"))
             let g:dark_theme = 'github_dark'
             let g:airline_dark_theme = "hybrid"               
-        endif
+        end
+    endif
    
    
-    if g:theme_color == 'dark'
+    if g:dark_or_white_theme == 'dark'
         let g:airline_theme=g:airline_dark_theme
         call SetDarkTheme()
     else
@@ -507,7 +544,7 @@ endif
 
     " Since in .vimrc we cannot call plugin function as they
     " are not loaded (:help startup)
-    if g:transparent_dark_theme && g:theme_color == 'dark' || g:transparent_light_theme && g:theme_color == 'light'
+    if g:transparent_dark_theme && g:dark_or_white_theme == 'dark' || g:transparent_light_theme && g:dark_or_white_theme == 'light'
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             let g:transparent_enabled = v:true
         else
@@ -525,7 +562,7 @@ endif
     " Allow to trigger background
     function! ToggleBG()
         " Inversion
-        if g:theme_color == "dark"
+        if g:dark_or_white_theme == "dark"
             call SetLightTheme()
             call SetAirlineTheme(g:airline_light_theme)
             call CreateSignalFile('.light_theme.signal') 
@@ -536,7 +573,7 @@ endif
             call DeleteSignalFile(".light_theme.signal")
         endif
 
-        if g:transparent_dark_theme && g:theme_color == 'dark' || g:transparent_light_theme && g:theme_color == 'light'
+        if g:transparent_dark_theme && g:dark_or_white_theme == 'dark' || g:transparent_light_theme && g:dark_or_white_theme == 'light'
             call EnableTransparent()
         else
             call DisableTransparent()

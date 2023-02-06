@@ -12,8 +12,8 @@ fzf_command_list_all=(\
 # fzf match files
 fzf_command_list_file=(\
 cat \
-vim \
-nvim \
+#vim \
+#nvim \
 set_wallpaper \
 )
 
