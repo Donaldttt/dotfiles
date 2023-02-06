@@ -76,7 +76,7 @@ if vim_version_minor >= 5 then
                     alpha = 'Alpha',
                     NvimTree = ''
                 },
-                max_length = vim.o.columns * 2 / 3,   -- Maximum width of buffers component,
+                max_length = vim.o.columns - 27,   -- Maximum width of buffers component,
                                                       -- it can also be a function that returns
                                                       -- the value of `max_length` dynamically.
                 symbols = {
@@ -88,8 +88,8 @@ if vim_version_minor >= 5 then
             },
             -- lualine_x = {'encoding', 'fileformat', 'filetype'},
             lualine_x = {},
-            lualine_y = {'encoding'},
-            lualine_z = {'location'}
+            lualine_y = {},
+            lualine_z = {'encoding', 'location'}
         },
     }
 
