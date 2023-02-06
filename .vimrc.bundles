@@ -36,18 +36,12 @@
             let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.js'
         " }
         
-        Plug 'scrooloose/nerdtree'
 
         " for markdown{
             Plug 'preservim/vim-markdown'
         "}
         
-        " for window resize{
-            Plug 'simeji/winresizer'
-            let g:winresizer_start_key    = '<leader-r>'
-            let g:winresizer_vert_resize  = 2
-            let g:winresizer_horiz_resize = 2
-        " }
+        Plug 'simeji/winresizer'
         
         Plug 'tpope/vim-surround'
         Plug 'rhysd/conflict-marker.vim'
@@ -55,7 +49,7 @@
         Plug 'jiangmiao/auto-pairs'
         Plug 'mg979/vim-visual-multi'
 
-        Plug 'easymotion/vim-easymotion'
+        "Plug 'easymotion/vim-easymotion'
         Plug 'vim-scripts/restore_view.vim'
 
         if executable('fzf')
@@ -79,6 +73,7 @@
 
         " only work with vim 
         if g:vim_type == 'vim'
+            Plug 'scrooloose/nerdtree'
             Plug 'vim-airline/vim-airline'
             Plug 'vim-airline/vim-airline-themes'
         endif
@@ -98,8 +93,6 @@
 
                 Plug 'nvim-lualine/lualine.nvim'
 
-                " partial code execution
-                " Plug 'michaelb/sniprun', {'do': 'bash install.sh'}
             endif
             if g:vim_version >= 0.7
                 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -143,6 +136,12 @@ if g:vim_type == 'nvim'
     endif
 endif
 " }
+    " simeji/winresizer {
+    if isdirectory(expand(plugin_dir . "/winresizer"))
+        let g:winresizer_vert_resize  = 2
+        let g:winresizer_horiz_resize = 2
+        nnoremap <C-w>r :WinResizerStartResize<CR>
+    endif
 
     " ludovicchabant/vim-gutentags {
     if isdirectory(expand(plugin_dir . "/vim-gutentags"))
@@ -245,7 +244,7 @@ endif
     " }
     "else
     " vim-airline {
-    if g:vim_type == 'vim' && isdirectory(expand(plugin_dir . "/airline"))
+    if g:vim_type == 'vim' && isdirectory(expand(plugin_dir . "/vim-airline"))
         " Set configuration options for the statusline plugin vim-airline.
         " Use the powerline theme and optionally enable powerline symbols.
         let g:airline_section_b       = ''
@@ -332,7 +331,6 @@ endif
 " Theme_Appearance
 " {
 "
-
     " debug function print out highlight group of cursor position
     function! SynStack()
       if !exists("*synstack")

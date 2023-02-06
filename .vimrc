@@ -80,7 +80,13 @@
 "
     " set tabpagemax=15               " Only show 15 tabs
     " set showmode                    " Display the current mode
-    set cursorline                  " Highlight current line
+    set cursorline                    " Highlight current line
+
+    " get rid of current line highlight, instead just highlight the number column
+    augroup CLClear
+        autocmd! ColorScheme * hi clear CursorLine
+    augroup END
+
     set cmdheight=1                 " get rid of the extra useless line at the bottom(not working, probably a plugin is changing the value)
 
     "highlight clear SignColumn      " SignColumn should match background
