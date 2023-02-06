@@ -68,7 +68,7 @@
         Plug 'wellle/tmux-complete.vim'
         Plug 'NoahTheDuke/vim-just'
 
-        Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
+        Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp', 'vim'] }
         Plug 'lambdalisue/readablefold.vim'
 
         " only work with vim 
@@ -77,7 +77,7 @@
             Plug 'vim-airline/vim-airline'
             Plug 'vim-airline/vim-airline-themes'
             " The bottom buffer display
-            Plug 'bling/vim-bufferline'
+            Plug 'Donaldttt/vim-bufferline'
         endif
 
         " only work with nvim > 0.5
@@ -216,8 +216,15 @@ endif
             let g:NERDTreeMinimalMenu=1
 
             "nnoremap <C-e> :NERDTreeToggle<CR>
-            nnoremap <leader>e :NERDTreeToggle<CR>
-            "nmap <leader>e :NERDTreeFind<CR>
+            " nnoremap <leader>e :NERDTreeToggle<CR>
+            function! NERDTreeFindToggle()
+                if &filetype == 'nerdtree'
+                    :NERDTreeToggle
+                else
+                    :NERDTreeFind
+                endif
+            endfunction
+            nnoremap <silent> <leader>e :call NERDTreeFindToggle()<CR>
 
             "let NERDTreeShowBookmarks=1
             "let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
@@ -226,6 +233,9 @@ endif
             let NERDTreeMouseMode        = 2
             let NERDTreeShowHidden       = 1
             let NERDTreeKeepTreeInNewTab = 1
+
+            " Exit Vim if NERDTree is the only window remaining in the only tab.
+            autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
         endif
     " }
     
@@ -252,6 +262,8 @@ endif
         let g:airline_section_y       = ''
         let g:airline_section_x       = ''
         let g:airline_section_warning = ''
+        let g:airline_exclude_filetypes = ['nerdtree'] " see source for current list
+        let g:airline#extensions#nerdtree_statusline = 0
         "let g:airline#extensions#tabline#left_sep = ''
         "let g:airline#extensions#tabline#left_alt_sep = '|'
 
@@ -323,6 +335,8 @@ endif
         if filereadable(expand(config_dir . "/.exp-coc-config"))
             exec "source " . config_dir . "/.exp-coc-config"
         endif
+        " warning that coc work best for vim >= 8.3
+        let g:coc_disable_startup_warning = 1
     endif
     
     " }
@@ -356,7 +370,8 @@ endif
 
     " what to use for dark theme
     let g:dark_theme = 'default'               
-    let g:airline_dark_theme = "deus"               
+    " let g:airline_dark_theme = "violet"               
+    let g:airline_dark_theme = "angr"               
 
     " what to use for light theme
     let g:light_theme = 'default'              
@@ -604,15 +619,24 @@ endif
     " leader num change tab
     " only for vim or nvim without lualine
     if g:vim_type == 'vim' || (g:vim_type == 'nvim' && g:vim_version < 0.5)
-        nnoremap <Leader>1 :b1<CR>
-        nnoremap <Leader>2 :b2<CR>
-        nnoremap <Leader>3 :b3<CR>
-        nnoremap <Leader>4 :b4<CR>
-        nnoremap <Leader>5 :b5<CR>
-        nnoremap <Leader>6 :b6<CR>
-        nnoremap <Leader>7 :b7<CR>
-        nnoremap <Leader>8 :b8<CR>
-        nnoremap <Leader>9 :b9<CR>
+        " nnoremap <Leader>1 :b1<CR>
+        " nnoremap <Leader>2 :b2<CR>
+        " nnoremap <Leader>3 :b3<CR>
+        " nnoremap <Leader>4 :b4<CR>
+        " nnoremap <Leader>5 :b5<CR>
+        " nnoremap <Leader>6 :b6<CR>
+        " nnoremap <Leader>7 :b7<CR>
+        " nnoremap <Leader>8 :b8<CR>
+        " nnoremap <Leader>9 :b9<CR>
+        nnoremap <Leader>1 :call bufferline#jump(1)<CR>
+        nnoremap <Leader>2 :call bufferline#jump(2)<CR>
+        nnoremap <Leader>3 :call bufferline#jump(3)<CR>
+        nnoremap <Leader>4 :call bufferline#jump(4)<CR>
+        nnoremap <Leader>5 :call bufferline#jump(5)<CR>
+        nnoremap <Leader>6 :call bufferline#jump(6)<CR>
+        nnoremap <Leader>7 :call bufferline#jump(7)<CR>
+        nnoremap <Leader>8 :call bufferline#jump(8)<CR>
+        nnoremap <Leader>9 :call bufferline#jump(9)<CR>
     end
 
     " split window comform with other window management shortcuts
