@@ -87,7 +87,7 @@
         autocmd! ColorScheme * hi clear CursorLine
     augroup END
 
-    set cmdheight=1                 " get rid of the extra useless line at the bottom(not working, probably a plugin is changing the value)
+    set cmdheight=1                 " get rid of the extra useless line at the bottom(if not working, probably a plugin is changing the value)
 
     "highlight clear SignColumn      " SignColumn should match background
     "highlight clear LineNr          " Current line number row will have same background color in relative mode
@@ -157,21 +157,21 @@
     noremap k gk
 
     " Stupid shift key fixes
-    if !exists('g:spf13_no_keyfixes')
-        if has("user_commands")
-            command! -bang -nargs=* -complete=file E e<bang> <args>
-            command! -bang -nargs=* -complete=file W w<bang> <args>
-            command! -bang -nargs=* -complete=file Wq wq<bang> <args>
-            command! -bang -nargs=* -complete=file WQ wq<bang> <args>
-            command! -bang Wa wa<bang>
-            command! -bang WA wa<bang>
-            command! -bang Q q<bang>
-            command! -bang QA qa<bang>
-            command! -bang Qa qa<bang>
-        endif
+    " if !exists('g:spf13_no_keyfixes')
+    "     if has("user_commands")
+    "         command! -bang -nargs=* -complete=file E e<bang> <args>
+    "         command! -bang -nargs=* -complete=file W w<bang> <args>
+    "         command! -bang -nargs=* -complete=file Wq wq<bang> <args>
+    "         command! -bang -nargs=* -complete=file WQ wq<bang> <args>
+    "         command! -bang Wa wa<bang>
+    "         command! -bang WA wa<bang>
+    "         command! -bang Q q<bang>
+    "         command! -bang QA qa<bang>
+    "         command! -bang Qa qa<bang>
+    "     endif
 
-        cmap Tabe tabe
-    endif
+    "     cmap Tabe tabe
+    " endif
 
     " Yank from the cursor to the end of the line, to be consistent with C and D.
     nnoremap Y y$
@@ -213,17 +213,7 @@
     map zh zH
 
     " Easier formatting
-    nnoremap <silent> <leader>q gwip
-
-" Plugins {
-
-    " AutoCloseTag {
-        " Make it so AutoCloseTag works for xml and xhtml files as well
-        au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
-        nmap <Leader>ac <Plug>ToggleAutoCloseMappings
-    " }
-
-" }
+    " nnoremap <silent> <leader>q gwip
 
 " Functions {
 

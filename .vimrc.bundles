@@ -68,16 +68,18 @@
         Plug 'wellle/tmux-complete.vim'
         Plug 'NoahTheDuke/vim-just'
 
-        Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
+        Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp', 'vim'] }
         Plug 'lambdalisue/readablefold.vim'
 
         " only work with vim 
         if g:vim_type == 'vim'
             Plug 'scrooloose/nerdtree'
+            " Plug 'tribela/vim-transparent'
             Plug 'vim-airline/vim-airline'
             Plug 'vim-airline/vim-airline-themes'
             " The bottom buffer display
-            Plug 'bling/vim-bufferline'
+            Plug 'Donaldttt/vim-bufferline'
+            " Plug 'itchyny/lightline.vim'
         endif
 
         " only work with nvim > 0.5
@@ -96,6 +98,9 @@
             endif
             if g:vim_version >= 0.7
                 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+                " comment out this plugin if the machine doesn't have required
+                " font install
                 Plug 'nvim-tree/nvim-web-devicons'
             endif
             if g:vim_version >= 0.8
@@ -130,10 +135,6 @@ if g:vim_type == 'nvim'
 
     if g:vim_version >= 0.7
     " nvim-treesitter/nvim-treesitter {
-    
-    if filereadable(expand(g:dotfile_path . '.vimrc.lua'))
-        execute('source ' . g:dotfile_path . '/.vimrc.lua')
-    endif
     
     " }
     endif
@@ -187,11 +188,13 @@ endif
         let g:bufferline_modified = '+'
 
         " scrolling with fixed current buffer position
-        let g:bufferline_rotate = 1
+        let g:bufferline_rotate = 0
 
         let g:bufferline_active_buffer_left = ''
         let g:bufferline_active_buffer_right = ''
         let g:bufferline_fixed_index = -1 
+        let g:bufferline_inactive_highlight = 'StatusLineNC'
+        let g:bufferline_active_highlight = 'StatusLine'
     
     " }
 
@@ -215,8 +218,16 @@ endif
             let g:NERDTreeMinimalMenu=1
 
             "nnoremap <C-e> :NERDTreeToggle<CR>
-            nnoremap <leader>e :NERDTreeToggle<CR>
-            "nmap <leader>e :NERDTreeFind<CR>
+            " nnoremap <leader>e :NERDTreeToggle<CR>
+            function! NERDTreeFindToggle()
+                let my_filetype = &filetype
+                if my_filetype == 'nerdtree' || my_filetype == ''
+                    :NERDTreeToggle
+                else
+                    :NERDTreeFind
+                endif
+            endfunction
+            nnoremap <silent> <leader>e :call NERDTreeFindToggle()<CR>
 
             "let NERDTreeShowBookmarks=1
             "let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
@@ -225,19 +236,18 @@ endif
             let NERDTreeMouseMode        = 2
             let NERDTreeShowHidden       = 1
             let NERDTreeKeepTreeInNewTab = 1
+
+            " Exit Vim if NERDTree is the only window remaining in the only tab.
+            autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
         endif
     " }
     
     " nvim-tree.lua {
         if g:vim_type == 'nvim' && isdirectory(expand(plugin_dir . "/nvim-tree.lua"))
 
-
-            nnoremap <leader>e :NvimTreeFindFileToggle<CR>
-            nnoremap <leader>r :NvimTreeRefresh<CR>
-
             " Hide vim bottom statusline
             " autocmd FileType NvimTree setlocal noshowmode noruler laststatus=0 noshowcmd
-            set noshowmode noruler laststatus=0 noshowcmd
+            " set noshowmode noruler laststatus=0 noshowcmd
             " autocmd BufRead,BufNewFile NvimTree set laststatus=0 " This will work instead
         endif
     " }
@@ -246,21 +256,45 @@ endif
     " nvim-lualine/lualine.nvim {
     " }
     "else
+    "
+    " itchyny/lightline.vim {
+    if g:vim_type == 'vim' && isdirectory(expand(plugin_dir . "/lightline.vim"))
+        set laststatus=2
+        let g:lightline = {
+          \ 'colorscheme': 'wombat',
+          \ 'active': {
+          \   'left': [ [ 'mode', 'paste' ],
+          \             [ 'buffers' ] ]
+          \ },
+          \ 'component_function': {
+          \   'buffers': 'bufferline#get_echo_string'
+          \ },
+          \ }
+    endif
+    " }
+    "
     " vim-airline {
     if g:vim_type == 'vim' && isdirectory(expand(plugin_dir . "/vim-airline"))
         " Set configuration options for the statusline plugin vim-airline.
         " Use the powerline theme and optionally enable powerline symbols.
-        let g:airline_section_b       = ''
-        let g:airline_section_z       = ''
-        let g:airline_section_y       = ''
-        let g:airline_section_x       = ''
-        let g:airline_section_warning = ''
-        "let g:airline#extensions#tabline#left_sep = ''
-        "let g:airline#extensions#tabline#left_alt_sep = '|'
+        
+        " This must using my fork version of bufferline
+        "
+        let g:bufferline_max_length   = &columns - 25
+        function! BufferNumber()
+            return len(g:index_to_buffer)
+        endfunction
+        call airline#parts#define_function('bufnum', 'BufferNumber')
 
-        "let g:airline_left_sep='>'
-        "let g:airline_right_sep='<'
-        "let g:airline_skip_empty_sections = 1
+        let g:airline_section_b       = ''
+        let g:airline_section_x       = ''
+        "let g:airline_section_gutter  = ''
+        let g:airline_section_y       = airline#section#create(['bufnum'])
+        let g:airline_section_z       = airline#section#create(['filetype'])
+        let g:airline_section_warning = ''
+        let g:airline_section_error   = ''
+        "let g:airline_exclude_filetypes = ['nerdtree'] " see source for current list
+        let g:airline#extensions#nerdtree_statusline = 0
         "let g:airline#extensions#bufferline#overwrite_variables = 0
         let g:airline_mode_map = {
             \ '__'     : '-',
@@ -326,6 +360,8 @@ endif
         if filereadable(expand(config_dir . "/.exp-coc-config"))
             exec "source " . config_dir . "/.exp-coc-config"
         endif
+        " warning that coc work best for vim >= 8.3
+        let g:coc_disable_startup_warning = 1
     endif
     
     " }
@@ -359,7 +395,8 @@ endif
 
     " what to use for dark theme
     let g:dark_theme = 'default'               
-    let g:airline_dark_theme = "deus"               
+    " let g:airline_dark_theme = "violet"               
+    let g:airline_dark_theme = "angr"               
 
     " what to use for light theme
     let g:light_theme = 'default'              
@@ -431,48 +468,52 @@ endif
     function! EnableTransparent()
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             :TransparentEnable
-        elseif g:dark_or_white_theme == 'dark'
-            let g:PaperColor_Theme_Options = {
-            \   'theme': {
-            \       'default.dark': {
-            \           'transparent_background': 1
-            \        }
-            \   }
-            \ }
-            execute("colorscheme " . g:dark_theme)
-        elseif g:dark_or_white_theme == 'light'
-            let g:PaperColor_Theme_Options = {
-            \   'theme': {
-            \       'default.light': {
-            \           'transparent_background': 1
-            \        }
-            \   }
-            \ }
-            execute("colorscheme " . g:light_theme)
+        else
+            if g:dark_or_white_theme == 'dark'
+                let g:PaperColor_Theme_Options = {
+                \   'theme': {
+                \       'default.dark': {
+                \           'transparent_background': 1
+                \        }
+                \   }
+                \ }
+                execute("colorscheme " . g:dark_theme)
+            elseif g:dark_or_white_theme == 'light'
+                let g:PaperColor_Theme_Options = {
+                \   'theme': {
+                \       'default.light': {
+                \           'transparent_background': 1
+                \        }
+                \   }
+                \ }
+                execute("colorscheme " . g:light_theme)
+            endif
         endif
     endfunction
 
     function! DisableTransparent()
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             :TransparentDisable
-        elseif g:dark_or_white_theme == 'dark'
-            let g:PaperColor_Theme_Options = {
-            \   'theme': {
-            \       'default.dark': {
-            \           'transparent_background': 0
-            \        }
-            \   }
-            \ }
-            execute("colorscheme " . g:dark_theme)
-        elseif g:dark_or_white_theme == 'light'
-            let g:PaperColor_Theme_Options = {
-            \   'theme': {
-            \       'default.light': {
-            \           'transparent_background': 0
-            \        }
-            \   }
-            \ }
-            execute("colorscheme " . g:light_theme)
+        else
+            if g:dark_or_white_theme == 'dark'
+                let g:PaperColor_Theme_Options = {
+                \   'theme': {
+                \       'default.dark': {
+                \           'transparent_background': 0
+                \        }
+                \   }
+                \ }
+                execute("colorscheme " . g:dark_theme)
+            elseif g:dark_or_white_theme == 'light'
+                let g:PaperColor_Theme_Options = {
+                \   'theme': {
+                \       'default.light': {
+                \           'transparent_background': 0
+                \        }
+                \   }
+                \ }
+                execute("colorscheme " . g:light_theme)
+            endif
         endif
     endfunction
 
@@ -592,34 +633,55 @@ endif
 " {
 
     " Toggle dark/light theme
-    noremap <leader>bg :call ToggleBG()<CR>
+    noremap <silent> <leader>bg :call ToggleBG()<CR>
 
     " Toggle transparent background
-    noremap <leader>tb :call ToggleTransparent()<CR>
+    noremap <silent> <leader>tb :call ToggleTransparent()<CR>
 
     " Buffer navigation
-    nnoremap <space>q :bprevious<CR>
-    nnoremap <space>e :bnext<CR>
+    nnoremap <silent> <space>q :bprevious<CR>
+    nnoremap <silent> <space>e :bnext<CR>
 
     " leader s change all occurence
-    nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
+    nnoremap <silent> <Leader>s :%s/\<<C-r><C-w>\>/
 
     " leader num change tab
-    nnoremap <Leader>1 :b1<CR>
-    nnoremap <Leader>2 :b2<CR>
-    nnoremap <Leader>3 :b3<CR>
-    nnoremap <Leader>4 :b4<CR>
-    nnoremap <Leader>5 :b5<CR>
-    nnoremap <Leader>6 :b6<CR>
-    nnoremap <Leader>7 :b7<CR>
-    nnoremap <Leader>8 :b8<CR>
-    nnoremap <Leader>9 :b9<CR>
+    " only for vim or nvim without lualine
+    if g:vim_type == 'vim' || (g:vim_type == 'nvim' && g:vim_version < 0.5)
+        " nnoremap <Leader>1 :b1<CR>
+        " nnoremap <Leader>2 :b2<CR>
+        " nnoremap <Leader>3 :b3<CR>
+        " nnoremap <Leader>4 :b4<CR>
+        " nnoremap <Leader>5 :b5<CR>
+        " nnoremap <Leader>6 :b6<CR>
+        " nnoremap <Leader>7 :b7<CR>
+        " nnoremap <Leader>8 :b8<CR>
+        " nnoremap <Leader>9 :b9<CR>
+        nnoremap <nowait> <Leader>1 :call bufferline#jump(1)<CR>
+        nnoremap <nowait> <Leader>2 :call bufferline#jump(2)<CR>
+        nnoremap <nowait> <Leader>3 :call bufferline#jump(3)<CR>
+        nnoremap <nowait> <Leader>4 :call bufferline#jump(4)<CR>
+        nnoremap <nowait> <Leader>5 :call bufferline#jump(5)<CR>
+        nnoremap <nowait> <Leader>6 :call bufferline#jump(6)<CR>
+        nnoremap <nowait> <Leader>7 :call bufferline#jump(7)<CR>
+        nnoremap <nowait> <Leader>8 :call bufferline#jump(8)<CR>
+        nnoremap <nowait> <Leader>9 :call bufferline#jump(9)<CR>
+        nnoremap <nowait> <Space>10 :call bufferline#jump(10)<CR>
+        nnoremap <nowait> <Space>11 :call bufferline#jump(11)<CR>
+        nnoremap <nowait> <Space>12 :call bufferline#jump(12)<CR>
+        nnoremap <nowait> <Space>13 :call bufferline#jump(13)<CR>
+    end
 
     " split window comform with other window management shortcuts
-    nnoremap <C-w>% :vsplit<CR>
-    nnoremap <C-w>" :split<CR>
+    nnoremap <silent> <C-w>% :vsplit<CR>
+    nnoremap <silent> <C-w>" :split<CR>
 " }
 "
+" Lua configuration
+    if g:vim_type == 'nvim' && filereadable(expand(g:dotfile_path . '.vimrc.lua'))
+        execute('source ' . g:dotfile_path . '/.vimrc.lua')
+    endif
+"   
 " Useful_Info{
 "   show mapping info
 "   :verbose map ,cf
