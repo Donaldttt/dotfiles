@@ -184,7 +184,7 @@ endif
 
     " airblade/vim-rooter {
     if isdirectory(expand(plugin_dir . "/vim-rooter"))
-        let g:rooter_patterns = ['.vscode', '.git', '*.sln']
+        let g:rooter_patterns = ['.vscode', '.git', '*.sln', 'src']
         let g:rooter_change_directory_for_non_project_files = 'current'
         let g:rooter_silent_chdir = 1
     endif
@@ -284,7 +284,7 @@ endif
         " coc-tsserver: javascript
         " coc-pyright: python
         " coc-clangd: c/c++, may need to install clangd seperatly
-        let g:coc_global_extensions = ['coc-pyright', 'coc-rls', 'coc-clangd', 'coc-tsserver', 'coc-html', 'coc-cmake', 'coc-json', 'coc-sh']
+        let g:coc_global_extensions = ['coc-pyright', 'coc-rls', 'coc-clangd', 'coc-tsserver', 'coc-html', 'coc-cmake', 'coc-json', 'coc-sh', 'coc-java']
 
         let g:coc_user_config = {
         \   'suggest.noselect': v:true,
