@@ -300,7 +300,8 @@
 "    highlight cComment ctermfg=12 guifg=#458588
 
 "   copy to system
-    set clipboard=unnamed
+    "set clipboard=unnamed
+    set clipboard=unnamedplus
 
 "   fix paste mess up when using tmux
     if &term =~ "screen"
