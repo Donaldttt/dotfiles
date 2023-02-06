@@ -37,11 +37,11 @@ end
 if vim_version_minor >= 5 then
 
     for i=1,9 do
-        vim.api.nvim_set_keymap('n', '<Leader>'..i, ':LualineBuffersJump '..i..'<CR>', { noremap = true, silent = true })
+        vim.api.nvim_set_keymap('n', '<Leader>'..i, ':LualineBuffersJump '..i..'<CR>', { noremap = true, silent = true, nowait = true })
         -- :nnoremap <silent> <Leader>1 :LualineBuffersJump 1<CR>
     end
     for i=10,20 do
-        vim.api.nvim_set_keymap('n', '<Space>'..i, ':LualineBuffersJump '..i..'<CR>', { noremap = true, silent = true })
+        vim.api.nvim_set_keymap('n', '<Space>'..i, ':LualineBuffersJump '..i..'<CR>', { noremap = true, silent = true, nowait = true })
         -- :nnoremap <silent> <Leader>1 :LualineBuffersJump 1<CR>
     end
 

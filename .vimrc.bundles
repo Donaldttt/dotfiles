@@ -657,19 +657,19 @@ endif
         " nnoremap <Leader>7 :b7<CR>
         " nnoremap <Leader>8 :b8<CR>
         " nnoremap <Leader>9 :b9<CR>
-        nnoremap <Leader>1 :call bufferline#jump(1)<CR>
-        nnoremap <Leader>2 :call bufferline#jump(2)<CR>
-        nnoremap <Leader>3 :call bufferline#jump(3)<CR>
-        nnoremap <Leader>4 :call bufferline#jump(4)<CR>
-        nnoremap <Leader>5 :call bufferline#jump(5)<CR>
-        nnoremap <Leader>6 :call bufferline#jump(6)<CR>
-        nnoremap <Leader>7 :call bufferline#jump(7)<CR>
-        nnoremap <Leader>8 :call bufferline#jump(8)<CR>
-        nnoremap <Leader>9 :call bufferline#jump(9)<CR>
-        nnoremap <Space>10 :call bufferline#jump(10)<CR>
-        nnoremap <Space>11 :call bufferline#jump(11)<CR>
-        nnoremap <Space>12 :call bufferline#jump(12)<CR>
-        nnoremap <Space>13 :call bufferline#jump(13)<CR>
+        nnoremap <nowait> <Leader>1 :call bufferline#jump(1)<CR>
+        nnoremap <nowait> <Leader>2 :call bufferline#jump(2)<CR>
+        nnoremap <nowait> <Leader>3 :call bufferline#jump(3)<CR>
+        nnoremap <nowait> <Leader>4 :call bufferline#jump(4)<CR>
+        nnoremap <nowait> <Leader>5 :call bufferline#jump(5)<CR>
+        nnoremap <nowait> <Leader>6 :call bufferline#jump(6)<CR>
+        nnoremap <nowait> <Leader>7 :call bufferline#jump(7)<CR>
+        nnoremap <nowait> <Leader>8 :call bufferline#jump(8)<CR>
+        nnoremap <nowait> <Leader>9 :call bufferline#jump(9)<CR>
+        nnoremap <nowait> <Space>10 :call bufferline#jump(10)<CR>
+        nnoremap <nowait> <Space>11 :call bufferline#jump(11)<CR>
+        nnoremap <nowait> <Space>12 :call bufferline#jump(12)<CR>
+        nnoremap <nowait> <Space>13 :call bufferline#jump(13)<CR>
     end
 
     " split window comform with other window management shortcuts
