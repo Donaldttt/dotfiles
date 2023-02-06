@@ -74,10 +74,12 @@
         " only work with vim 
         if g:vim_type == 'vim'
             Plug 'scrooloose/nerdtree'
+            " Plug 'tribela/vim-transparent'
             Plug 'vim-airline/vim-airline'
             Plug 'vim-airline/vim-airline-themes'
             " The bottom buffer display
             Plug 'Donaldttt/vim-bufferline'
+            " Plug 'itchyny/lightline.vim'
         endif
 
         " only work with nvim > 0.5
@@ -245,7 +247,7 @@ endif
 
             " Hide vim bottom statusline
             " autocmd FileType NvimTree setlocal noshowmode noruler laststatus=0 noshowcmd
-            set noshowmode noruler laststatus=0 noshowcmd
+            " set noshowmode noruler laststatus=0 noshowcmd
             " autocmd BufRead,BufNewFile NvimTree set laststatus=0 " This will work instead
         endif
     " }
@@ -254,23 +256,34 @@ endif
     " nvim-lualine/lualine.nvim {
     " }
     "else
+    "
+    " itchyny/lightline.vim {
+    if g:vim_type == 'vim' && isdirectory(expand(plugin_dir . "/lightline.vim"))
+        set laststatus=2
+        let g:lightline = {
+          \ 'colorscheme': 'wombat',
+          \ 'active': {
+          \   'left': [ [ 'mode', 'paste' ],
+          \             [ 'buffers' ] ]
+          \ },
+          \ 'component_function': {
+          \   'buffers': 'bufferline#get_echo_string'
+          \ },
+          \ }
+    endif
+    " }
+    "
     " vim-airline {
     if g:vim_type == 'vim' && isdirectory(expand(plugin_dir . "/vim-airline"))
         " Set configuration options for the statusline plugin vim-airline.
         " Use the powerline theme and optionally enable powerline symbols.
         let g:airline_section_b       = ''
-        let g:airline_section_z       = ''
-        let g:airline_section_y       = ''
         let g:airline_section_x       = ''
+        let g:airline_section_y       = ''
+        "let g:airline_section_z       = ''
         let g:airline_section_warning = ''
         let g:airline_exclude_filetypes = ['nerdtree'] " see source for current list
         let g:airline#extensions#nerdtree_statusline = 0
-        "let g:airline#extensions#tabline#left_sep = ''
-        "let g:airline#extensions#tabline#left_alt_sep = '|'
-
-        "let g:airline_left_sep='>'
-        "let g:airline_right_sep='<'
-        "let g:airline_skip_empty_sections = 1
         "let g:airline#extensions#bufferline#overwrite_variables = 0
         let g:airline_mode_map = {
             \ '__'     : '-',
@@ -444,48 +457,52 @@ endif
     function! EnableTransparent()
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             :TransparentEnable
-        elseif g:dark_or_white_theme == 'dark'
-            let g:PaperColor_Theme_Options = {
-            \   'theme': {
-            \       'default.dark': {
-            \           'transparent_background': 1
-            \        }
-            \   }
-            \ }
-            execute("colorscheme " . g:dark_theme)
-        elseif g:dark_or_white_theme == 'light'
-            let g:PaperColor_Theme_Options = {
-            \   'theme': {
-            \       'default.light': {
-            \           'transparent_background': 1
-            \        }
-            \   }
-            \ }
-            execute("colorscheme " . g:light_theme)
+        else
+            if g:dark_or_white_theme == 'dark'
+                let g:PaperColor_Theme_Options = {
+                \   'theme': {
+                \       'default.dark': {
+                \           'transparent_background': 1
+                \        }
+                \   }
+                \ }
+                execute("colorscheme " . g:dark_theme)
+            elseif g:dark_or_white_theme == 'light'
+                let g:PaperColor_Theme_Options = {
+                \   'theme': {
+                \       'default.light': {
+                \           'transparent_background': 1
+                \        }
+                \   }
+                \ }
+                execute("colorscheme " . g:light_theme)
+            endif
         endif
     endfunction
 
     function! DisableTransparent()
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             :TransparentDisable
-        elseif g:dark_or_white_theme == 'dark'
-            let g:PaperColor_Theme_Options = {
-            \   'theme': {
-            \       'default.dark': {
-            \           'transparent_background': 0
-            \        }
-            \   }
-            \ }
-            execute("colorscheme " . g:dark_theme)
-        elseif g:dark_or_white_theme == 'light'
-            let g:PaperColor_Theme_Options = {
-            \   'theme': {
-            \       'default.light': {
-            \           'transparent_background': 0
-            \        }
-            \   }
-            \ }
-            execute("colorscheme " . g:light_theme)
+        else
+            if g:dark_or_white_theme == 'dark'
+                let g:PaperColor_Theme_Options = {
+                \   'theme': {
+                \       'default.dark': {
+                \           'transparent_background': 0
+                \        }
+                \   }
+                \ }
+                execute("colorscheme " . g:dark_theme)
+            elseif g:dark_or_white_theme == 'light'
+                let g:PaperColor_Theme_Options = {
+                \   'theme': {
+                \       'default.light': {
+                \           'transparent_background': 0
+                \        }
+                \   }
+                \ }
+                execute("colorscheme " . g:light_theme)
+            endif
         endif
     endfunction
 
