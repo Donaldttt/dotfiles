@@ -76,10 +76,10 @@
             Plug 'scrooloose/nerdtree'
             Plug 'vim-airline/vim-airline'
             Plug 'vim-airline/vim-airline-themes'
+            " The bottom buffer display
+            Plug 'bling/vim-bufferline'
         endif
 
-        " The bottom buffer display
-        Plug 'bling/vim-bufferline'
         " only work with nvim > 0.5
         " For other versions, just loading the plugin may
         " cause error
