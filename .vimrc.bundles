@@ -96,6 +96,9 @@
             endif
             if g:vim_version >= 0.7
                 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+                " comment out this plugin if the machine doesn't have required
+                " font install
                 Plug 'nvim-tree/nvim-web-devicons'
             endif
             if g:vim_version >= 0.8
@@ -130,10 +133,6 @@ if g:vim_type == 'nvim'
 
     if g:vim_version >= 0.7
     " nvim-treesitter/nvim-treesitter {
-    
-    if filereadable(expand(g:dotfile_path . '.vimrc.lua'))
-        execute('source ' . g:dotfile_path . '/.vimrc.lua')
-    endif
     
     " }
     endif
@@ -187,11 +186,13 @@ endif
         let g:bufferline_modified = '+'
 
         " scrolling with fixed current buffer position
-        let g:bufferline_rotate = 1
+        let g:bufferline_rotate = 0
 
         let g:bufferline_active_buffer_left = ''
         let g:bufferline_active_buffer_right = ''
         let g:bufferline_fixed_index = -1 
+        let g:bufferline_inactive_highlight = 'StatusLineNC'
+        let g:bufferline_active_highlight = 'StatusLine'
     
     " }
 
@@ -230,10 +231,6 @@ endif
     
     " nvim-tree.lua {
         if g:vim_type == 'nvim' && isdirectory(expand(plugin_dir . "/nvim-tree.lua"))
-
-
-            nnoremap <leader>e :NvimTreeFindFileToggle<CR>
-            nnoremap <leader>r :NvimTreeRefresh<CR>
 
             " Hide vim bottom statusline
             " autocmd FileType NvimTree setlocal noshowmode noruler laststatus=0 noshowcmd
@@ -592,34 +589,42 @@ endif
 " {
 
     " Toggle dark/light theme
-    noremap <leader>bg :call ToggleBG()<CR>
+    noremap <silent> <leader>bg :call ToggleBG()<CR>
 
     " Toggle transparent background
-    noremap <leader>tb :call ToggleTransparent()<CR>
+    noremap <silent> <leader>tb :call ToggleTransparent()<CR>
 
     " Buffer navigation
-    nnoremap <space>q :bprevious<CR>
-    nnoremap <space>e :bnext<CR>
+    nnoremap <silent> <space>q :bprevious<CR>
+    nnoremap <silent> <space>e :bnext<CR>
 
     " leader s change all occurence
-    nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
+    nnoremap <silent> <Leader>s :%s/\<<C-r><C-w>\>/
 
     " leader num change tab
-    nnoremap <Leader>1 :b1<CR>
-    nnoremap <Leader>2 :b2<CR>
-    nnoremap <Leader>3 :b3<CR>
-    nnoremap <Leader>4 :b4<CR>
-    nnoremap <Leader>5 :b5<CR>
-    nnoremap <Leader>6 :b6<CR>
-    nnoremap <Leader>7 :b7<CR>
-    nnoremap <Leader>8 :b8<CR>
-    nnoremap <Leader>9 :b9<CR>
+    " only for vim or nvim without lualine
+    if g:vim_type == 'vim' || (g:vim_type == 'nvim' && g:vim_version < 0.5)
+        nnoremap <Leader>1 :b1<CR>
+        nnoremap <Leader>2 :b2<CR>
+        nnoremap <Leader>3 :b3<CR>
+        nnoremap <Leader>4 :b4<CR>
+        nnoremap <Leader>5 :b5<CR>
+        nnoremap <Leader>6 :b6<CR>
+        nnoremap <Leader>7 :b7<CR>
+        nnoremap <Leader>8 :b8<CR>
+        nnoremap <Leader>9 :b9<CR>
+    end
 
     " split window comform with other window management shortcuts
-    nnoremap <C-w>% :vsplit<CR>
-    nnoremap <C-w>" :split<CR>
+    nnoremap <silent> <C-w>% :vsplit<CR>
+    nnoremap <silent> <C-w>" :split<CR>
 " }
 "
+" Lua configuration
+    if g:vim_type == 'nvim' && filereadable(expand(g:dotfile_path . '.vimrc.lua'))
+        execute('source ' . g:dotfile_path . '/.vimrc.lua')
+    endif
+"   
 " Useful_Info{
 "   show mapping info
 "   :verbose map ,cf

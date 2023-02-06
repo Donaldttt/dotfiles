@@ -4,6 +4,21 @@ vim_version_minor = vim_version['minor']
 -- debug
 -- print(vim.inspect(version))
 
+if vim_version_minor >= 5 then
+
+    require("transparent").setup({
+      enable = true, -- boolean: enable transparent
+      extra_groups = { -- table/string: additional groups that should be cleared
+        -- In particular, when you set it to 'all', that means all available groups
+
+        "NvimTreeNormal",
+        "VertSplit",
+      },
+      exclude = {}, -- table: groups you don't want to clear
+    })
+
+end
+
 if vim_version_minor >= 7 then
 
     require('nvim-treesitter.configs').setup {
@@ -21,14 +36,30 @@ end
 
 if vim_version_minor >= 5 then
 
+    for i=1,9 do
+        vim.api.nvim_set_keymap('n', '<Leader>'..i, ':LualineBuffersJump '..i..'<CR>', { noremap = true, silent = true })
+        -- :nnoremap <silent> <Leader>1 :LualineBuffersJump 1<CR>
+    end
+
+    local disabled_filetypes_data = {}
+    if vim_version_minor < 7 then
+        -- globalstatus only work for nvim >= 0.7
+        disabled_filetypes_data = {     -- Filetypes to disable lualine for.
+          statusline = {},       -- only ignores the ft for statusline.
+          winbar = {},           -- only ignores the ft for winbar.
+          'NvimTree'
+        }
+    end
+    
     require('lualine').setup {
         options = {
             theme = 'auto', -- lualine theme
-            disabled_filetypes = {     -- Filetypes to disable lualine for.
-              statusline = {},       -- only ignores the ft for statusline.
-              winbar = {},           -- only ignores the ft for winbar.
-              'NvimTree'
-            },
+            -- theme = 'ayu', -- lualine theme
+            always_divide_middle = false,  -- When set to true, left sections i.e. 'a','b' and 'c'
+                                           -- can't take over the entire statusline even
+                                           -- if neither of 'x', 'y' or 'z' are present.
+            globalstatus = true,
+            disabled_filetypes = disabled_filetypes_data,
         },
         sections = {
             lualine_a = {'mode'},
@@ -36,43 +67,30 @@ if vim_version_minor >= 5 then
             lualine_c = { 
                 {
                 'buffers',
-                mode = 4,
+                mode = 2,
                 filetype_names = {
                     TelescopePrompt = 'Telescope',
                     dashboard = 'Dashboard',
                     packer = 'Packer',
                     fzf = 'FZF',
                     alpha = 'Alpha',
-                    NvimTree = 'NvimTree'
+                    NvimTree = ''
+                },
+                max_length = vim.o.columns * 2 / 3,   -- Maximum width of buffers component,
+                                                      -- it can also be a function that returns
+                                                      -- the value of `max_length` dynamically.
+                symbols = {
+                    modified = ' ●',      -- Text to show when the buffer is modified
+                    alternate_file = '', -- Text to show to identify the alternate file
+                    directory =  '',     -- Text to show when the buffer is a directory
                 },
                 }
             },
             -- lualine_x = {'encoding', 'fileformat', 'filetype'},
-            lualine_x = {'encoding'},
-            lualine_y = {},
+            lualine_x = {},
+            lualine_y = {'encoding'},
             lualine_z = {'location'}
         },
-        -- tabline = {
-        --     lualine_a = {
-        --         {
-        --         'buffers',
-        --         mode = 4,
-        --         }
-        --     },
-        --     lualine_b = {},
-        --     lualine_c = {},
-        --     lualine_x = {},
-        --     lualine_y = {},
-        --     lualine_z = {'tabs'}
-        -- },
-        -- winbar = {
-        --     lualine_a = {},
-        --     lualine_b = {},
-        --     lualine_c = {'filename'},
-        --     lualine_x = {},
-        --     lualine_y = {},
-        --     lualine_z = {}
-        -- },
     }
 
 end
@@ -120,6 +138,8 @@ if vim_version_minor >= 8 then
             },
         },
     })
+
+    vim.api.nvim_set_keymap('n', '<Leader>e', ':NvimTreeFindFileToggle<CR>', { noremap = true, silent = true })
 
     --
     -- nvim-tree configuration end
