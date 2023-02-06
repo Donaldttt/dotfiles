@@ -231,7 +231,7 @@ endif
 
             " Hide vim bottom statusline
             " autocmd FileType NvimTree setlocal noshowmode noruler laststatus=0 noshowcmd
-            set noshowmode noruler laststatus=0 noshowcmd
+            "set noshowmode noruler laststatus=0 noshowcmd
             " autocmd BufRead,BufNewFile NvimTree set laststatus=0 " This will work instead
         endif
     " }
