@@ -218,7 +218,8 @@ endif
             "nnoremap <C-e> :NERDTreeToggle<CR>
             " nnoremap <leader>e :NERDTreeToggle<CR>
             function! NERDTreeFindToggle()
-                if &filetype == 'nerdtree'
+                let my_filetype = &filetype
+                if my_filetype == 'nerdtree' || my_filetype == ''
                     :NERDTreeToggle
                 else
                     :NERDTreeFind
