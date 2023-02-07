@@ -73,12 +73,14 @@
 
         " only work with vim 
         if g:vim_type == 'vim'
+            set encoding=UTF-8
             Plug 'scrooloose/nerdtree'
             " Plug 'tribela/vim-transparent'
             Plug 'vim-airline/vim-airline'
             Plug 'vim-airline/vim-airline-themes'
             " The bottom buffer display
             Plug 'Donaldttt/vim-bufferline'
+            Plug 'ryanoasis/vim-devicons'
             " Plug 'itchyny/lightline.vim'
         endif
 
@@ -280,17 +282,17 @@ endif
         
         " This must using my fork version of bufferline
         "
-        let g:bufferline_max_length   = &columns - 25
+        let g:bufferline_max_length   = &columns - 30
         function! BufferNumber()
             return len(g:index_to_buffer)
         endfunction
         call airline#parts#define_function('bufnum', 'BufferNumber')
 
         let g:airline_section_b       = ''
-        let g:airline_section_x       = ''
-        "let g:airline_section_gutter  = ''
-        let g:airline_section_y       = airline#section#create(['bufnum'])
+        let g:airline_section_x       = airline#section#create(['bufnum'])
+        let g:airline_section_y       = ''
         let g:airline_section_z       = airline#section#create(['filetype'])
+        "let g:airline_section_gutter  = ''
         let g:airline_section_warning = ''
         let g:airline_section_error   = ''
         "let g:airline_exclude_filetypes = ['nerdtree'] " see source for current list
@@ -357,8 +359,8 @@ endif
         \   'suggest.noselect': v:true,
         \   'suggest.enablePreselect': v:false }
 
-        if filereadable(expand(config_dir . "/.exp-coc-config"))
-            exec "source " . config_dir . "/.exp-coc-config"
+        if filereadable(expand(config_dir . "/coc-nvim-config.vim"))
+            exec "source " . config_dir . "/coc-nvim-config.vim"
         endif
         " warning that coc work best for vim >= 8.3
         let g:coc_disable_startup_warning = 1
@@ -441,26 +443,29 @@ endif
     " Fix colorscheme not working correctly under transparent background
     " There is no plugin for this for nvim < 0.5 or vim without lua support
     function! TransparentBackgroundFix()
-        "if !has('nvim') || g:vim_version < 0.5
-        if v:true
-        "if v:false
+        if !has('nvim') || g:vim_version < 0.5
+        " if v:true
+        " if v:true
+            highlight CursorLineNr ctermbg=none
             highlight SignColumn ctermbg=none
-            "highlight CursorLineNr ctermbg=none
-            highlight CocWarningHighlight ctermbg=none
-            highlight CocErrorSign ctermbg=none ctermfg=9 cterm=bold
-            highlight CocErrorHighlight ctermbg=none ctermfg=9 cterm=underline,bold
-            highlight CocInfoHighlight ctermbg=none
-            highlight CocHintHighlight ctermbg=none
-            highlight CocWarningSign ctermbg=none
-            highlight CocInfoSign    ctermbg=none
-            highlight CocHintSign    ctermbg=none
-            if g:dark_or_white_theme == 'dark'
-                highlight! link TempColor Visual
-                highlight! link CocFloating     TempColor
-                highlight! link CocErrorFloat   TempColor
-                highlight! link CocWarningFloat TempColor
-                highlight! link CocInfoFloat    TempColor
-                highlight! link CocHintFloat    TempColor
+            if v:false
+                "highlight CursorLineNr ctermbg=none
+                highlight CocWarningHighlight ctermbg=none
+                highlight CocErrorSign ctermbg=none ctermfg=9 cterm=bold
+                highlight CocErrorHighlight ctermbg=none ctermfg=9 cterm=underline,bold
+                highlight CocInfoHighlight ctermbg=none
+                highlight CocHintHighlight ctermbg=none
+                highlight CocWarningSign ctermbg=none
+                highlight CocInfoSign    ctermbg=none
+                highlight CocHintSign    ctermbg=none
+                if g:dark_or_white_theme == 'dark'
+                    highlight! link TempColor Visual
+                    highlight! link CocFloating     TempColor
+                    highlight! link CocErrorFloat   TempColor
+                    highlight! link CocWarningFloat TempColor
+                    highlight! link CocInfoFloat    TempColor
+                    highlight! link CocHintFloat    TempColor
+                endif
             endif
         endif
     endfunction
