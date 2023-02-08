@@ -34,36 +34,22 @@ local function lsp_zero_config()
     })
     -- local cmp = require('cmp')
 
-    -- lsp.setup_nvim_cmp({
-    --     mapping = cmp.mapping.preset.insert({
-    --         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    --         ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    --     })
-    -- })
-
-    -- vim.api.nvim_create_autocmd(
-    --     {"TextChangedI", "TextChangedP"},
-    --     {
-    --     callback = function()
-    --         local line = vim.api.nvim_get_current_line()
-    --         local cursor = vim.api.nvim_win_get_cursor(0)[2]
-
-    --         local current = string.sub(line, cursor, cursor + 1)
-    --         if current == "." or current == "," or current == " " then
-    --             require('cmp').close()
-    --         end
-
-    --         local before_line = string.sub(line, 1, cursor + 1)
-    --         local after_line = string.sub(line, cursor + 1, -1)
-    --         if not string.match(before_line, '^%s+$') then
-    --             if after_line == "" or string.match(before_line, " $") or string.match(before_line, "%.$") then
-    --                 require('cmp').complete()
-    --             end
-    --         end
-    --     end,
-    --     pattern = "*"
-    --     }
-    -- )
+    lsp.setup_nvim_cmp({
+        -- mapping = cmp.mapping.preset.insert({
+        --     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        --     ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        -- }),
+        formatting = {
+            format = function(entry, vim_item)
+                local len = string.len(vim_item.abbr)
+                vim_item.abbr = string.sub(vim_item.abbr, 1, 30)
+                if len > 30 then
+                    vim_item.abbr = vim_item.abbr .. '...'
+                end
+                return vim_item
+            end
+        }
+    })
 
     -- (Optional) Configure lua language server for neovim
     lsp.nvim_workspace()
