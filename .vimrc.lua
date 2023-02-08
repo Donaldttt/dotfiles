@@ -178,11 +178,11 @@ end
 
 if vim_version_minor >= 5 then
     transparent_config()
-    lsp_zero_config()
     lualine_config()
 end
 if vim_version_minor >= 7 then
     nvim_treesitter_config()
+    -- lsp_zero_config()
 end
 if vim_version_minor >= 8 then
     nvim_tree_config()
