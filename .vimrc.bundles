@@ -24,11 +24,6 @@
 
     call plug#begin(plugin_dir)
 
-        " make sure to install nodejs to use coc.nvim
-        if executable('node')
-            Plug 'neoclide/coc.nvim', {'branch': 'release'}
-        endif
-
         Plug 'rust-lang/rust.vim'
 
         " {
@@ -62,11 +57,14 @@
         Plug 'NLKNguyen/papercolor-theme'
         Plug 'airblade/vim-rooter'
         Plug 'mbbill/undotree'
-        Plug 'tpope/vim-commentary'
+
+        " Comment stuff out
+        Plug 'tpope/vim-commentary' 
 
         " put text in neibouring tmux pane into auto complete
         Plug 'wellle/tmux-complete.vim'
-        Plug 'NoahTheDuke/vim-just'
+
+        "Plug 'NoahTheDuke/vim-just'
 
         Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp', 'vim'] }
         Plug 'lambdalisue/readablefold.vim'
@@ -81,7 +79,12 @@
             " The bottom buffer display
             Plug 'Donaldttt/vim-bufferline'
             Plug 'ryanoasis/vim-devicons'
-            " Plug 'itchyny/lightline.vim'
+            if executable('node')
+                Plug 'neoclide/coc.nvim', {'branch': 'release'}
+            endif
+            if executable('fzf')
+                Plug 'antoinemadec/coc-fzf'
+            endif
         endif
 
         " only work with nvim > 0.5
@@ -96,6 +99,28 @@
                 Plug 'projekt0n/github-nvim-theme'
 
                 Plug 'nvim-lualine/lualine.nvim'
+
+                "{ lsp-zero
+                
+                    " LSP Support
+                    Plug 'neovim/nvim-lspconfig'             " Required
+                    Plug 'williamboman/mason.nvim'           " Optional
+                    Plug 'williamboman/mason-lspconfig.nvim' " Optional
+
+                    " Autocompletion Engine
+                    Plug 'hrsh7th/nvim-cmp'         " Required
+                    Plug 'hrsh7th/cmp-nvim-lsp'     " Required
+                    Plug 'hrsh7th/cmp-buffer'       " Optional
+                    Plug 'hrsh7th/cmp-path'         " Optional
+                    Plug 'saadparwaiz1/cmp_luasnip' " Optional
+                    Plug 'hrsh7th/cmp-nvim-lua'     " Optional
+
+                    "  Snippets
+                    Plug 'L3MON4D3/LuaSnip'             " Required
+                    Plug 'rafamadriz/friendly-snippets' " Optional
+
+                    Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v1.x'}
+                "}
 
             endif
             if g:vim_version >= 0.7
@@ -259,22 +284,6 @@ endif
     " }
     "else
     "
-    " itchyny/lightline.vim {
-    if g:vim_type == 'vim' && isdirectory(expand(plugin_dir . "/lightline.vim"))
-        set laststatus=2
-        let g:lightline = {
-          \ 'colorscheme': 'wombat',
-          \ 'active': {
-          \   'left': [ [ 'mode', 'paste' ],
-          \             [ 'buffers' ] ]
-          \ },
-          \ 'component_function': {
-          \   'buffers': 'bufferline#get_echo_string'
-          \ },
-          \ }
-    endif
-    " }
-    "
     " vim-airline {
     if g:vim_type == 'vim' && isdirectory(expand(plugin_dir . "/vim-airline"))
         " Set configuration options for the statusline plugin vim-airline.
@@ -348,7 +357,7 @@ endif
     " }
     
     " neoclide/coc.nvim {
-    if isdirectory(expand(plugin_dir . "/coc.nvim/")) && executable('node')
+    if g:vim_type == 'vim' && isdirectory(expand(plugin_dir . "/coc.nvim/")) && executable('node')
         " add desired extensions to the following global variable
         " coc-tsserver: javascript
         " coc-pyright: python
@@ -494,6 +503,7 @@ endif
                 execute("colorscheme " . g:light_theme)
             endif
         endif
+        call TransparentBackgroundFix()
     endfunction
 
     function! DisableTransparent()
@@ -555,7 +565,6 @@ endif
                 call CreateSignalFile('.transparent_light_theme.signal')
             endif
         endif
-        call TransparentBackgroundFix()
     endfunction
 
 
@@ -593,12 +602,13 @@ endif
 
     " Since in .vimrc we cannot call plugin function as they
     " are not loaded (:help startup)
-    if g:transparent_dark_theme && g:dark_or_white_theme == 'dark' || g:transparent_light_theme && g:dark_or_white_theme == 'light'
+    if (g:transparent_dark_theme && g:dark_or_white_theme == 'dark') || (g:transparent_light_theme && g:dark_or_white_theme == 'light')
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             let g:transparent_enabled = v:true
         else
             call EnableTransparent()
         endif
+        call TransparentBackgroundFix()
     else 
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             let g:transparent_enabled = v:false
@@ -607,7 +617,6 @@ endif
         endif
     endif
         
-    call TransparentBackgroundFix()
     " Allow to trigger background
     function! ToggleBG()
         " Inversion
@@ -627,7 +636,6 @@ endif
         else
             call DisableTransparent()
         endif
-        call TransparentBackgroundFix()
     endfunction
 
 " }

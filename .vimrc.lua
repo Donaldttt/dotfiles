@@ -1,11 +1,10 @@
-vim_version = vim.version()
-vim_version_minor = vim_version['minor']
+local vim_version = vim.version()
+local vim_version_minor = vim_version['minor']
 
 -- debug
 -- print(vim.inspect(version))
 
-if vim_version_minor >= 5 then
-
+local function transparent_config()
     require("transparent").setup({
       enable = true, -- boolean: enable transparent
       extra_groups = { -- table/string: additional groups that should be cleared
@@ -16,26 +15,63 @@ if vim_version_minor >= 5 then
       },
       exclude = {}, -- table: groups you don't want to clear
     })
-
 end
 
-if vim_version_minor >= 7 then
+local function lsp_zero_config()
+    -- Learn the keybindings, see :help lsp-zero-keybindings
+    -- Learn to configure LSP servers, see :help lsp-zero-api-showcase
+    local lsp = require('lsp-zero')
+    lsp.preset('recommended')
+      -- make sure this servers are installed
+      -- see :help lsp-zero.ensure_installed()
+    lsp.ensure_installed({
+        'rust_analyzer',
+        'tsserver',
+        'eslint',
+        'sumneko_lua',
+        'jdtls',
+        'vimls',
+    })
+    -- local cmp = require('cmp')
 
-    require('nvim-treesitter.configs').setup {
-        -- ensure_installed = { "c", "bash", "lua" },
-        sync_install = false,
-        auto_install = true,
-        -- ignore_install = { "javascript" },
-        highlight = {
-            enable = true,
-            additional_vim_regex_highlighting = false,
-        },
-    }
+    -- lsp.setup_nvim_cmp({
+    --     mapping = cmp.mapping.preset.insert({
+    --         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    --         ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    --     })
+    -- })
 
+    -- vim.api.nvim_create_autocmd(
+    --     {"TextChangedI", "TextChangedP"},
+    --     {
+    --     callback = function()
+    --         local line = vim.api.nvim_get_current_line()
+    --         local cursor = vim.api.nvim_win_get_cursor(0)[2]
+
+    --         local current = string.sub(line, cursor, cursor + 1)
+    --         if current == "." or current == "," or current == " " then
+    --             require('cmp').close()
+    --         end
+
+    --         local before_line = string.sub(line, 1, cursor + 1)
+    --         local after_line = string.sub(line, cursor + 1, -1)
+    --         if not string.match(before_line, '^%s+$') then
+    --             if after_line == "" or string.match(before_line, " $") or string.match(before_line, "%.$") then
+    --                 require('cmp').complete()
+    --             end
+    --         end
+    --     end,
+    --     pattern = "*"
+    --     }
+    -- )
+
+    -- (Optional) Configure lua language server for neovim
+    lsp.nvim_workspace()
+
+    lsp.setup()
 end
 
-if vim_version_minor >= 5 then
-
+local function lualine_config()
     for i=1,9 do
         vim.api.nvim_set_keymap('n', '<Leader>'..i, ':LualineBuffersJump '..i..'<CR>', { noremap = true, silent = true, nowait = true })
         -- :nnoremap <silent> <Leader>1 :LualineBuffersJump 1<CR>
@@ -54,7 +90,6 @@ if vim_version_minor >= 5 then
           'NvimTree'
         }
     end
-    
     require('lualine').setup {
         options = {
             theme = 'auto', -- lualine theme
@@ -68,7 +103,7 @@ if vim_version_minor >= 5 then
         sections = {
             lualine_a = {'mode'},
             lualine_b = {},
-            lualine_c = { 
+            lualine_c = {
                 {
                 'buffers',
                 mode = 2,
@@ -96,13 +131,22 @@ if vim_version_minor >= 5 then
             lualine_z = {'encoding', 'location'}
         },
     }
-
 end
 
-if vim_version_minor >= 8 then
-    -- nvim-tree configuration
-    --
+local function nvim_treesitter_config()
+    require('nvim-treesitter.configs').setup {
+        -- ensure_installed = { "c", "bash", "lua" },
+        sync_install = false,
+        auto_install = true,
+        -- ignore_install = { "javascript" },
+        highlight = {
+            enable = true,
+            additional_vim_regex_highlighting = false,
+        },
+    }
+end
 
+local function nvim_tree_config()
     -- disable netrw at the very start of your init.lua (strongly advised)
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
@@ -144,8 +188,17 @@ if vim_version_minor >= 8 then
     })
 
     vim.api.nvim_set_keymap('n', '<Leader>e', ':NvimTreeFindFileToggle<CR>', { noremap = true, silent = true })
-
-    --
-    -- nvim-tree configuration end
-    --
 end
+
+if vim_version_minor >= 5 then
+    transparent_config()
+    lsp_zero_config()
+    lualine_config()
+end
+if vim_version_minor >= 7 then
+    nvim_treesitter_config()
+end
+if vim_version_minor >= 8 then
+    nvim_tree_config()
+end
+
