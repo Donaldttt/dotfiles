@@ -16,14 +16,23 @@ local function github_theme_config()
     })
 end
 
+local function indent_blankline_config()
+    -- Example config in Lua
+    require("indent_blankline").setup {
+        show_current_context = true,
+        filetype_exclude =   { "lspinfo", "packer", "checkhealth", "help", "man", "", "startify",}
+        -- use_treesitter = true,
+    }
+
+end
+
 local function transparent_config()
     require("transparent").setup({
       enable = true, -- boolean: enable transparent
       extra_groups = { -- table/string: additional groups that should be cleared
-        -- In particular, when you set it to 'all', that means all available groups
-
-        "NvimTreeNormal",
-        "VertSplit",
+          -- In particular, when you set it to 'all', that means all available groups
+          "NvimTreeNormal",
+          "VertSplit",
       },
       exclude = {}, -- table: groups you don't want to clear
     })
@@ -192,6 +201,7 @@ if vim_version_minor >= 5 then
     transparent_config()
     lualine_config()
     github_theme_config()
+    indent_blankline_config()
 end
 if vim_version_minor >= 7 then
     nvim_treesitter_config()

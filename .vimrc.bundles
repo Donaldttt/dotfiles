@@ -19,24 +19,25 @@
 " {
     " Plugin environment
     let g:mydotfiles_directory = expand('~/.dotfiles/')
-    let plugin_dir = expand('~/.vim/plugged/')
+    let s:plugin_dir = expand('~/.vim/plugged/')
     let g:vim_dir = expand('~/.vim/')
 
-    call plug#begin(plugin_dir)
+    call plug#begin(s:plugin_dir)
 
-        Plug 'rust-lang/rust.vim'
-
+        "Plug 'NoahTheDuke/vim-just'
+        " Plug 'mbbill/undotree'
         " {
-            Plug 'alvan/vim-closetag'
-            let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.js'
+            " Plug 'alvan/vim-closetag'
+            " let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.js'
         " }
-        
 
         " for markdown{
-            Plug 'preservim/vim-markdown'
+            " Plug 'preservim/vim-markdown'
         "}
         
+        Plug 'dstein64/vim-startuptime'
         Plug 'simeji/winresizer'
+        Plug 'rust-lang/rust.vim'
         
         Plug 'tpope/vim-surround'
         Plug 'rhysd/conflict-marker.vim'
@@ -46,6 +47,7 @@
 
         "Plug 'easymotion/vim-easymotion'
         Plug 'vim-scripts/restore_view.vim'
+        Plug 'mhinz/vim-startify'
 
         if executable('fzf')
             " fzf#install() makes sure that you have the latest binary, comment out because I don't want it to install binary for me
@@ -56,7 +58,6 @@
 
         Plug 'NLKNguyen/papercolor-theme'
         Plug 'airblade/vim-rooter'
-        Plug 'mbbill/undotree'
 
         " Comment stuff out
         Plug 'tpope/vim-commentary' 
@@ -64,21 +65,21 @@
         " put text in neibouring tmux pane into auto complete
         Plug 'wellle/tmux-complete.vim'
 
-        "Plug 'NoahTheDuke/vim-just'
-
-        Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp', 'vim'] }
+        Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
         Plug 'lambdalisue/readablefold.vim'
 
         " only work with vim 
         if g:vim_type == 'vim'
             set encoding=UTF-8
             Plug 'scrooloose/nerdtree'
+            Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
             " Plug 'tribela/vim-transparent'
             Plug 'vim-airline/vim-airline'
             Plug 'vim-airline/vim-airline-themes'
             " The bottom buffer display
             Plug 'Donaldttt/vim-bufferline'
             Plug 'ryanoasis/vim-devicons'
+            Plug 'Yggdroot/indentLine'
         endif
 
         if executable('node')
@@ -139,48 +140,78 @@
     call plug#end()
 " }
 
+function! HasPlug(plug_name, ...)
+    let plug_dir_name = get(a:, 1, a:plug_name) " optional argument for the name of plug's folder
+    if has_key(g:plugs, a:plug_name) && isdirectory(s:plugin_dir . "/" . plug_dir_name)
+        return v:true
+    endif
+        return v:false
+endfunction
+
 " Plugin_Preferences
 " {
-"
-" nvim > 0.5 or above plugin {
-
-if g:vim_type == 'nvim'
-    if g:vim_version >= 0.5
-    " xiyaowong/nvim-transparent {
-    
-    " }
-
-    " lukas-reineke/indent-blankline.nvim {
-        let g:indent_blankline_use_treesitter = v:true
-        let g:indent_blankline_show_current_context = v:true
-        "let g:indent_blankline_show_current_context_start = v:true
-    " }
-    
+    " Yggdroot/indentLine {
+    if HasPlug('indentLine')
+        let g:indentLine_fileTypeExclude = ['startify']
     endif
-
-    if g:vim_version >= 0.7
-    " nvim-treesitter/nvim-treesitter {
-    
     " }
+
+    " mhinz/vim-startify {
+    if HasPlug("vim-startify")
+        if g:vim_type == 'nvim'
+            let buffer_str_len = (&columns - 60) / 2
+            let buf_str = repeat(' ', buffer_str_len)
+            let g:startify_custom_header = [
+                \ buf_str . ' __    __  ________   ______   __     __  ______  __       __ ',
+                \ buf_str . '|  \  |  \|        \ /      \ |  \   |  \|      \|  \     /  \',
+                \ buf_str . '| $$\ | $$| $$$$$$$$|  $$$$$$\| $$   | $$ \$$$$$$| $$\   /  $$',
+                \ buf_str . '| $$$\| $$| $$__    | $$  | $$| $$   | $$  | $$  | $$$\ /  $$$',
+                \ buf_str . '| $$$$\ $$| $$  \   | $$  | $$ \$$\ /  $$  | $$  | $$$$\  $$$$',
+                \ buf_str . '| $$\$$ $$| $$$$$   | $$  | $$  \$$\  $$   | $$  | $$\$$ $$ $$',
+                \ buf_str . '| $$ \$$$$| $$_____ | $$__/ $$   \$$ $$   _| $$_ | $$ \$$$| $$',
+                \ buf_str . '| $$  \$$$| $$     \ \$$    $$    \$$$   |   $$ \| $$  \$ | $$',
+                \ buf_str . ' \$$   \$$ \$$$$$$$$  \$$$$$$      \$     \$$$$$$ \$$      \$$',
+                \]
+        else
+            let buffer_str_len = (&columns - 30) / 2
+            let buf_str = repeat(' ', buffer_str_len)
+            let g:startify_custom_header = [
+                \ buf_str . ' __     __  ______  __       __ ',
+                \ buf_str . '|  \   |  \|      \|  \     /  \',
+                \ buf_str . '| $$   | $$ \$$$$$$| $$\   /  $$',
+                \ buf_str . '| $$   | $$  | $$  | $$$\ /  $$$',
+                \ buf_str . ' \$$\ /  $$  | $$  | $$$$\  $$$$',
+                \ buf_str . '  \$$\  $$   | $$  | $$\$$ $$ $$',
+                \ buf_str . '   \$$ $$   _| $$_ | $$ \$$$| $$',
+                \ buf_str . '    \$$$   |   $$ \| $$  \$ | $$',
+                \ buf_str . '     \$     \$$$$$$ \$$      \$$',
+                \]
+        endif
+
+        let g:startify_lists = [
+            \ { 'header': ['   RECENT'],            'type': 'files' },
+            \ { 'header': ['   SESSIONS'],       'type': 'sessions' },
+            \ { 'header': ['   WORKING DIR: '. getcwd()], 'type': 'dir' },
+        \ ]
     endif
-endif
-" }
+    " }
     " simeji/winresizer {
-    if isdirectory(plugin_dir . "/winresizer")
+    if HasPlug("winresizer")
         let g:winresizer_vert_resize  = 2
         let g:winresizer_horiz_resize = 2
         nnoremap <C-w>r :WinResizerStartResize<CR>
     endif
+    " }
 
     " ludovicchabant/vim-gutentags {
-    if isdirectory(plugin_dir . "/vim-gutentags")
+    if HasPlug("vim-gutentags")
         if exists("*gutentags#statusline()")
             set statusline+=%{gutentags#statusline()}
         endif
         let g:gutentags_cache_dir=g:vim_dir . '/.vimtags/'
         let g:gutentags_project_root=['.git', '.hg', '.svn', '.bzr', '_darcs', '_FOSSIL_', '.fslckout', 'src']
     endif
-    "}
+    " }
 
     " easymotion/vim-easymotion {
     
@@ -202,7 +233,7 @@ endif
     " }
 
     " antoinemadec/coc-fzf {
-    if isdirectory(plugin_dir . "/coc-fzf")
+    if HasPlug("coc-fzf")
         nnoremap <silent> <space><space> :<C-u>CocFzfList<CR>
         nnoremap <leader>o       :<C-u>CocFzfList outline<CR>
     endif
@@ -228,7 +259,7 @@ endif
     " }
 
     " airblade/vim-rooter {
-    if isdirectory(plugin_dir . "/vim-rooter")
+    if HasPlug("vim-rooter")
         let g:rooter_patterns = ['.vscode', '.git', '*.sln', 'src']
         let g:rooter_change_directory_for_non_project_files = 'current'
         let g:rooter_silent_chdir = 1
@@ -236,7 +267,7 @@ endif
     " }
     
     " NerdTree {
-        if (g:vim_type == 'vim' || g:vim_version < 0.8) && isdirectory(plugin_dir . '/nerdtree')
+        if (g:vim_type == 'vim' || g:vim_version < 0.8) && HasPlug('nerdtree')
             let g:NERDShutUp=1
 
             " work around for nerdtree bug: https://github.com/preservim/nerdtree/issues/1321
@@ -246,7 +277,8 @@ endif
             "nnoremap <C-e> :NERDTreeToggle<CR>
             function! NERDTreeFindToggle()
                 let my_filetype = &filetype
-                if my_filetype == 'nerdtree' || my_filetype == ''
+                let specical_fts = ['nerdtree', 'startify']
+                if  my_filetype == '' || index(specical_fts, my_filetype) >= 0
                     :NERDTreeToggle
                 else
                     :NERDTreeFind
@@ -268,7 +300,7 @@ endif
     " }
     
     " nvim-tree.lua {
-        if g:vim_type == 'nvim' && isdirectory(plugin_dir . "/nvim-tree.lua")
+        if g:vim_type == 'nvim' && HasPlug("nvim-tree.lua")
 
             " Hide vim bottom statusline
             " autocmd FileType NvimTree setlocal noshowmode noruler laststatus=0 noshowcmd
@@ -277,13 +309,13 @@ endif
         endif
     " }
      
-    "if has('nvim') && str2float(g:nvim_version) >= 0.5 && isdirectory(plugin_dir . "/lualine.nvim")
+    "if has('nvim') && str2float(g:nvim_version) >= 0.5 && HasPlug("lualine.nvim")
     " nvim-lualine/lualine.nvim {
     " }
     "else
     "
     " vim-airline {
-    if g:vim_type == 'vim' && isdirectory(plugin_dir . "/vim-airline")
+    if g:vim_type == 'vim' && HasPlug("vim-airline")
         " Set configuration options for the statusline plugin vim-airline.
         " Use the powerline theme and optionally enable powerline symbols.
         
@@ -325,7 +357,7 @@ endif
             \ 'V'      : 'V',
             \ ''     : 'V',
             \ }
-        if isdirectory(plugin_dir . "/vim-airline-themes/")
+        if HasPlug("vim-airline-themes/")
             "let g:airline_theme = 'solarized'
         endif
     endif
@@ -355,7 +387,7 @@ endif
     " }
     
     " neoclide/coc.nvim {
-    if isdirectory(plugin_dir . "/coc.nvim/") && executable('node')
+    if HasPlug("coc.nvim") && executable('node')
         " add desired extensions to the following global variable
         " coc-clangd: c/c++, may need to install clangd seperatly
         let g:coc_global_extensions = ['coc-pyright', 'coc-rls', 'coc-clangd', 'coc-tsserver', 'coc-html', 'coc-cmake', 'coc-json', 'coc-sh', 'coc-java']
@@ -561,7 +593,7 @@ endif
 
 
     " vim theme 
-    if !has('nvim') && isdirectory(plugin_dir . "/papercolor-theme") 
+    if !has('nvim') && HasPlug("papercolor-theme") && HasPlug('papercolor-theme')
         set t_Co=256
         " improve coc color in this theme
         let g:light_theme = 'PaperColor'              
@@ -572,12 +604,12 @@ endif
 
         " nvim only theme
     if has('nvim')
-        if g:vim_version >= 0.8 && isdirectory(plugin_dir . "/nightfox.nvim")
+        if g:vim_version >= 0.8 && HasPlug("nightfox.nvim")
             let g:light_theme = 'dawnfox'
             "let g:dark_theme = 'nightfox'
         end   
 
-        if g:vim_version >= 0.5 && isdirectory(plugin_dir . "/github-nvim-theme")
+        if g:vim_version >= 0.5 && HasPlug("/github-nvim-theme")
             " let g:dark_theme = 'github_dark'
             " let g:dark_theme = 'github_dark_default'
             let g:dark_theme = 'github_dimmed'
@@ -682,6 +714,13 @@ endif
     " split window comform with other window management shortcuts
     nnoremap <silent> <C-w>% :vsplit<CR>
     nnoremap <silent> <C-w>" :split<CR>
+
+    " session related KeyBinding. These KeyBinding uses function from startify
+    nnoremap <silent> <C-s>s :SSave<CR>
+    nnoremap <silent> <C-s>l :SLoad<CR>
+    nnoremap <silent> <C-s>d :SDelete!<CR>
+    nnoremap <silent> <C-s>c :SClose<CR>
+    
 " }
 "
 " Lua configuration
