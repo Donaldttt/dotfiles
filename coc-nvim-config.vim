@@ -74,3 +74,12 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+"COC LSP SETTING
+" let g:coc_user_config = {
+" \   'suggest.noselect': v:true,
+" \   'suggest.enablePreselect': v:false, }
+
+
+call coc#config("java.jdt.ls.vmargs", '-javaagent:/Users/nactang/.dotfiles/config/coc/java/lombok-1.18.26.jar')
+call coc#config("java.jdt.ls.lombokSupport.enabled", v:false)
