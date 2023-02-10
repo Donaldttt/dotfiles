@@ -18,9 +18,9 @@
 " Plugin_Install
 " {
     " Plugin environment
-    let config_dir = '~/.dotfiles/'
-    let plugin_dir = '~/.vim/plugged/'
-    let g:vim_dir = '~/.vim/'
+    let g:mydotfiles_directory = expand('~/.dotfiles/')
+    let plugin_dir = expand('~/.vim/plugged/')
+    let g:vim_dir = expand('~/.vim/')
 
     call plug#begin(plugin_dir)
 
@@ -166,14 +166,14 @@ if g:vim_type == 'nvim'
 endif
 " }
     " simeji/winresizer {
-    if isdirectory(expand(plugin_dir . "/winresizer"))
+    if isdirectory(plugin_dir . "/winresizer")
         let g:winresizer_vert_resize  = 2
         let g:winresizer_horiz_resize = 2
         nnoremap <C-w>r :WinResizerStartResize<CR>
     endif
 
     " ludovicchabant/vim-gutentags {
-    if isdirectory(expand(plugin_dir . "/vim-gutentags"))
+    if isdirectory(plugin_dir . "/vim-gutentags")
         if exists("*gutentags#statusline()")
             set statusline+=%{gutentags#statusline()}
         endif
@@ -202,7 +202,7 @@ endif
     " }
 
     " antoinemadec/coc-fzf {
-    if isdirectory(expand(plugin_dir . "/coc-fzf"))
+    if isdirectory(plugin_dir . "/coc-fzf")
         nnoremap <silent> <space><space> :<C-u>CocFzfList<CR>
         nnoremap <leader>o       :<C-u>CocFzfList outline<CR>
     endif
@@ -228,7 +228,7 @@ endif
     " }
 
     " airblade/vim-rooter {
-    if isdirectory(expand(plugin_dir . "/vim-rooter"))
+    if isdirectory(plugin_dir . "/vim-rooter")
         let g:rooter_patterns = ['.vscode', '.git', '*.sln', 'src']
         let g:rooter_change_directory_for_non_project_files = 'current'
         let g:rooter_silent_chdir = 1
@@ -236,14 +236,13 @@ endif
     " }
     
     " NerdTree {
-        if (g:vim_type == 'vim' || g:vim_version < 0.8) && isdirectory(expand(plugin_dir . "/nerdtree"))
+        if (g:vim_type == 'vim' || g:vim_version < 0.8) && isdirectory(plugin_dir . '/nerdtree')
             let g:NERDShutUp=1
 
             " work around for nerdtree bug: https://github.com/preservim/nerdtree/issues/1321
             let g:NERDTreeMinimalMenu=1
 
             "nnoremap <C-e> :NERDTreeToggle<CR>
-            " nnoremap <leader>e :NERDTreeToggle<CR>
             function! NERDTreeFindToggle()
                 let my_filetype = &filetype
                 if my_filetype == 'nerdtree' || my_filetype == ''
@@ -268,7 +267,7 @@ endif
     " }
     
     " nvim-tree.lua {
-        if g:vim_type == 'nvim' && isdirectory(expand(plugin_dir . "/nvim-tree.lua"))
+        if g:vim_type == 'nvim' && isdirectory(plugin_dir . "/nvim-tree.lua")
 
             " Hide vim bottom statusline
             " autocmd FileType NvimTree setlocal noshowmode noruler laststatus=0 noshowcmd
@@ -277,13 +276,13 @@ endif
         endif
     " }
      
-    "if has('nvim') && str2float(g:nvim_version) >= 0.5 && isdirectory(expand(plugin_dir . "/lualine.nvim"))
+    "if has('nvim') && str2float(g:nvim_version) >= 0.5 && isdirectory(plugin_dir . "/lualine.nvim")
     " nvim-lualine/lualine.nvim {
     " }
     "else
     "
     " vim-airline {
-    if g:vim_type == 'vim' && isdirectory(expand(plugin_dir . "/vim-airline"))
+    if g:vim_type == 'vim' && isdirectory(plugin_dir . "/vim-airline")
         " Set configuration options for the statusline plugin vim-airline.
         " Use the powerline theme and optionally enable powerline symbols.
         
@@ -325,7 +324,7 @@ endif
             \ 'V'      : 'V',
             \ ''     : 'V',
             \ }
-        if isdirectory(expand(plugin_dir . "/vim-airline-themes/"))
+        if isdirectory(plugin_dir . "/vim-airline-themes/")
             "let g:airline_theme = 'solarized'
         endif
     endif
@@ -355,13 +354,13 @@ endif
     " }
     
     " neoclide/coc.nvim {
-    if isdirectory(expand(plugin_dir . "/coc.nvim/")) && executable('node')
+    if isdirectory(plugin_dir . "/coc.nvim/") && executable('node')
         " add desired extensions to the following global variable
         " coc-clangd: c/c++, may need to install clangd seperatly
         let g:coc_global_extensions = ['coc-pyright', 'coc-rls', 'coc-clangd', 'coc-tsserver', 'coc-html', 'coc-cmake', 'coc-json', 'coc-sh', 'coc-java']
 
-        if filereadable(expand(config_dir . "/coc-nvim-config.vim"))
-            exec "source " . config_dir . "/coc-nvim-config.vim"
+        if filereadable(g:mydotfiles_directory . "/coc-nvim-config.vim")
+            exec "source " . g:mydotfiles_directory . "/coc-nvim-config.vim"
         endif
         " warning that coc work best for vim >= 8.3
         let g:coc_disable_startup_warning = 1
@@ -390,7 +389,7 @@ endif
     endfunc
 
     " dark or light
-    if filereadable(expand(g:vim_dir . '.light_theme.signal'))
+    if filereadable(g:vim_dir . '.light_theme.signal')
         let g:dark_or_white_theme = 'light'              
     else
         let g:dark_or_white_theme = 'dark'              
@@ -410,10 +409,10 @@ endif
     " exist and set respect variable
     let g:transparent_dark_theme = v:false     
     let g:transparent_light_theme = v:false     
-    if filereadable(expand(g:vim_dir . '.transparent_dark_theme.signal'))
+    if filereadable(g:vim_dir . '.transparent_dark_theme.signal')
         let g:transparent_dark_theme = v:true     
     endif
-    if filereadable(expand(g:vim_dir . '.transparent_light_theme.signal'))
+    if filereadable(g:vim_dir . '.transparent_light_theme.signal')
         let g:transparent_light_theme = v:true     
     endif
 
@@ -526,8 +525,8 @@ endif
 
     " delete signal file if exist
     function! DeleteSignalFile(name)
-        if filereadable(expand(g:vim_dir . a:name))
-            call delete(expand(g:vim_dir . a:name))
+        if filereadable(g:vim_dir . a:name)
+            call delete(g:vim_dir . a:name)
         endif
     endfunction
     
@@ -561,7 +560,7 @@ endif
 
 
     " vim theme 
-    if !has('nvim') && isdirectory(expand(plugin_dir . "/papercolor-theme")) 
+    if !has('nvim') && isdirectory(plugin_dir . "/papercolor-theme") 
         set t_Co=256
         " improve coc color in this theme
         let g:light_theme = 'PaperColor'              
@@ -572,12 +571,12 @@ endif
 
         " nvim only theme
     if has('nvim')
-        if g:vim_version >= 0.8 && isdirectory(expand(plugin_dir . "/nightfox.nvim"))
+        if g:vim_version >= 0.8 && isdirectory(plugin_dir . "/nightfox.nvim")
             let g:light_theme = 'dawnfox'
             "let g:dark_theme = 'nightfox'
         end   
 
-        if g:vim_version >= 0.5 && isdirectory(expand(plugin_dir . "/github-nvim-theme"))
+        if g:vim_version >= 0.5 && isdirectory(plugin_dir . "/github-nvim-theme")
             let g:dark_theme = 'github_dark'
             let g:airline_dark_theme = "hybrid"               
         end
@@ -683,8 +682,8 @@ endif
 " }
 "
 " Lua configuration
-    if g:vim_type == 'nvim' && filereadable(expand(g:dotfile_path . '.vimrc.lua'))
-        execute('source ' . g:dotfile_path . '/.vimrc.lua')
+    if g:vim_type == 'nvim' && filereadable(g:mydotfiles_directory . '.vimrc.lua')
+        execute('source ' . g:mydotfiles_directory . '/.vimrc.lua')
     endif
 "   
 " Useful_Info{
