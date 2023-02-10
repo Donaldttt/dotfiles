@@ -76,10 +76,10 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 "COC LSP SETTING
-" let g:coc_user_config = {
-" \   'suggest.noselect': v:true,
-" \   'suggest.enablePreselect': v:false, }
-
+let g:coc_user_config = {
+\   'suggest.noselect': v:true,
+\   'suggest.enablePreselect': v:false, }
 
 call coc#config("java.jdt.ls.vmargs", '-javaagent:' . g:mydotfiles_directory . '/config/coc/java/lombok-1.18.26.jar')
 call coc#config("java.jdt.ls.lombokSupport.enabled", v:false)
+call coc#config("java.inlayHints.parameterNames.enabled", v:false)

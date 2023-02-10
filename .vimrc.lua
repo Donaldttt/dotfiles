@@ -3,6 +3,18 @@ local vim_version_minor = vim_version['minor']
 
 -- debug
 -- print(vim.inspect(version))
+--
+local function github_theme_config()
+    -- Example config in Lua
+    require("github-theme").setup({
+        -- Overwrite the highlight groups
+        overrides = function(c)
+        return {
+            NormalFloat = { link = 'Pmenu' },
+        }
+        end
+    })
+end
 
 local function transparent_config()
     require("transparent").setup({
@@ -179,6 +191,7 @@ end
 if vim_version_minor >= 5 then
     transparent_config()
     lualine_config()
+    github_theme_config()
 end
 if vim_version_minor >= 7 then
     nvim_treesitter_config()

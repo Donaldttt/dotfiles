@@ -82,7 +82,7 @@
         endif
 
         if executable('node')
-            Plug 'neoclide/coc.nvim', {'branch': 'release'}
+             Plug 'neoclide/coc.nvim', {'branch': 'release'}
         endif
 
         " only work with nvim > 0.5
@@ -94,7 +94,7 @@
                 Plug 'lukas-reineke/indent-blankline.nvim'
                 " nvim theme
                 Plug 'EdenEast/nightfox.nvim'
-                Plug 'projekt0n/github-nvim-theme'
+                Plug 'projekt0n/github-nvim-theme', { 'tag': 'v0.0.7' }
 
                 Plug 'nvim-lualine/lualine.nvim'
 
@@ -240,7 +240,8 @@ endif
             let g:NERDShutUp=1
 
             " work around for nerdtree bug: https://github.com/preservim/nerdtree/issues/1321
-            let g:NERDTreeMinimalMenu=1
+            let g:NERDTreeMinimalMenu = v:true
+            let g:NERDTreeMinimalUI = v:true
 
             "nnoremap <C-e> :NERDTreeToggle<CR>
             function! NERDTreeFindToggle()
@@ -690,3 +691,4 @@ endif
 "   show mapping info
 "   :verbose map ,cf
 " }
+

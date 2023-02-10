@@ -2,6 +2,10 @@
 " Environment {
     " get current neovim version
     let g:vim_version = -1
+
+    " dotfile location
+    let g:mydotfiles_directory = expand('~/.dotfiles/')
+    let after_directory = g:mydotfiles_directory . 'config/vi-plugs/coc-theme/after/'
     if has('nvim')
         let g:vim_type = 'nvim'
         let g:vim_version = matchstr(execute('version'), 'NVIM v\zs[^\n]*')
@@ -13,6 +17,7 @@
     let g:dotfile_path = '~/.dotfiles/'
 
     set runtimepath^=~/.vim runtimepath+=~/.vim/after
+    execute('set runtimepath^=' . after_directory)
     let &packpath=&runtimepath
 
     " The default leader is '\', but many people prefer ',' as it's in a standard
