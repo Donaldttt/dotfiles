@@ -578,7 +578,9 @@ endif
         end   
 
         if g:vim_version >= 0.5 && isdirectory(plugin_dir . "/github-nvim-theme")
-            let g:dark_theme = 'github_dark'
+            " let g:dark_theme = 'github_dark'
+            " let g:dark_theme = 'github_dark_default'
+            let g:dark_theme = 'github_dimmed'
             let g:airline_dark_theme = "hybrid"               
         end
     endif

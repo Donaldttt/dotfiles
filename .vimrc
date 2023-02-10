@@ -85,7 +85,7 @@
 "
     " set tabpagemax=15               " Only show 15 tabs
     " set showmode                    " Display the current mode
-    set cursorline                    " Highlight current line
+    " set cursorline                    " Highlight current line
 
     " get rid of current line highlight, instead just highlight the number column
     augroup CLClear
