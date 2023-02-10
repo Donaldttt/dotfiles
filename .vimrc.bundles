@@ -694,3 +694,6 @@ endif
 "   :verbose map ,cf
 " }
 
+if filereadable(g:mydotfiles_directory . "/config/theme.vim")
+    exec "source " . g:mydotfiles_directory . "/config/theme.vim"
+endif

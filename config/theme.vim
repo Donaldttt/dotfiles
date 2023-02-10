@@ -36,3 +36,21 @@ function! ThemeFix()
     end
 endfunction
 
+function! GetRidOfBg()
+    let hiGroups = ['CocErrorSign']
+    for group in hiGroups
+        if hlexists(group)
+            execute('hi ' . group . ' ctermbg=none')
+        endif
+    endfor
+endfunction
+
+function! CocThemeFix()
+    hi CocErrorHighlight cterm=underline ctermfg=124 ctermbg=none
+    hi Error cterm=underline ctermfg=124 ctermbg=none
+    hi javaError cterm=underline ctermfg=124 ctermbg=none
+    call GetRidOfBg()
+endfunction
+
+call CocThemeFix()
+au! ColorScheme * call CocThemeFix()
