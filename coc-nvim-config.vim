@@ -6,6 +6,8 @@ else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
+set updatetime=300
+
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
@@ -83,3 +85,4 @@ let g:coc_user_config = {
 call coc#config("java.jdt.ls.vmargs", '-javaagent:' . g:mydotfiles_directory . '/config/coc/java/lombok-1.18.26.jar')
 call coc#config("java.jdt.ls.lombokSupport.enabled", v:false)
 call coc#config("java.inlayHints.parameterNames.enabled", v:false)
+call coc#config("inlayHint.enable", v:false)

@@ -16,6 +16,20 @@ local function github_theme_config()
     })
 end
 
+local function color_picker_nvim_config()
+    -- config for ziontee113/color-picker.nvim
+    require("color-picker").setup({
+        ["keymap"] = { -- mapping example:
+            ["U"] = "<Plug>ColorPickerSlider5Decrease",
+            ["O"] = "<Plug>ColorPickerSlider5Increase",
+        },
+    })
+    local opts = { noremap = true, silent = true }
+
+    vim.keymap.set("n", "cp", "<cmd>PickColor<cr>", opts)
+    -- vim.keymap.set("i", "<C-u>c", "<cmd>PickColorInsert<cr>", opts)
+end
+
 local function indent_blankline_config()
     -- Example config in Lua
     require("indent_blankline").setup {
@@ -205,6 +219,7 @@ if vim_version_minor >= 5 then
 end
 if vim_version_minor >= 7 then
     nvim_treesitter_config()
+    color_picker_nvim_config()
     -- lsp_zero_config()
 end
 if vim_version_minor >= 8 then

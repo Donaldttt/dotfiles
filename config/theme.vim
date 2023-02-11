@@ -2,7 +2,6 @@
 function! GetHi(group, term)
    " Store output of group to variable
    let output = execute('hi ' . a:group)
-
    " Find the term we're looking for
    return matchstr(output, a:term.'=\zs\S*')
 endfunction
@@ -37,7 +36,7 @@ function! ThemeFix()
 endfunction
 
 function! GetRidOfBg()
-    let hiGroups = ['CocErrorSign']
+    let hiGroups = ['CocErrorSign', 'CocWarningSign', 'CocHintSign']
     for group in hiGroups
         if hlexists(group)
             execute('hi ' . group . ' ctermbg=none')
@@ -46,10 +45,21 @@ function! GetRidOfBg()
 endfunction
 
 function! CocThemeFix()
-    hi CocErrorHighlight cterm=underline ctermfg=124 ctermbg=none
+    hi CocErrorHighlight cterm=underline ctermfg=124 ctermbg=none   " Keyword at the error position highlight
+    hi CocErrorSign ctermbg=none ctermfg=124       " Error Sign at the sign column highlight 
+
+    hi CocWarningSign ctermbg=none ctermfg=214     " Warning Sign at the sign column highlight 
+    hi CocHintSign ctermbg=none ctermfg=214        " Hint Sign at the sign column highlight 
+    hi CocUnusedHighlight cterm=underline ctermfg=214 ctermbg=none    " Unused variable/function etc. highlight
+    hi CocWarningHighlight cterm=underline ctermfg=214 ctermbg=none    " Warning variable/function etc. highlight
+
+    hi CocInfoHighlight ctermfg=207 ctermbg=none    " Info variable/function etc. highlight
+    hi CocInfoSign ctermbg=none ctermfg=207        " Info Sign at the sign column highlight 
+
+    hi Todo ctermbg=none ctermfg=214        " Info Sign at the sign column highlight 
+    
     hi Error cterm=underline ctermfg=124 ctermbg=none
     hi javaError cterm=underline ctermfg=124 ctermbg=none
-    call GetRidOfBg()
 endfunction
 
 call CocThemeFix()

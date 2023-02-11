@@ -43,6 +43,9 @@ program_exists() {
 # return 0 if exists
 # 1 not contain string
 # 2 file not exist
+# when using this function:
+# file path should not be quoted but like this:
+# file_contains 'abc' file_path 
 file_contains(){
     if [ -f "$2" ]; then
         a=`grep "$1" $2`

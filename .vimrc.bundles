@@ -128,6 +128,7 @@
                 " comment out this plugin if the machine doesn't have required
                 " font install
                 Plug 'nvim-tree/nvim-web-devicons'
+                Plug 'ziontee113/color-picker.nvim'
             endif
             if g:vim_version >= 0.8
                 Plug 'nvim-tree/nvim-tree.lua'
@@ -327,7 +328,7 @@ endfunction
         
         " This must using my fork version of bufferline
         "
-        let g:bufferline_max_length   = &columns - 22
+        let g:bufferline_max_length = &columns - 22
         function! BufferNumber()
             return len(g:index_to_buffer)
         endfunction
@@ -720,10 +721,10 @@ endfunction
     nnoremap <silent> <C-w>" :split<CR>
 
     " session related KeyBinding. These KeyBinding uses function from startify
-    nnoremap <silent> <C-s>s :SSave<CR>
-    nnoremap <silent> <C-s>l :SLoad<CR>
-    nnoremap <silent> <C-s>d :SDelete!<CR>
-    nnoremap <silent> <C-s>c :SClose<CR>
+    nnoremap <silent> <leader><leader>s :SSave<CR>
+    nnoremap <silent> <leader><leader>l :SLoad<CR>
+    nnoremap <silent> <leader><leader>d :SDelete!<CR>
+    nnoremap <silent> <leader><leader>c :SClose<CR>
     
 " }
 "
