@@ -1,4 +1,10 @@
 
+" let g:coc_global_extensions = ['coc-pyright', 'coc-rls', 'coc-clangd', 'coc-tsserver', 'coc-html', 'coc-cmake', 'coc-json', 'coc-sh', 'coc-java']
+let g:coc_global_extensions = ['coc-pyright', 'coc-tsserver']
+
+g:coc_data_home = g:vim_dir . '/coc'
+g:coc_config_home = g:vim_dir . '/coc'
+
 " Use <c-space> to trigger completion.
 if has('nvim')
   inoremap <silent><expr> <c-space> coc#refresh()

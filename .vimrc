@@ -6,6 +6,8 @@
     " dotfile location
     let g:mydotfiles_directory = expand('~/.dotfiles/')
     let after_directory = g:mydotfiles_directory . 'config/vi-plugs/coc-theme/after/'
+
+    " detect vim type(vim or nvim)
     if has('nvim')
         let g:vim_type = 'nvim'
         let g:vim_version = matchstr(execute('version'), 'NVIM v\zs[^\n]*')
@@ -13,6 +15,14 @@
         let g:vim_type = 'vim'
         let g:vim_version = matchstr(execute('version'), 'Vi IMproved \zs[^\n]*')
     endif
+
+    " detect operating system (Windows/Linux/Darwin)
+    if has("win64") || has("win32") || has("win16")
+        let g:os = "Windows"
+    else
+        let g:os = substitute(system('uname'), '\n', '', '')
+    endif
+
     let g:vim_version = str2float(g:vim_version)
     let g:dotfile_path = '~/.dotfiles/'
 

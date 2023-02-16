@@ -19,7 +19,7 @@ def exist(app):
 
 def program_must_exist(app):
     if not exist(app):
-        fatal_error(app, "must be installed to continue")
+        fatal_error("must be installed to continue")
 
 def fatal_error(msg):
     print('Error:', msg)
