@@ -52,46 +52,6 @@ local function transparent_config()
     })
 end
 
-local function lsp_zero_config()
-    -- Learn the keybindings, see :help lsp-zero-keybindings
-    -- Learn to configure LSP servers, see :help lsp-zero-api-showcase
-    local lsp = require('lsp-zero')
-    lsp.preset('recommended')
-      -- make sure this servers are installed
-      -- see :help lsp-zero.ensure_installed()
-    lsp.ensure_installed({
-        'rust_analyzer',
-        'tsserver',
-        'eslint',
-        'sumneko_lua',
-        'jdtls',
-        'vimls',
-    })
-    -- local cmp = require('cmp')
-
-    lsp.setup_nvim_cmp({
-        -- mapping = cmp.mapping.preset.insert({
-        --     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-        --     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        -- }),
-        formatting = {
-            format = function(entry, vim_item)
-                local len = string.len(vim_item.abbr)
-                vim_item.abbr = string.sub(vim_item.abbr, 1, 30)
-                if len > 30 then
-                    vim_item.abbr = vim_item.abbr .. '...'
-                end
-                return vim_item
-            end
-        }
-    })
-
-    -- (Optional) Configure lua language server for neovim
-    lsp.nvim_workspace()
-
-    lsp.setup()
-end
-
 local function lualine_config()
     for i=1,9 do
         vim.api.nvim_set_keymap('n', '<Leader>'..i, ':LualineBuffersJump '..i..'<CR>', { noremap = true, silent = true, nowait = true })
