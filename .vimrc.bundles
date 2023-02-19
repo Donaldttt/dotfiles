@@ -18,30 +18,26 @@
 " Plugin_Install
 " {
     " Plugin environment
-    let config_dir = '~/.dotfiles/'
-    let plugin_dir = '~/.vim/plugged/'
-    let g:vim_dir = '~/.vim/'
+    let g:mydotfiles_directory = expand('~/.dotfiles/')
+    let s:plugin_dir = expand('~/.vim/plugged/')
+    let g:vim_dir = expand('~/.vim/')
 
-    call plug#begin(plugin_dir)
+    call plug#begin(s:plugin_dir)
 
-        " make sure to install nodejs to use coc.nvim
-        if executable('node')
-            Plug 'neoclide/coc.nvim', {'branch': 'release'}
-        endif
-
-        Plug 'rust-lang/rust.vim'
-
+        "Plug 'NoahTheDuke/vim-just'
+        " Plug 'mbbill/undotree'
         " {
-            Plug 'alvan/vim-closetag'
-            let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.js'
+            " Plug 'alvan/vim-closetag'
+            " let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.js'
         " }
-        
 
         " for markdown{
-            Plug 'preservim/vim-markdown'
+            " Plug 'preservim/vim-markdown'
         "}
         
+        Plug 'dstein64/vim-startuptime'
         Plug 'simeji/winresizer'
+        Plug 'rust-lang/rust.vim'
         
         Plug 'tpope/vim-surround'
         Plug 'rhysd/conflict-marker.vim'
@@ -51,6 +47,7 @@
 
         "Plug 'easymotion/vim-easymotion'
         Plug 'vim-scripts/restore_view.vim'
+        Plug 'mhinz/vim-startify'
 
         if executable('fzf')
             " fzf#install() makes sure that you have the latest binary, comment out because I don't want it to install binary for me
@@ -61,25 +58,32 @@
 
         Plug 'NLKNguyen/papercolor-theme'
         Plug 'airblade/vim-rooter'
-        Plug 'mbbill/undotree'
-        Plug 'tpope/vim-commentary'
+
+        " Comment stuff out
+        Plug 'tpope/vim-commentary' 
 
         " put text in neibouring tmux pane into auto complete
         Plug 'wellle/tmux-complete.vim'
-        Plug 'NoahTheDuke/vim-just'
 
-        Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp', 'vim'] }
+        Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
         Plug 'lambdalisue/readablefold.vim'
 
         " only work with vim 
         if g:vim_type == 'vim'
+            set encoding=UTF-8
             Plug 'scrooloose/nerdtree'
+            Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
             " Plug 'tribela/vim-transparent'
             Plug 'vim-airline/vim-airline'
             Plug 'vim-airline/vim-airline-themes'
             " The bottom buffer display
             Plug 'Donaldttt/vim-bufferline'
-            " Plug 'itchyny/lightline.vim'
+            Plug 'ryanoasis/vim-devicons'
+            Plug 'Yggdroot/indentLine'
+        endif
+
+        if executable('node')
+             Plug 'neoclide/coc.nvim', {'branch': 'release'}
         endif
 
         " only work with nvim > 0.5
@@ -91,7 +95,7 @@
                 Plug 'lukas-reineke/indent-blankline.nvim'
                 " nvim theme
                 Plug 'EdenEast/nightfox.nvim'
-                Plug 'projekt0n/github-nvim-theme'
+                Plug 'projekt0n/github-nvim-theme', { 'tag': 'v0.0.7' }
 
                 Plug 'nvim-lualine/lualine.nvim'
 
@@ -102,6 +106,7 @@
                 " comment out this plugin if the machine doesn't have required
                 " font install
                 Plug 'nvim-tree/nvim-web-devicons'
+                Plug 'ziontee113/color-picker.nvim'
             endif
             if g:vim_version >= 0.8
                 Plug 'nvim-tree/nvim-tree.lua'
@@ -114,48 +119,84 @@
     call plug#end()
 " }
 
+function! HasPlug(plug_name, ...)
+    let plug_dir_name = get(a:, 1, a:plug_name) " optional argument for the name of plug's folder
+    if has_key(g:plugs, a:plug_name) && isdirectory(s:plugin_dir . "/" . plug_dir_name)
+        return v:true
+    endif
+        return v:false
+endfunction
+
 " Plugin_Preferences
 " {
-"
-" nvim > 0.5 or above plugin {
-
-if g:vim_type == 'nvim'
-    if g:vim_version >= 0.5
-    " xiyaowong/nvim-transparent {
-    
-    " }
-
-    " lukas-reineke/indent-blankline.nvim {
-        let g:indent_blankline_use_treesitter = v:true
-        let g:indent_blankline_show_current_context = v:true
-        "let g:indent_blankline_show_current_context_start = v:true
-    " }
-    
+    " Yggdroot/indentLine {
+    if HasPlug('indentLine')
+        let g:indentLine_fileTypeExclude = ['startify']
     endif
-
-    if g:vim_version >= 0.7
-    " nvim-treesitter/nvim-treesitter {
-    
     " }
+
+    " mhinz/vim-startify {
+    if HasPlug("vim-startify")
+        if g:vim_type == 'nvim'
+            let buffer_str_len = (&columns - 60) / 2
+            let buf_str = repeat(' ', buffer_str_len)
+            let g:startify_custom_header = [
+                \ buf_str . ' __    __  ________   ______   __     __  ______  __       __ ',
+                \ buf_str . '|  \  |  \|        \ /      \ |  \   |  \|      \|  \     /  \',
+                \ buf_str . '| $$\ | $$| $$$$$$$$|  $$$$$$\| $$   | $$ \$$$$$$| $$\   /  $$',
+                \ buf_str . '| $$$\| $$| $$__    | $$  | $$| $$   | $$  | $$  | $$$\ /  $$$',
+                \ buf_str . '| $$$$\ $$| $$  \   | $$  | $$ \$$\ /  $$  | $$  | $$$$\  $$$$',
+                \ buf_str . '| $$\$$ $$| $$$$$   | $$  | $$  \$$\  $$   | $$  | $$\$$ $$ $$',
+                \ buf_str . '| $$ \$$$$| $$_____ | $$__/ $$   \$$ $$   _| $$_ | $$ \$$$| $$',
+                \ buf_str . '| $$  \$$$| $$     \ \$$    $$    \$$$   |   $$ \| $$  \$ | $$',
+                \ buf_str . ' \$$   \$$ \$$$$$$$$  \$$$$$$      \$     \$$$$$$ \$$      \$$',
+                \]
+        else
+            let buffer_str_len = (&columns - 30) / 2
+            let buf_str = repeat(' ', buffer_str_len)
+            let g:startify_custom_header = [
+                \ buf_str . ' __     __  ______  __       __ ',
+                \ buf_str . '|  \   |  \|      \|  \     /  \',
+                \ buf_str . '| $$   | $$ \$$$$$$| $$\   /  $$',
+                \ buf_str . '| $$   | $$  | $$  | $$$\ /  $$$',
+                \ buf_str . ' \$$\ /  $$  | $$  | $$$$\  $$$$',
+                \ buf_str . '  \$$\  $$   | $$  | $$\$$ $$ $$',
+                \ buf_str . '   \$$ $$   _| $$_ | $$ \$$$| $$',
+                \ buf_str . '    \$$$   |   $$ \| $$  \$ | $$',
+                \ buf_str . '     \$     \$$$$$$ \$$      \$$',
+                \]
+        endif
+
+        let g:startify_lists = [
+            \ { 'header': ['   RECENT'],            'type': 'files' },
+            \ { 'header': ['   SESSIONS'],       'type': 'sessions' },
+        \ ]
     endif
-endif
-" }
+    " }
+    "
+    " ryanoasis/vim-devicons {
+    if HasPlug("vim-devicons")
+        let g:webdevicons_enable_airline_statusline = 0
+    endif
+    " }
+    "
     " simeji/winresizer {
-    if isdirectory(expand(plugin_dir . "/winresizer"))
+    if HasPlug("winresizer")
         let g:winresizer_vert_resize  = 2
         let g:winresizer_horiz_resize = 2
         nnoremap <C-w>r :WinResizerStartResize<CR>
     endif
+    " }
 
     " ludovicchabant/vim-gutentags {
-    if isdirectory(expand(plugin_dir . "/vim-gutentags"))
+    if HasPlug("vim-gutentags")
         if exists("*gutentags#statusline()")
             set statusline+=%{gutentags#statusline()}
         endif
         let g:gutentags_cache_dir=g:vim_dir . '/.vimtags/'
         let g:gutentags_project_root=['.git', '.hg', '.svn', '.bzr', '_darcs', '_FOSSIL_', '.fslckout', 'src']
     endif
-    "}
+    " }
 
     " easymotion/vim-easymotion {
     
@@ -177,7 +218,7 @@ endif
     " }
 
     " antoinemadec/coc-fzf {
-    if isdirectory(expand(plugin_dir . "/coc-fzf"))
+    if HasPlug("coc-fzf")
         nnoremap <silent> <space><space> :<C-u>CocFzfList<CR>
         nnoremap <leader>o       :<C-u>CocFzfList outline<CR>
     endif
@@ -203,7 +244,7 @@ endif
     " }
 
     " airblade/vim-rooter {
-    if isdirectory(expand(plugin_dir . "/vim-rooter"))
+    if HasPlug("vim-rooter")
         let g:rooter_patterns = ['.vscode', '.git', '*.sln', 'src']
         let g:rooter_change_directory_for_non_project_files = 'current'
         let g:rooter_silent_chdir = 1
@@ -211,17 +252,18 @@ endif
     " }
     
     " NerdTree {
-        if (g:vim_type == 'vim' || g:vim_version < 0.8) && isdirectory(expand(plugin_dir . "/nerdtree"))
+        if (g:vim_type == 'vim' || g:vim_version < 0.8) && HasPlug('nerdtree')
             let g:NERDShutUp=1
 
             " work around for nerdtree bug: https://github.com/preservim/nerdtree/issues/1321
-            let g:NERDTreeMinimalMenu=1
+            let g:NERDTreeMinimalMenu = v:true
+            let g:NERDTreeMinimalUI = v:true
 
             "nnoremap <C-e> :NERDTreeToggle<CR>
-            " nnoremap <leader>e :NERDTreeToggle<CR>
             function! NERDTreeFindToggle()
                 let my_filetype = &filetype
-                if my_filetype == 'nerdtree' || my_filetype == ''
+                let specical_fts = ['nerdtree', 'startify']
+                if  my_filetype == '' || index(specical_fts, my_filetype) >= 0
                     :NERDTreeToggle
                 else
                     :NERDTreeFind
@@ -243,7 +285,7 @@ endif
     " }
     
     " nvim-tree.lua {
-        if g:vim_type == 'nvim' && isdirectory(expand(plugin_dir . "/nvim-tree.lua"))
+        if g:vim_type == 'nvim' && HasPlug("nvim-tree.lua")
 
             " Hide vim bottom statusline
             " autocmd FileType NvimTree setlocal noshowmode noruler laststatus=0 noshowcmd
@@ -252,47 +294,29 @@ endif
         endif
     " }
      
-    "if has('nvim') && str2float(g:nvim_version) >= 0.5 && isdirectory(expand(plugin_dir . "/lualine.nvim"))
+    "if has('nvim') && str2float(g:nvim_version) >= 0.5 && HasPlug("lualine.nvim")
     " nvim-lualine/lualine.nvim {
     " }
     "else
     "
-    " itchyny/lightline.vim {
-    if g:vim_type == 'vim' && isdirectory(expand(plugin_dir . "/lightline.vim"))
-        set laststatus=2
-        let g:lightline = {
-          \ 'colorscheme': 'wombat',
-          \ 'active': {
-          \   'left': [ [ 'mode', 'paste' ],
-          \             [ 'buffers' ] ]
-          \ },
-          \ 'component_function': {
-          \   'buffers': 'bufferline#get_echo_string'
-          \ },
-          \ }
-    endif
-    " }
-    "
     " vim-airline {
-    if g:vim_type == 'vim' && isdirectory(expand(plugin_dir . "/vim-airline"))
+    if g:vim_type == 'vim' && HasPlug("vim-airline")
         " Set configuration options for the statusline plugin vim-airline.
         " Use the powerline theme and optionally enable powerline symbols.
         
         " This must using my fork version of bufferline
         "
-        let g:bufferline_max_length   = &columns - 25
+        let g:bufferline_max_length = &columns - 22
         function! BufferNumber()
             return len(g:index_to_buffer)
         endfunction
         call airline#parts#define_function('bufnum', 'BufferNumber')
 
-        let g:airline_section_b       = ''
-        let g:airline_section_x       = ''
-        "let g:airline_section_gutter  = ''
-        let g:airline_section_y       = airline#section#create(['bufnum'])
+        let g:airline_extensions = ['bufferline']
+        let g:airline_section_x       = airline#section#create(['bufnum'])
+        let g:airline_section_y       = ''
         let g:airline_section_z       = airline#section#create(['filetype'])
-        let g:airline_section_warning = ''
-        let g:airline_section_error   = ''
+        let g:airline_skip_empty_sections = 1
         "let g:airline_exclude_filetypes = ['nerdtree'] " see source for current list
         let g:airline#extensions#nerdtree_statusline = 0
         "let g:airline#extensions#bufferline#overwrite_variables = 0
@@ -316,7 +340,7 @@ endif
             \ 'V'      : 'V',
             \ ''     : 'V',
             \ }
-        if isdirectory(expand(plugin_dir . "/vim-airline-themes/"))
+        if HasPlug("vim-airline-themes/")
             "let g:airline_theme = 'solarized'
         endif
     endif
@@ -331,7 +355,11 @@ endif
 
         "   - Preview window on the right with 50% width
         "   - CTRL-/ will toggle preview window.
-        let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+        if g:os == 'Windows'
+            let g:fzf_preview_window = []
+        else
+            let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+        end
 
 
         " check if ripgrep is installed
@@ -346,19 +374,12 @@ endif
     " }
     
     " neoclide/coc.nvim {
-    if isdirectory(expand(plugin_dir . "/coc.nvim/")) && executable('node')
+    if HasPlug("coc.nvim") && executable('node')
         " add desired extensions to the following global variable
-        " coc-tsserver: javascript
-        " coc-pyright: python
         " coc-clangd: c/c++, may need to install clangd seperatly
-        let g:coc_global_extensions = ['coc-pyright', 'coc-rls', 'coc-clangd', 'coc-tsserver', 'coc-html', 'coc-cmake', 'coc-json', 'coc-sh', 'coc-java']
 
-        let g:coc_user_config = {
-        \   'suggest.noselect': v:true,
-        \   'suggest.enablePreselect': v:false }
-
-        if filereadable(expand(config_dir . "/.exp-coc-config"))
-            exec "source " . config_dir . "/.exp-coc-config"
+        if filereadable(g:mydotfiles_directory . "/coc-nvim-config.vim")
+            exec "source " . g:mydotfiles_directory . "/coc-nvim-config.vim"
         endif
         " warning that coc work best for vim >= 8.3
         let g:coc_disable_startup_warning = 1
@@ -387,7 +408,7 @@ endif
     endfunc
 
     " dark or light
-    if filereadable(expand(g:vim_dir . '.light_theme.signal'))
+    if filereadable(g:vim_dir . '.light_theme.signal')
         let g:dark_or_white_theme = 'light'              
     else
         let g:dark_or_white_theme = 'dark'              
@@ -407,10 +428,10 @@ endif
     " exist and set respect variable
     let g:transparent_dark_theme = v:false     
     let g:transparent_light_theme = v:false     
-    if filereadable(expand(g:vim_dir . '.transparent_dark_theme.signal'))
+    if filereadable(g:vim_dir . '.transparent_dark_theme.signal')
         let g:transparent_dark_theme = v:true     
     endif
-    if filereadable(expand(g:vim_dir . '.transparent_light_theme.signal'))
+    if filereadable(g:vim_dir . '.transparent_light_theme.signal')
         let g:transparent_light_theme = v:true     
     endif
 
@@ -441,26 +462,29 @@ endif
     " Fix colorscheme not working correctly under transparent background
     " There is no plugin for this for nvim < 0.5 or vim without lua support
     function! TransparentBackgroundFix()
-        "if !has('nvim') || g:vim_version < 0.5
-        if v:true
-        "if v:false
+        if !has('nvim') || g:vim_version < 0.5
+        " if v:true
+        " if v:true
+            highlight CursorLineNr ctermbg=none
             highlight SignColumn ctermbg=none
-            "highlight CursorLineNr ctermbg=none
-            highlight CocWarningHighlight ctermbg=none
-            highlight CocErrorSign ctermbg=none ctermfg=9 cterm=bold
-            highlight CocErrorHighlight ctermbg=none ctermfg=9 cterm=underline,bold
-            highlight CocInfoHighlight ctermbg=none
-            highlight CocHintHighlight ctermbg=none
-            highlight CocWarningSign ctermbg=none
-            highlight CocInfoSign    ctermbg=none
-            highlight CocHintSign    ctermbg=none
-            if g:dark_or_white_theme == 'dark'
-                highlight! link TempColor Visual
-                highlight! link CocFloating     TempColor
-                highlight! link CocErrorFloat   TempColor
-                highlight! link CocWarningFloat TempColor
-                highlight! link CocInfoFloat    TempColor
-                highlight! link CocHintFloat    TempColor
+            if v:false
+                "highlight CursorLineNr ctermbg=none
+                highlight CocWarningHighlight ctermbg=none
+                highlight CocErrorSign ctermbg=none ctermfg=9 cterm=bold
+                highlight CocErrorHighlight ctermbg=none ctermfg=9 cterm=underline,bold
+                highlight CocInfoHighlight ctermbg=none
+                highlight CocHintHighlight ctermbg=none
+                highlight CocWarningSign ctermbg=none
+                highlight CocInfoSign    ctermbg=none
+                highlight CocHintSign    ctermbg=none
+                if g:dark_or_white_theme == 'dark'
+                    highlight! link TempColor Visual
+                    highlight! link CocFloating     TempColor
+                    highlight! link CocErrorFloat   TempColor
+                    highlight! link CocWarningFloat TempColor
+                    highlight! link CocInfoFloat    TempColor
+                    highlight! link CocHintFloat    TempColor
+                endif
             endif
         endif
     endfunction
@@ -489,6 +513,7 @@ endif
                 execute("colorscheme " . g:light_theme)
             endif
         endif
+        call TransparentBackgroundFix()
     endfunction
 
     function! DisableTransparent()
@@ -519,8 +544,8 @@ endif
 
     " delete signal file if exist
     function! DeleteSignalFile(name)
-        if filereadable(expand(g:vim_dir . a:name))
-            call delete(expand(g:vim_dir . a:name))
+        if filereadable(g:vim_dir . a:name)
+            call delete(g:vim_dir . a:name)
         endif
     endfunction
     
@@ -550,12 +575,11 @@ endif
                 call CreateSignalFile('.transparent_light_theme.signal')
             endif
         endif
-        call TransparentBackgroundFix()
     endfunction
 
 
     " vim theme 
-    if !has('nvim') && isdirectory(expand(plugin_dir . "/papercolor-theme")) 
+    if !has('nvim') && HasPlug("papercolor-theme") && HasPlug('papercolor-theme')
         set t_Co=256
         " improve coc color in this theme
         let g:light_theme = 'PaperColor'              
@@ -566,13 +590,15 @@ endif
 
         " nvim only theme
     if has('nvim')
-        if g:vim_version >= 0.8 && isdirectory(expand(plugin_dir . "/nightfox.nvim"))
+        if g:vim_version >= 0.8 && HasPlug("nightfox.nvim")
             let g:light_theme = 'dawnfox'
             "let g:dark_theme = 'nightfox'
         end   
 
-        if g:vim_version >= 0.5 && isdirectory(expand(plugin_dir . "/github-nvim-theme"))
+        if g:vim_version >= 0.5 && HasPlug("/github-nvim-theme")
             let g:dark_theme = 'github_dark'
+            " let g:dark_theme = 'github_dark_default'
+            " let g:dark_theme = 'github_dimmed'
             let g:airline_dark_theme = "hybrid"               
         end
     endif
@@ -588,12 +614,13 @@ endif
 
     " Since in .vimrc we cannot call plugin function as they
     " are not loaded (:help startup)
-    if g:transparent_dark_theme && g:dark_or_white_theme == 'dark' || g:transparent_light_theme && g:dark_or_white_theme == 'light'
+    if (g:transparent_dark_theme && g:dark_or_white_theme == 'dark') || (g:transparent_light_theme && g:dark_or_white_theme == 'light')
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             let g:transparent_enabled = v:true
         else
             call EnableTransparent()
         endif
+        call TransparentBackgroundFix()
     else 
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             let g:transparent_enabled = v:false
@@ -602,7 +629,6 @@ endif
         endif
     endif
         
-    call TransparentBackgroundFix()
     " Allow to trigger background
     function! ToggleBG()
         " Inversion
@@ -622,7 +648,6 @@ endif
         else
             call DisableTransparent()
         endif
-        call TransparentBackgroundFix()
     endfunction
 
 " }
@@ -657,32 +682,43 @@ endif
         " nnoremap <Leader>7 :b7<CR>
         " nnoremap <Leader>8 :b8<CR>
         " nnoremap <Leader>9 :b9<CR>
-        nnoremap <nowait> <Leader>1 :call bufferline#jump(1)<CR>
-        nnoremap <nowait> <Leader>2 :call bufferline#jump(2)<CR>
-        nnoremap <nowait> <Leader>3 :call bufferline#jump(3)<CR>
-        nnoremap <nowait> <Leader>4 :call bufferline#jump(4)<CR>
-        nnoremap <nowait> <Leader>5 :call bufferline#jump(5)<CR>
-        nnoremap <nowait> <Leader>6 :call bufferline#jump(6)<CR>
-        nnoremap <nowait> <Leader>7 :call bufferline#jump(7)<CR>
-        nnoremap <nowait> <Leader>8 :call bufferline#jump(8)<CR>
-        nnoremap <nowait> <Leader>9 :call bufferline#jump(9)<CR>
-        nnoremap <nowait> <Space>10 :call bufferline#jump(10)<CR>
-        nnoremap <nowait> <Space>11 :call bufferline#jump(11)<CR>
-        nnoremap <nowait> <Space>12 :call bufferline#jump(12)<CR>
-        nnoremap <nowait> <Space>13 :call bufferline#jump(13)<CR>
+        nnoremap <silent> <nowait> <Leader>1 :call bufferline#jump(1)<CR>
+        nnoremap <silent> <nowait> <Leader>2 :call bufferline#jump(2)<CR>
+        nnoremap <silent> <nowait> <Leader>3 :call bufferline#jump(3)<CR>
+        nnoremap <silent> <nowait> <Leader>4 :call bufferline#jump(4)<CR>
+        nnoremap <silent> <nowait> <Leader>5 :call bufferline#jump(5)<CR>
+        nnoremap <silent> <nowait> <Leader>6 :call bufferline#jump(6)<CR>
+        nnoremap <silent> <nowait> <Leader>7 :call bufferline#jump(7)<CR>
+        nnoremap <silent> <nowait> <Leader>8 :call bufferline#jump(8)<CR>
+        nnoremap <silent> <nowait> <Leader>9 :call bufferline#jump(9)<CR>
+        nnoremap <silent> <nowait> <Space>10 :call bufferline#jump(10)<CR>
+        nnoremap <silent> <nowait> <Space>11 :call bufferline#jump(11)<CR>
+        nnoremap <silent> <nowait> <Space>12 :call bufferline#jump(12)<CR>
+        nnoremap <silent> <nowait> <Space>13 :call bufferline#jump(13)<CR>
     end
 
     " split window comform with other window management shortcuts
     nnoremap <silent> <C-w>% :vsplit<CR>
     nnoremap <silent> <C-w>" :split<CR>
+
+    " session related KeyBinding. These KeyBinding uses function from startify
+    nnoremap <silent> <leader><leader>s :SSave<CR>
+    nnoremap <silent> <leader><leader>l :SLoad<CR>
+    nnoremap <silent> <leader><leader>d :SDelete!<CR>
+    nnoremap <silent> <leader><leader>c :SClose<CR>
+    
 " }
 "
 " Lua configuration
-    if g:vim_type == 'nvim' && filereadable(expand(g:dotfile_path . '.vimrc.lua'))
-        execute('source ' . g:dotfile_path . '/.vimrc.lua')
+    if g:vim_type == 'nvim' && filereadable(g:mydotfiles_directory . '.vimrc.lua')
+        execute('source ' . g:mydotfiles_directory . '/.vimrc.lua')
     endif
 "   
 " Useful_Info{
 "   show mapping info
 "   :verbose map ,cf
 " }
+
+if filereadable(g:mydotfiles_directory . "/config/theme.vim")
+    exec "source " . g:mydotfiles_directory . "/config/theme.vim"
+endif

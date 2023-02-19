@@ -1,41 +1,58 @@
-vim_version = vim.version()
-vim_version_minor = vim_version['minor']
+local vim_version = vim.version()
+local vim_version_minor = vim_version['minor']
 
 -- debug
 -- print(vim.inspect(version))
-
-if vim_version_minor >= 5 then
-
-    require("transparent").setup({
-      enable = true, -- boolean: enable transparent
-      extra_groups = { -- table/string: additional groups that should be cleared
-        -- In particular, when you set it to 'all', that means all available groups
-
-        "NvimTreeNormal",
-        "VertSplit",
-      },
-      exclude = {}, -- table: groups you don't want to clear
+--
+local function github_theme_config()
+    -- Example config in Lua
+    require("github-theme").setup({
+        -- Overwrite the highlight groups
+        overrides = function(c)
+        return {
+            NormalFloat = { link = 'Pmenu' },
+        }
+        end
     })
-
 end
 
-if vim_version_minor >= 7 then
-
-    require('nvim-treesitter.configs').setup {
-        -- ensure_installed = { "c", "bash", "lua" },
-        sync_install = false,
-        auto_install = true,
-        -- ignore_install = { "javascript" },
-        highlight = {
-            enable = true,
-            additional_vim_regex_highlighting = false,
+local function color_picker_nvim_config()
+    -- config for ziontee113/color-picker.nvim
+    require("color-picker").setup({
+        ["keymap"] = { -- mapping example:
+            ["U"] = "<Plug>ColorPickerSlider5Decrease",
+            ["O"] = "<Plug>ColorPickerSlider5Increase",
         },
+    })
+    local opts = { noremap = true, silent = true }
+
+    vim.keymap.set("n", "cp", "<cmd>PickColor<cr>", opts)
+    -- vim.keymap.set("i", "<C-u>c", "<cmd>PickColorInsert<cr>", opts)
+end
+
+local function indent_blankline_config()
+    -- Example config in Lua
+    require("indent_blankline").setup {
+        show_current_context = true,
+        filetype_exclude =   { "lspinfo", "packer", "checkhealth", "help", "man", "", "startify",}
+        -- use_treesitter = true,
     }
 
 end
 
-if vim_version_minor >= 5 then
+local function transparent_config()
+    require("transparent").setup({
+      enable = true, -- boolean: enable transparent
+      extra_groups = { -- table/string: additional groups that should be cleared
+          -- In particular, when you set it to 'all', that means all available groups
+          "NvimTreeNormal",
+          "VertSplit",
+      },
+      exclude = {}, -- table: groups you don't want to clear
+    })
+end
 
+local function lualine_config()
     for i=1,9 do
         vim.api.nvim_set_keymap('n', '<Leader>'..i, ':LualineBuffersJump '..i..'<CR>', { noremap = true, silent = true, nowait = true })
         -- :nnoremap <silent> <Leader>1 :LualineBuffersJump 1<CR>
@@ -54,7 +71,6 @@ if vim_version_minor >= 5 then
           'NvimTree'
         }
     end
-    
     require('lualine').setup {
         options = {
             theme = 'auto', -- lualine theme
@@ -68,7 +84,7 @@ if vim_version_minor >= 5 then
         sections = {
             lualine_a = {'mode'},
             lualine_b = {},
-            lualine_c = { 
+            lualine_c = {
                 {
                 'buffers',
                 mode = 2,
@@ -96,13 +112,22 @@ if vim_version_minor >= 5 then
             lualine_z = {'encoding', 'location'}
         },
     }
-
 end
 
-if vim_version_minor >= 8 then
-    -- nvim-tree configuration
-    --
+local function nvim_treesitter_config()
+    require('nvim-treesitter.configs').setup {
+        -- ensure_installed = { "c", "bash", "lua" },
+        sync_install = false,
+        auto_install = true,
+        -- ignore_install = { "javascript" },
+        highlight = {
+            enable = true,
+            additional_vim_regex_highlighting = false,
+        },
+    }
+end
 
+local function nvim_tree_config()
     -- disable netrw at the very start of your init.lua (strongly advised)
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
@@ -144,8 +169,20 @@ if vim_version_minor >= 8 then
     })
 
     vim.api.nvim_set_keymap('n', '<Leader>e', ':NvimTreeFindFileToggle<CR>', { noremap = true, silent = true })
-
-    --
-    -- nvim-tree configuration end
-    --
 end
+
+if vim_version_minor >= 5 then
+    transparent_config()
+    lualine_config()
+    github_theme_config()
+    indent_blankline_config()
+end
+if vim_version_minor >= 7 then
+    nvim_treesitter_config()
+    color_picker_nvim_config()
+    -- lsp_zero_config()
+end
+if vim_version_minor >= 8 then
+    nvim_tree_config()
+end
+
