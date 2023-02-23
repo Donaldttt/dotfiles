@@ -60,6 +60,9 @@ function! CocThemeFix()
     
     hi Error cterm=underline ctermfg=124 ctermbg=none
     hi javaError cterm=underline ctermfg=124 ctermbg=none
+
+    highlight CursorLineNr ctermbg=none
+    highlight SignColumn ctermbg=none
 endfunction
 
 call CocThemeFix()
