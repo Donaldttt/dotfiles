@@ -81,6 +81,7 @@
             Plug 'Donaldttt/vim-bufferline'
             Plug 'ryanoasis/vim-devicons'
             Plug 'junegunn/goyo.vim'
+            Plug 'sainnhe/everforest'
         endif
 
         if executable('node')
@@ -331,7 +332,8 @@ endfunction
         let g:airline_section_y       = ''
         let g:airline_section_z       = airline#section#create(['filetype'])
         let g:airline_skip_empty_sections = 1
-        "let g:airline_exclude_filetypes = ['nerdtree'] " see source for current list
+        let g:airline_exclude_filetypes = ['nerdtree'] 
+        " see source for current list
         let g:airline#extensions#nerdtree_statusline = 0
         "let g:airline#extensions#bufferline#overwrite_variables = 0
         let g:airline_mode_map = {
@@ -501,7 +503,13 @@ endfunction
         endif
     endfunction
 
+    let g:custom_transparent_function_enable = ''
+    let g:custom_transparent_function_disable = ''
     function! EnableTransparent()
+        if g:custom_transparent_function_enable != ''
+            execute('call ' . g:custom_transparent_function_enable)
+            return
+        endif
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             :TransparentEnable
         else
@@ -529,6 +537,10 @@ endfunction
     endfunction
 
     function! DisableTransparent()
+        if g:custom_transparent_function_disable != ''
+            execute('call ' . g:custom_transparent_function_disable)
+            return
+        endif
         if g:vim_type == 'nvim' && g:vim_version > 0.5
             :TransparentDisable
         else
@@ -579,13 +591,42 @@ endfunction
 
 
     " vim theme 
-    if !has('nvim') && HasPlug("papercolor-theme") && HasPlug('papercolor-theme')
-    set t_Co=256
-        " improve coc color in this theme
-        let g:light_theme = 'PaperColor'              
-        let g:dark_theme = 'PaperColor'
-        "let g:airline_dark_theme = "papercolor"               
-        "let g:airline_light_theme = "papercolor"               
+    if g:vim_type == 'vim' 
+        set t_Co=256
+        if HasPlug("papercolor-theme")
+            " improve coc color in this theme
+            let g:light_theme = 'PaperColor'              
+            let g:dark_theme = 'PaperColor'
+        endif
+        if HasPlug("everforest")
+            set termguicolors
+            let g:light_theme = 'everforest'              
+            let g:dark_theme = 'everforest'
+            let g:airline_dark_theme = "everforest" 
+            let g:airline_light_theme = "everforest"               
+            " let g:everforest_background = 'soft'
+            let g:everforest_better_performance = 1
+            " let g:everforest_enable_italic = 1
+
+            function! Everforest_trans_enable()
+                let g:everforest_transparent_background = 1
+                colorscheme everforest
+                " try
+                "     execute('AirlineTheme  everforest')
+                " catch
+                " endtry
+            endfunction
+            function! Everforest_trans_disable()
+                let g:everforest_transparent_background = 0
+                colorscheme everforest
+                " try
+                "     execute('AirlineTheme  everforest')
+                " catch
+                " endtry
+            endfunction
+            let g:custom_transparent_function_enable = 'Everforest_trans_enable()'
+            let g:custom_transparent_function_disable = 'Everforest_trans_disable()'
+        endif
     endif
 
         " nvim only theme
