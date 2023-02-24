@@ -272,8 +272,8 @@
 "  Note that this means e.g. "ad won't copy the text into
 "  register a anymore.  You have to explicitly yank it.
 "  TIPS: you can type :registers to view value in each registers
-    vnoremap y "+y
-    nnoremap y "+y
+    " vnoremap y "+y
+    " nnoremap y "+y
 
 "   copy to system
     if g:os == 'Darwin' && g:os == 'Windows'

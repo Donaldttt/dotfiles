@@ -364,6 +364,7 @@ endfunction
             \ 'V'      : 'V',
             \ ''     : 'V',
             \ }
+
         if HasPlug("vim-airline-themes/")
             "let g:airline_theme = 'solarized'
         endif
@@ -614,16 +615,15 @@ endfunction
             let g:airline_dark_theme = "everforest" 
             let g:airline_light_theme = "everforest"               
             let g:everforest_better_performance = 1
-            " let g:everforest_background = 'soft'
+            let g:everforest_background = 'hard'
             " let g:everforest_enable_italic = 1
 
             function! Everforest_trans_enable()
                 let g:everforest_transparent_background = 2
                 colorscheme everforest
-                try
+                if exists(':AirlineTheme')
                     execute('AirlineTheme  everforest')
-                catch
-                endtry
+                endif
                 " hack to fix caret characters appearing in the statusline when StatusLine
                 " and StatusLineNC has same highlight(https://vi.stackexchange.com/questions/15873/carets-in-status-line)
                 hi StatusLine guifg=#d3c6aa ctermfg=223
@@ -631,10 +631,9 @@ endfunction
             function! Everforest_trans_disable()
                 let g:everforest_transparent_background = 0
                 colorscheme everforest
-                try
+                if exists(':AirlineTheme')
                     execute('AirlineTheme  everforest')
-                catch
-                endtry
+                endif
             endfunction
             let g:custom_transparent_function_enable = 'Everforest_trans_enable()'
             let g:custom_transparent_function_disable = 'Everforest_trans_disable()'
