@@ -1,5 +1,3 @@
-" Modeline and Notes {
-" Environment {
     " get current neovim version
     let g:vim_version = -1
 
@@ -34,22 +32,19 @@
     let mapleader = ','
     let maplocalleader = '_'
 
-" }
-
 " General {
 
     noremap <leader>h :noh<CR>  " turn off highlight
 
     filetype plugin indent on   " Automatically detect file types.
     syntax on                   " Syntax highlighting
-    "set mouse=a                 " Automatically enable mouse usage
+    set mouse=a                 " Automatically enable mouse usage
     set mousehide               " Hide the mouse cursor while typing
-    scriptencoding utf-8
-
+    " scriptencoding utf-8
 
     " Most prefer to automatically switch to the current file directory when
     " a new buffer is opened;
-    autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
+    " autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
     " Always switch to the current file directory
 
     set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
@@ -104,15 +99,10 @@
 
     set cmdheight=1                 " get rid of the extra useless line at the bottom(if not working, probably a plugin is changing the value)
 
-    "highlight clear SignColumn      " SignColumn should match background
-    "highlight clear LineNr          " Current line number row will have same background color in relative mode
-    "highlight clear CursorLineNr    " Remove highlight color from current line number
-
     if has('cmdline_info')
         set ruler                   " Show the ruler
         set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
         set showcmd                 " Show partial commands in status line and
-
     endif
 
     set backspace=indent,eol,start  " Backspace for dummies
@@ -136,7 +126,6 @@
         
 " Formatting {
 
-    "set nowrap                      " Do not wrap long lines
     set autoindent                  " Indent at the same level of the previous line
     set expandtab                   " Tabs are spaces, not tabs
     set shiftwidth=4                " Use indents of 4 spaces
@@ -173,33 +162,16 @@
     noremap j gj
     noremap k gk
 
-    " Stupid shift key fixes
-    " if !exists('g:spf13_no_keyfixes')
-    "     if has("user_commands")
-    "         command! -bang -nargs=* -complete=file E e<bang> <args>
-    "         command! -bang -nargs=* -complete=file W w<bang> <args>
-    "         command! -bang -nargs=* -complete=file Wq wq<bang> <args>
-    "         command! -bang -nargs=* -complete=file WQ wq<bang> <args>
-    "         command! -bang Wa wa<bang>
-    "         command! -bang WA wa<bang>
-    "         command! -bang Q q<bang>
-    "         command! -bang QA qa<bang>
-    "         command! -bang Qa qa<bang>
-    "     endif
-
-    "     cmap Tabe tabe
-    " endif
-
     " Yank from the cursor to the end of the line, to be consistent with C and D.
     nnoremap Y y$
 
-    if has('nvim')
-        set foldmethod=expr
-        set foldexpr=nvim_treesitter#foldexpr()
-    else
-        set foldmethod=syntax
-        autocmd FileType python set foldmethod=indent
-    endif
+"     if has('nvim')
+"         set foldmethod=expr
+"         set foldexpr=nvim_treesitter#foldexpr()
+"     else
+"         set foldmethod=syntax
+"         autocmd FileType python,vim set foldmethod=indent
+"     endif
 
     " so when a buffer open it wouldn't be fold by default
     set nofoldenable
@@ -228,9 +200,6 @@
     " Easier horizontal scrolling
     map zl zL
     map zh zH
-
-    " Easier formatting
-    " nnoremap <silent> <leader>q gwip
 
 " Functions {
 
@@ -305,14 +274,6 @@
 "  TIPS: you can type :registers to view value in each registers
     vnoremap p "0p
 
-
-"   TIPS: :hi can be used to check current highlight options
-"   Coc has wired floating color, this is an attempt to fix it
-"    highlight CocFloating ctermbg=green
-"    highlight FgCocErrorFloatBgCocFloating cterm=bold ctermfg=124 guifg=DarkRed ctermbg=green
-
-"   c highlight fix
-"    highlight cComment ctermfg=12 guifg=#458588
 
 "   copy to system
     "set clipboard=unnamed

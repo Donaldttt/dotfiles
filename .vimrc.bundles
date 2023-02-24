@@ -37,7 +37,7 @@
         
         Plug 'dstein64/vim-startuptime'
         Plug 'simeji/winresizer'
-        Plug 'rust-lang/rust.vim'
+        Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
         
         Plug 'tpope/vim-surround'
         Plug 'rhysd/conflict-marker.vim'
@@ -64,7 +64,7 @@
         Plug 'tpope/vim-commentary' 
 
         " put text in neibouring tmux pane into auto complete
-        Plug 'wellle/tmux-complete.vim'
+        " Plug 'wellle/tmux-complete.vim'
 
         Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
         Plug 'lambdalisue/readablefold.vim'
@@ -80,7 +80,7 @@
             " The bottom buffer display
             Plug 'Donaldttt/vim-bufferline'
             Plug 'ryanoasis/vim-devicons'
-            " Plug 'Yggdroot/indentLine'
+            Plug 'junegunn/goyo.vim'
         endif
 
         if executable('node')
@@ -182,6 +182,13 @@ endfunction
             \ { 'header': ['   RECENT'],            'type': 'files' },
             \ { 'header': ['   SESSIONS'],       'type': 'sessions' },
         \ ]
+
+        " session related KeyBinding. These KeyBinding uses function from startify
+        nnoremap <silent> <leader><leader>s :SSave<CR>
+        nnoremap <silent> <leader><leader>l :SLoad<CR>
+        nnoremap <silent> <leader><leader>d :SDelete!<CR>
+        nnoremap <silent> <leader><leader>c :SClose<CR>
+    
     endif
     " }
     "
@@ -237,6 +244,7 @@ endfunction
     " }
     
     " bling/vim-bufferline {
+    if HasPlug("vim-bufferline") && HasPlug("vim-airline")
         let g:bufferline_echo = 0
         let g:bufferline_modified = '+'
 
@@ -248,11 +256,14 @@ endfunction
         let g:bufferline_fixed_index = -1 
         let g:bufferline_inactive_highlight = 'StatusLineNC'
         let g:bufferline_active_highlight = 'StatusLine'
+    endif
     
     " }
 
     " mbbill/undotree {
+    if HasPlug("undotree")
         nnoremap <leader>ut :UndotreeToggle<CR>
+    endif
     " }
 
     " airblade/vim-rooter {
@@ -299,20 +310,11 @@ endfunction
     " nvim-tree.lua {
     if g:vim_type == 'nvim' && HasPlug("nvim-tree.lua")
 
-        " Hide vim bottom statusline
-        " autocmd FileType NvimTree setlocal noshowmode noruler laststatus=0 noshowcmd
-        " set noshowmode noruler laststatus=0 noshowcmd
-        " autocmd BufRead,BufNewFile NvimTree set laststatus=0 " This will work instead
     endif
     " }
      
-    "if has('nvim') && str2float(g:nvim_version) >= 0.5 && HasPlug("lualine.nvim")
-    " nvim-lualine/lualine.nvim {
-    " }
-    "else
-    "
     " vim-airline {
-    if g:vim_type == 'vim' && HasPlug("vim-airline")
+    if HasPlug("vim-airline")
         " Set configuration options for the statusline plugin vim-airline.
         " Use the powerline theme and optionally enable powerline symbols.
         
@@ -360,6 +362,7 @@ endfunction
     "endif
 
     " junegunn/fzf {
+    if HasPlug("fzf") && HasPlug("fzf.vim")
         " [Buffers] Jump to the existing window if possible
         let g:fzf_buffers_jump = 1
 
@@ -373,7 +376,6 @@ endfunction
             let g:fzf_preview_window = ['right:50%', 'ctrl-/']
         end
 
-
         " check if ripgrep is installed
         if ! executable('rg')
             command! -bang -nargs=* Rg
@@ -383,11 +385,11 @@ endfunction
         endif
         noremap <leader><leader>r :Rg<CR>
         noremap <leader><leader>f :Files<CR>
+    endif
     " }
     
     " neoclide/coc.nvim {
     if HasPlug("coc.nvim") && executable('node')
-        " add desired extensions to the following global variable
         " coc-clangd: c/c++, may need to install clangd seperatly
 
         if filereadable(g:mydotfiles_directory . "/coc-nvim-config.vim")
@@ -447,9 +449,6 @@ endfunction
         call system("touch " . g:vim_dir . a:name)
     endfunction
 
-    " all signal files:
-    " .transparent_light_theme.signal
-    " .transparent_dark_theme.signal
     function! SignalFileExists(filename)
         if filereadable(g:vim_dir . a:filename)
             return v:true
@@ -489,7 +488,9 @@ endfunction
         if g:vim_type == 'nvim' && g:vim_version >= 0.5
             "execute('AirlineTheme ' . a:theme)
         else
-            execute('AirlineTheme ' . a:theme)
+            if HasPlug('vim-airline') && HasPlug('vim-airline-themes')
+                execute('AirlineTheme ' . a:theme)
+            endif
         endif
     endfunction
 
@@ -497,29 +498,6 @@ endfunction
     " There is no plugin for this for nvim < 0.5 or vim without lua support
     function! TransparentBackgroundFix()
         if !has('nvim') || g:vim_version < 0.5
-        " if v:true
-        " if v:true
-            highlight CursorLineNr ctermbg=none
-            highlight SignColumn ctermbg=none
-            if v:false
-                "highlight CursorLineNr ctermbg=none
-                highlight CocWarningHighlight ctermbg=none
-                highlight CocErrorSign ctermbg=none ctermfg=9 cterm=bold
-                highlight CocErrorHighlight ctermbg=none ctermfg=9 cterm=underline,bold
-                highlight CocInfoHighlight ctermbg=none
-                highlight CocHintHighlight ctermbg=none
-                highlight CocWarningSign ctermbg=none
-                highlight CocInfoSign    ctermbg=none
-                highlight CocHintSign    ctermbg=none
-                if g:dark_or_light_theme == 'dark'
-                    highlight! link TempColor Visual
-                    highlight! link CocFloating     TempColor
-                    highlight! link CocErrorFloat   TempColor
-                    highlight! link CocWarningFloat TempColor
-                    highlight! link CocInfoFloat    TempColor
-                    highlight! link CocHintFloat    TempColor
-                endif
-            endif
         endif
     endfunction
 
@@ -572,7 +550,6 @@ endfunction
                 \   }
                 \ }
                 execute("colorscheme " . g:light_theme)
-                DeleteSignalFile()
             endif
         endif
     endfunction
@@ -663,7 +640,7 @@ endfunction
             call SetDarkTheme()
             call SetStatusLineTheme(g:airline_dark_theme)
             " for saving theme state
-            call DeleteSignalFile(".light_theme.signal")
+            call DeleteSignalFile('.light_theme.signal')
         endif
 
         if (g:transparent_dark_theme && g:dark_or_light_theme == 'dark') || (g:transparent_light_theme && g:dark_or_light_theme == 'light')
@@ -715,12 +692,6 @@ endfunction
     nnoremap <silent> <C-w>% :vsplit<CR>
     nnoremap <silent> <C-w>" :split<CR>
 
-    " session related KeyBinding. These KeyBinding uses function from startify
-    nnoremap <silent> <leader><leader>s :SSave<CR>
-    nnoremap <silent> <leader><leader>l :SLoad<CR>
-    nnoremap <silent> <leader><leader>d :SDelete!<CR>
-    nnoremap <silent> <leader><leader>c :SClose<CR>
-    
 " }
 "
 " Lua configuration
