@@ -71,7 +71,7 @@
         " only work with vim 
         if g:vim_type == 'vim'
             set encoding=UTF-8
-            Plug 'scrooloose/nerdtree'
+            Plug 'scrooloose/nerdtree', { 'on' : ['NERDTreeToggle', 'NERDTreeFind'] }
             Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
             Plug 'vim-airline/vim-airline'
             Plug 'vim-airline/vim-airline-themes'
