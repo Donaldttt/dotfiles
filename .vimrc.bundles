@@ -20,7 +20,6 @@
     " Plugin environment
     let g:mydotfiles_directory = expand('~/.dotfiles/')
     let s:plugin_dir = expand('~/.vim/plugged/')
-    let g:vim_dir = expand('~/.vim/')
 
     call plug#begin(s:plugin_dir)
 
@@ -74,7 +73,6 @@
             set encoding=UTF-8
             Plug 'scrooloose/nerdtree'
             Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-            " Plug 'tribela/vim-transparent'
             Plug 'vim-airline/vim-airline'
             Plug 'vim-airline/vim-airline-themes'
             " The bottom buffer display
@@ -121,6 +119,7 @@
     call plug#end()
 " }
 
+" only work for Plug.vim
 function! HasPlug(plug_name, ...)
     let plug_dir_name = get(a:, 1, a:plug_name) " optional argument for the name of plug's folder
     if has_key(g:plugs, a:plug_name) && isdirectory(s:plugin_dir . "/" . plug_dir_name)
@@ -239,8 +238,8 @@ endfunction
 
     " antoinemadec/coc-fzf {
     if HasPlug("coc-fzf")
-        nnoremap <silent> <space><space> :<C-u>CocFzfList<CR>
-        nnoremap <leader>o       :<C-u>CocFzfList outline<CR>
+        " nnoremap <silent> <space><space> :<C-u>CocFzfList<CR>
+        " nnoremap <leader>o       :<C-u>CocFzfList outline<CR>
     endif
     " }
     
@@ -250,13 +249,11 @@ endfunction
         let g:bufferline_modified = '+'
 
         " scrolling with fixed current buffer position
-        let g:bufferline_rotate = 0
 
         let g:bufferline_active_buffer_left = ''
         let g:bufferline_active_buffer_right = ''
-        let g:bufferline_fixed_index = -1 
-        let g:bufferline_inactive_highlight = 'StatusLineNC'
-        let g:bufferline_active_highlight = 'StatusLine'
+        " let g:bufferline_inactive_highlight = 'StatusLineNC'
+        " let g:bufferline_active_highlight = 'StatusLine'
     endif
     
     " }
@@ -277,6 +274,9 @@ endfunction
     
     " NerdTree {
     if (g:vim_type == 'vim' || g:vim_version < 0.8) && HasPlug('nerdtree')
+        if HasPlug('vim-nerdtree-syntax-highlight')
+            let g:NERDTreeLimitedSyntax = 1
+        endif
         let g:NERDShutUp=1
 
         " work around for nerdtree bug: https://github.com/preservim/nerdtree/issues/1321
@@ -301,8 +301,14 @@ endfunction
         let NERDTreeQuitOnOpen       = 1
         let NERDTreeMouseMode        = 2
         let NERDTreeShowHidden       = 1
-        let NERDTreeKeepTreeInNewTab = 1
 
+        if HasPlug('vim-devicons')
+            let NERDTreeDirArrowCollapsible = ''
+            let NERDTreeDirArrowExpandable = ''
+        else
+            " let NERDTreeDirArrowCollapsible = ''
+            " let NERDTreeDirArrowExpandable = ''
+        endif
         " Exit Vim if NERDTree is the only window remaining in the only tab.
         autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
     endif
@@ -313,7 +319,7 @@ endfunction
 
     endif
     " }
-     
+    
     " vim-airline {
     if HasPlug("vim-airline")
         " Set configuration options for the statusline plugin vim-airline.
@@ -332,10 +338,12 @@ endfunction
         let g:airline_section_y       = ''
         let g:airline_section_z       = airline#section#create(['filetype'])
         let g:airline_skip_empty_sections = 1
-        let g:airline_exclude_filetypes = ['nerdtree'] 
+        " let g:airline_exclude_filetypes = ['nerdtree'] 
         " see source for current list
         let g:airline#extensions#nerdtree_statusline = 0
-        "let g:airline#extensions#bufferline#overwrite_variables = 0
+
+        " without this airline will overwrite some setting like bufferline_active_buffer_left, etc.
+        let g:airline#extensions#bufferline#overwrite_variables = 0
         let g:airline_mode_map = {
             \ '__'     : '-',
             \ 'c'      : 'C',
@@ -533,7 +541,6 @@ endfunction
                 execute("colorscheme " . g:light_theme)
             endif
         endif
-        " call TransparentBackgroundFix()
     endfunction
 
     function! DisableTransparent()
@@ -599,30 +606,35 @@ endfunction
             let g:dark_theme = 'PaperColor'
         endif
         if HasPlug("everforest")
-            set termguicolors
+            if has('termguicolors')
+              set termguicolors
+            endif
             let g:light_theme = 'everforest'              
             let g:dark_theme = 'everforest'
             let g:airline_dark_theme = "everforest" 
             let g:airline_light_theme = "everforest"               
-            " let g:everforest_background = 'soft'
             let g:everforest_better_performance = 1
+            " let g:everforest_background = 'soft'
             " let g:everforest_enable_italic = 1
 
             function! Everforest_trans_enable()
-                let g:everforest_transparent_background = 1
+                let g:everforest_transparent_background = 2
                 colorscheme everforest
-                " try
-                "     execute('AirlineTheme  everforest')
-                " catch
-                " endtry
+                try
+                    execute('AirlineTheme  everforest')
+                catch
+                endtry
+                " hack to fix caret characters appearing in the statusline when StatusLine
+                " and StatusLineNC has same highlight(https://vi.stackexchange.com/questions/15873/carets-in-status-line)
+                hi StatusLine guifg=#d3c6aa ctermfg=223
             endfunction
             function! Everforest_trans_disable()
                 let g:everforest_transparent_background = 0
                 colorscheme everforest
-                " try
-                "     execute('AirlineTheme  everforest')
-                " catch
-                " endtry
+                try
+                    execute('AirlineTheme  everforest')
+                catch
+                endtry
             endfunction
             let g:custom_transparent_function_enable = 'Everforest_trans_enable()'
             let g:custom_transparent_function_disable = 'Everforest_trans_disable()'
@@ -727,6 +739,9 @@ endfunction
         nnoremap <silent> <nowait> <Space>11 :call bufferline#jump(11)<CR>
         nnoremap <silent> <nowait> <Space>12 :call bufferline#jump(12)<CR>
         nnoremap <silent> <nowait> <Space>13 :call bufferline#jump(13)<CR>
+        nnoremap <silent> <nowait> <Space>14 :call bufferline#jump(14)<CR>
+        nnoremap <silent> <nowait> <Space>15 :call bufferline#jump(15)<CR>
+        nnoremap <silent> <nowait> <Space>16 :call bufferline#jump(16)<CR>
     end
 
     " split window comform with other window management shortcuts
@@ -746,5 +761,5 @@ endfunction
 " }
 
 if filereadable(g:mydotfiles_directory . "/config/theme.vim")
-    exec "source " . g:mydotfiles_directory . "/config/theme.vim"
+    " exec "source " . g:mydotfiles_directory . "/config/theme.vim"
 endif

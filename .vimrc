@@ -1,6 +1,9 @@
     " get current neovim version
     let g:vim_version = -1
 
+    " vim runtime folder
+    let g:vim_dir = expand('~/.vim/')
+
     " dotfile location
     let g:mydotfiles_directory = expand('~/.dotfiles/')
     let after_directory = g:mydotfiles_directory . 'config/vi-plugs/coc-theme/after/'
@@ -141,6 +144,7 @@
     "set listchars=tab:•\ ,trail:•,extends:»,precedes:« " Unprintable chars mapping
     set nospell                     " Spell checking off
 
+
     set matchpairs+=<:>             " Match, to be used with %
     "set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 
@@ -203,28 +207,20 @@
 
 " Functions {
 
-    " Initialize directories for undo, swap, viewdir
+    " Initialize directories for undo, swap, viewdir (see :h undodir, etc.)
     " to ~/.vim/.vim*
     function! InitializeDirectories()
-        let parent = $HOME
-        let prefix = 'vim'
+        let common_dir = g:vim_dir
         let dir_list = {
-                    \ 'backup': 'backupdir',
-                    \ 'views': 'viewdir',
-                    \ 'swap': 'directory' }
+                    \ 'backupdir' : '.vimbackup',
+                    \ 'viewdir' : '.vimviews',
+                    \ 'directory' : '.vimswap' }
 
         if has('persistent_undo')
-            let dir_list['undo'] = 'undodir'
+            let dir_list['undodir'] = '.vimundo'
         endif
 
-        let g:spf13_consolidated_directory = $HOME . '/.vim/.'
-        if exists('g:spf13_consolidated_directory')
-            let common_dir = g:spf13_consolidated_directory . prefix
-        else
-            let common_dir = parent . '/.' . prefix
-        endif
-
-        for [dirname, settingname] in items(dir_list)
+        for [settingname, dirname] in items(dir_list)
             let directory = common_dir . dirname . '/'
             if exists("*mkdir")
                 if !isdirectory(directory)
@@ -243,41 +239,48 @@
     call InitializeDirectories()
 
     " Shell command 
-    function! s:RunShellCommand(cmdline)
-        botright new
+    " function! s:RunShellCommand(cmdline)
+    "     botright new
 
-        setlocal buftype=nofile
-        setlocal bufhidden=delete
-        setlocal nobuflisted
-        setlocal noswapfile
-        setlocal nowrap
-        setlocal filetype=shell
-        setlocal syntax=shell
+    "     setlocal buftype=nofile
+    "     setlocal bufhidden=delete
+    "     setlocal nobuflisted
+    "     setlocal noswapfile
+    "     setlocal nowrap
+    "     setlocal filetype=shell
+    "     setlocal syntax=shell
 
-        call setline(1, a:cmdline)
-        call setline(2, substitute(a:cmdline, '.', '=', 'g'))
-        execute 'silent $read !' . escape(a:cmdline, '%#')
-        setlocal nomodifiable
-    endfunction
+    "     call setline(1, a:cmdline)
+    "     call setline(2, substitute(a:cmdline, '.', '=', 'g'))
+    "     execute 'silent $read !' . escape(a:cmdline, '%#')
+    "     setlocal nomodifiable
+    " endfunction
 
-    command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
+    " command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
     " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
-     
+    
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+    vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+    vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>    
+
 " Fix file type error for typescript
     autocmd BufNewFile,BufRead *.ts set filetype=typescript
-
 
 "  These are to cancel the default behavior of d, D, c, C
 "  to put the text they delete in the default register.
 "  Note that this means e.g. "ad won't copy the text into
 "  register a anymore.  You have to explicitly yank it.
 "  TIPS: you can type :registers to view value in each registers
-    vnoremap p "0p
-
+    vnoremap y "+y
+    nnoremap y "+y
 
 "   copy to system
-    "set clipboard=unnamed
-    set clipboard=unnamedplus
+    if g:os == 'Darwin' && g:os == 'Windows'
+        set clipboard=unnamed
+    else
+        set clipboard=unnamedplus
+    endif
 
 "   fix paste mess up when using tmux
     if &term =~ "screen"
