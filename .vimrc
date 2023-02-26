@@ -276,7 +276,7 @@
     " nnoremap y "+y
 
 "   copy to system
-    if g:os == 'Darwin' && g:os == 'Windows'
+    if g:os == 'Darwin' || g:os == 'Windows'
         set clipboard=unnamed
     else
         set clipboard=unnamedplus

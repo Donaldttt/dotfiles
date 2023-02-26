@@ -33,7 +33,22 @@
         " for markdown{
             " Plug 'preservim/vim-markdown'
         "}
-        
+        if has('nvim')
+            function! UpdateRemotePlugins(...)
+                " Needed to refresh runtime files
+                let &rtp=&rtp
+                UpdateRemotePlugins
+            endfunction
+
+            Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
+        else
+            Plug 'gelguy/wilder.nvim'
+
+            " To use Python remote plugin features in Vim, can be skipped
+            " Plug 'roxma/nvim-yarp'
+            " Plug 'roxma/vim-hug-neovim-rpc'
+        endif       
+
         Plug 'dstein64/vim-startuptime'
         Plug 'simeji/winresizer'
         Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
@@ -135,7 +150,38 @@ endfunction
         let g:indentLine_fileTypeExclude = ['startify']
     endif
     " }
-    
+
+    if HasPlug('wilder.nvim')
+        call wilder#setup({
+              \ 'modes': [':'],
+              \ 'next_key': '<C-n>',
+              \ 'previous_key': '<C-p>',
+              \ })
+
+        call wilder#set_option('pipeline', [
+              \   wilder#branch(
+              \     wilder#cmdline_pipeline(),
+              \     wilder#search_pipeline(),
+              \   ),
+              \ ])
+        call wilder#set_option('renderer', wilder#popupmenu_renderer({
+                    \ 'highlighter': wilder#basic_highlighter(),
+                    \ 'left': [
+                    \  ' ', wilder#popupmenu_devicons(),
+                    \ ],
+                    \ 'right': [
+                    \   ' ', wilder#popupmenu_scrollbar(),
+                    \ ],
+                    \ 'max_height': 6,
+                    \ }))
+        " call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
+        "       \ 'highlights': {
+        "       \   'border': 'Normal',
+        "       \ },
+        "       \ 'border': 'rounded',
+        "       \ })))
+    endif
+
     if HasPlug('vim-tmux-navigator')
         let g:tmux_navigator_no_mappings = 1
 
