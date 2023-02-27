@@ -160,7 +160,13 @@ endfunction
         \ 'vim': ['vimVar', 'vimString', 'vimFuncName',
         \ 'vimFunction', 'vimUserFunc', 'vimFunc']
         \ }
-        let g:Illuminate_ftwhitelist = ['vim', 'sh', 'python', 'rust', 'java', 'c', 'cpp', 'javascript', 'typescript']
+        let g:Illuminate_ftwhitelist = ['vim', 'sh', 'python', 'rust', 'java', 'c', 'cpp', 'javascript', 'typescript', 'lua']
+
+        augroup illuminate_augroup
+            autocmd!
+            " autocmd VimEnter * hi link illuminatedWord CursorLine
+            autocmd VimEnter * hi illuminatedWord cterm=underline gui=underline
+        augroup END
     endif
 
     if HasPlug('wilder.nvim')
