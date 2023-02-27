@@ -77,11 +77,8 @@
         " Comment stuff out
         Plug 'tpope/vim-commentary' 
 
-        " put text in neibouring tmux pane into auto complete
-        " Plug 'wellle/tmux-complete.vim'
-
         Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
-        Plug 'lambdalisue/readablefold.vim'
+        " Plug 'lambdalisue/readablefold.vim'
 
         " only work with vim 
         if g:vim_type == 'vim'
@@ -93,7 +90,7 @@
             " The bottom buffer display
             Plug 'Donaldttt/vim-bufferline'
             Plug 'ryanoasis/vim-devicons'
-            Plug 'junegunn/goyo.vim'
+            " Plug 'lambdalisue/nerdfont.vim'
             Plug 'sainnhe/everforest'
         endif
 
@@ -121,7 +118,6 @@
                 " comment out this plugin if the machine doesn't have required
                 " font install
                 Plug 'nvim-tree/nvim-web-devicons'
-                Plug 'ziontee113/color-picker.nvim'
             endif
             if g:vim_version >= 0.8
                 Plug 'nvim-tree/nvim-tree.lua'
@@ -153,33 +149,27 @@ endfunction
 
     if HasPlug('wilder.nvim')
         call wilder#setup({
-              \ 'modes': [':'],
-              \ 'next_key': '<C-n>',
-              \ 'previous_key': '<C-p>',
-              \ })
+            \ 'modes': [':'],
+            \ 'next_key': '<C-n>',
+            \ 'previous_key': '<C-p>',
+            \ })
 
         call wilder#set_option('pipeline', [
-              \   wilder#branch(
-              \     wilder#cmdline_pipeline(),
-              \     wilder#search_pipeline(),
-              \   ),
-              \ ])
+            \   wilder#branch(
+            \     wilder#cmdline_pipeline(),
+            \     wilder#search_pipeline(),
+            \   ),
+            \ ])
         call wilder#set_option('renderer', wilder#popupmenu_renderer({
-                    \ 'highlighter': wilder#basic_highlighter(),
-                    \ 'left': [
-                    \  ' ', wilder#popupmenu_devicons(),
-                    \ ],
-                    \ 'right': [
-                    \   ' ', wilder#popupmenu_scrollbar(),
-                    \ ],
-                    \ 'max_height': 6,
-                    \ }))
-        " call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
-        "       \ 'highlights': {
-        "       \   'border': 'Normal',
-        "       \ },
-        "       \ 'border': 'rounded',
-        "       \ })))
+            \ 'highlighter': wilder#basic_highlighter(),
+            \ 'left': [
+            \  ' ', wilder#popupmenu_devicons(),
+            \ ],
+            \ 'right': [
+            \   ' ', wilder#popupmenu_scrollbar(),
+            \ ],
+            \ 'max_height': 6,
+            \ }))
     endif
 
     if HasPlug('vim-tmux-navigator')
@@ -348,7 +338,7 @@ endfunction
         let NERDTreeMouseMode        = 2
         let NERDTreeShowHidden       = 1
 
-        if HasPlug('vim-devicons')
+        if HasPlug('vim-devicons') || HasPlug('nerdfont.vim')
             let NERDTreeDirArrowCollapsible = ''
             let NERDTreeDirArrowExpandable = ''
         else

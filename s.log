@@ -1,0 +1,1237 @@
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.006  000.006: --- VIM STARTING ---
+000.070  000.064: Allocated generic buffers
+000.798  000.728: locale set
+000.802  000.004: clipboard setup
+000.806  000.004: window checked
+001.513  000.707: inits 1
+001.520  000.007: parsing arguments
+001.521  000.001: expanding arguments
+005.588  004.067: shell init
+006.055  000.467: Termcap init
+006.071  000.016: inits 2
+006.226  000.155: init highlight
+013.932  006.960  006.960: sourcing /opt/homebrew/share/vim/vim90/filetype.vim
+014.119  000.074  000.074: sourcing /opt/homebrew/share/vim/vim90/ftplugin.vim
+014.268  000.033  000.033: sourcing /opt/homebrew/share/vim/vim90/indent.vim
+015.742  000.945  000.945: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+015.879  001.262  000.317: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+015.960  001.480  000.218: sourcing /opt/homebrew/share/vim/vim90/syntax/synload.vim
+016.063  001.693  000.213: sourcing /opt/homebrew/share/vim/vim90/syntax/syntax.vim
+019.072  001.970  001.970: sourcing /Users/nactang/.vim/autoload/plug.vim
+022.617  000.694  000.694: sourcing /opt/homebrew/share/vim/vim90/ftoff.vim
+029.511  000.024  000.024: sourcing /Users/nactang/.vim/plugged/rust.vim/ftdetect/rust.vim
+029.793  005.308  005.284: sourcing /opt/homebrew/share/vim/vim90/filetype.vim
+030.025  000.012  000.012: sourcing /opt/homebrew/share/vim/vim90/ftplugin.vim
+030.245  000.008  000.008: sourcing /opt/homebrew/share/vim/vim90/indent.vim
+031.231  000.460  000.460: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/parts.vim
+031.720  000.119  000.119: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/init.vim
+032.260  000.012  000.012: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/formatter/short_path.vim
+032.922  001.500  001.369: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/section.vim
+033.905  000.128  000.128: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc.vim
+034.208  000.126  000.126: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/rpc.vim
+034.245  000.848  000.594: sourcing /Users/nactang/.dotfiles//coc-nvim-config.vim
+034.774  000.123  000.123: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+035.159  000.116  000.116: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+035.983  000.579  000.579: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+037.375  000.124  000.124: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+037.726  000.120  000.120: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+042.268  006.125  005.881: sourcing /Users/nactang/.vim/plugged/papercolor-theme/colors/PaperColor.vim
+042.983  000.512  000.512: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+044.539  000.232  000.232: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+045.168  000.216  000.216: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+049.197  006.100  005.652: sourcing /Users/nactang/.vim/plugged/papercolor-theme/colors/PaperColor.vim
+049.471  000.058  000.058: sourcing /Users/nactang/.dotfiles//config/theme.vim
+049.474  032.605  008.192: sourcing /Users/nactang/.vimrc.bundles
+049.478  042.953  001.588: sourcing $HOME/.vimrc
+049.479  000.300: sourcing vimrc file(s)
+049.762  000.068  000.068: sourcing /Users/nactang/.vim/plugged/rust.vim/plugin/cargo.vim
+049.821  000.025  000.025: sourcing /Users/nactang/.vim/plugged/rust.vim/plugin/rust.vim
+050.112  000.208  000.208: sourcing /Users/nactang/.vim/plugged/winresizer/plugin/winresizer.vim
+050.556  000.357  000.357: sourcing /Users/nactang/.vim/plugged/vim-surround/plugin/surround.vim
+050.895  000.253  000.253: sourcing /Users/nactang/.vim/plugged/conflict-marker.vim/plugin/conflict_marker.vim
+051.268  000.291  000.291: sourcing /Users/nactang/.vim/plugged/auto-pairs/plugin/auto-pairs.vim
+051.643  000.140  000.140: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/plugs.vim
+052.187  000.132  000.132: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/maps.vim
+052.418  000.094  000.094: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/maps/all.vim
+053.364  002.011  001.645: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/plugin/visual-multi.vim
+053.504  000.051  000.051: sourcing /Users/nactang/.vim/plugged/restore_view.vim/plugin/restore_view.vim
+053.678  000.091  000.091: sourcing /Users/nactang/.vim/plugged/vim-startify/plugin/startify.vim
+054.256  000.494  000.494: sourcing /Users/nactang/.vim/plugged/fzf/plugin/fzf.vim
+054.973  000.630  000.630: sourcing /Users/nactang/.vim/plugged/fzf.vim/plugin/fzf.vim
+055.116  000.055  000.055: sourcing /Users/nactang/.vim/plugged/coc-fzf/plugin/coc_fzf.vim
+055.359  000.146  000.146: sourcing /Users/nactang/.vim/plugged/vim-rooter/plugin/rooter.vim
+055.579  000.131  000.131: sourcing /Users/nactang/.vim/plugged/vim-commentary/plugin/commentary.vim
+055.708  000.044  000.044: sourcing /Users/nactang/.vim/plugged/tmux-complete.vim/plugin/tmuxcomplete.vim
+055.817  000.011  000.011: sourcing /Users/nactang/.vim/plugged/readablefold.vim/plugin/readablefold.vim
+056.181  000.110  000.110: sourcing /Users/nactang/.vim/plugged/nerdtree/autoload/nerdtree.vim
+056.698  000.281  000.281: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/path.vim
+056.888  000.081  000.081: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/menu_controller.vim
+057.037  000.044  000.044: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/menu_item.vim
+057.201  000.060  000.060: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/key_map.vim
+057.438  000.133  000.133: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/bookmark.vim
+057.673  000.126  000.126: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/tree_file_node.vim
+058.028  000.247  000.247: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/tree_dir_node.vim
+058.240  000.108  000.108: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/opener.vim
+058.482  000.137  000.137: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/creator.vim
+058.612  000.025  000.025: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/flag_set.vim
+058.794  000.078  000.078: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/nerdtree.vim
+059.079  000.181  000.181: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/ui.vim
+059.192  000.010  000.010: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/event.vim
+059.322  000.025  000.025: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/notifier.vim
+059.744  000.305  000.305: sourcing /Users/nactang/.vim/plugged/nerdtree/autoload/nerdtree/ui_glue.vim
+061.425  000.052  000.052: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/exec_menuitem.vim
+061.947  000.485  000.485: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/fs_menu.vim
+062.015  000.030  000.030: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/vcs.vim
+062.371  000.238  000.238: sourcing /Users/nactang/.vim/plugged/vim-devicons/nerdtree_plugin/webdevicons.vim
+062.467  006.574  003.818: sourcing /Users/nactang/.vim/plugged/nerdtree/plugin/NERD_tree.vim
+063.041  000.118  000.118: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/util.vim
+063.098  000.542  000.424: sourcing /Users/nactang/.vim/plugged/vim-airline/plugin/airline.vim
+063.205  000.019  000.019: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/plugin/airline-themes.vim
+063.386  000.095  000.095: sourcing /Users/nactang/.vim/plugged/vim-bufferline/plugin/bufferline.vim
+064.167  000.124  000.124: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline.vim
+065.173  000.007  000.007: sourcing /Users/nactang/.vim/plugged/vim-devicons/autoload/devicons/plugins/startify.vim
+065.188  001.719  001.588: sourcing /Users/nactang/.vim/plugged/vim-devicons/plugin/webdevicons.vim
+065.759  000.243  000.243: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/util.vim
+066.131  000.146  000.146: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/client.vim
+067.744  000.404  000.404: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/api.vim
+068.431  003.151  002.358: sourcing /Users/nactang/.vim/plugged/coc.nvim/plugin/coc.vim
+068.876  000.044  000.044: sourcing /opt/homebrew/share/vim/vim90/plugin/getscriptPlugin.vim
+069.019  000.106  000.106: sourcing /opt/homebrew/share/vim/vim90/plugin/gzip.vim
+069.198  000.143  000.143: sourcing /opt/homebrew/share/vim/vim90/plugin/logiPat.vim
+069.257  000.024  000.024: sourcing /opt/homebrew/share/vim/vim90/plugin/manpager.vim
+069.398  000.105  000.105: sourcing /opt/homebrew/share/vim/vim90/plugin/matchparen.vim
+069.741  000.308  000.308: sourcing /opt/homebrew/share/vim/vim90/plugin/netrwPlugin.vim
+069.792  000.007  000.007: sourcing /opt/homebrew/share/vim/vim90/plugin/rrhelper.vim
+069.846  000.013  000.013: sourcing /opt/homebrew/share/vim/vim90/plugin/spellfile.vim
+069.961  000.076  000.076: sourcing /opt/homebrew/share/vim/vim90/plugin/tarPlugin.vim
+070.079  000.078  000.078: sourcing /opt/homebrew/share/vim/vim90/plugin/tohtml.vim
+070.206  000.086  000.086: sourcing /opt/homebrew/share/vim/vim90/plugin/vimballPlugin.vim
+070.346  000.093  000.093: sourcing /opt/homebrew/share/vim/vim90/plugin/zipPlugin.vim
+070.349  002.821: loading plugins
+070.396  000.047: loading packages
+071.297  000.687  000.687: sourcing /Users/nactang/.vim/plugged/fzf.vim/autoload/fzf/vim.vim
+071.507  000.997  000.310: sourcing /Users/nactang/.vim/plugged/coc-fzf/after/plugin/coc_fzf.vim
+071.878  000.271  000.271: sourcing /Users/nactang/.vim/plugged/indentLine/after/plugin/indentLine.vim
+071.886  000.222: loading after plugins
+071.889  000.003: inits 3
+072.072  000.183: reading viminfo
+072.084  000.012: setting raw mode
+072.090  000.006: start termcap
+072.115  000.025: clearing screen
+072.524  000.199  000.199: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions.vim
+072.708  000.032  000.032: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/quickfix.vim
+072.905  000.019  000.019: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/netrw.vim
+073.077  000.026  000.026: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/fzf.vim
+073.615  000.146  000.146: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/highlighter.vim
+073.815  000.555  000.409: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/term.vim
+074.093  000.068  000.068: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/hunks.vim
+074.332  000.017  000.017: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/bufferline.vim
+074.580  000.029  000.029: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/coc.vim
+074.849  000.086  000.086: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/whitespace.vim
+075.075  000.038  000.038: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/po.vim
+075.292  000.063  000.063: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/wordcount.vim
+075.500  000.017  000.017: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/keymap.vim
+075.835  000.027  000.027: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/searchcount.vim
+079.247  000.037  000.037: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/themes.vim
+079.500  000.446  000.409: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/autoload/airline/themes/angr.vim
+083.912  000.264  000.264: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/autoload/airline/themes/angr.vim
+096.322  000.105  000.105: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/builder.vim
+096.717  000.053  000.053: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/default.vim
+108.947  034.788: opening buffers
+109.889  000.942: BufEnter autocommands
+109.890  000.001: editing files in windows
+110.572  000.480  000.480: sourcing /Users/nactang/.vim/plugged/vim-startify/autoload/startify.vim
+118.333  000.128  000.128: sourcing /Users/nactang/.vim/plugged/vim-startify/syntax/startify.vim
+121.279  000.303  000.303: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/highlight.vim
+121.724  000.291  000.291: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/color.vim
+126.032  014.940: VimEnter autocommands
+126.037  000.005: before starting main loop
+133.456  007.419: first screen update
+133.457  000.001: --- VIM STARTED ---
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.007  000.007: --- VIM STARTING ---
+000.075  000.068: Allocated generic buffers
+000.704  000.629: locale set
+000.708  000.004: clipboard setup
+000.713  000.005: window checked
+001.404  000.691: inits 1
+001.413  000.009: parsing arguments
+001.414  000.001: expanding arguments
+005.618  004.204: shell init
+006.058  000.440: Termcap init
+006.073  000.015: inits 2
+006.218  000.145: init highlight
+013.963  007.026  007.026: sourcing /opt/homebrew/share/vim/vim90/filetype.vim
+014.134  000.064  000.064: sourcing /opt/homebrew/share/vim/vim90/ftplugin.vim
+014.270  000.034  000.034: sourcing /opt/homebrew/share/vim/vim90/indent.vim
+015.653  000.815  000.815: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+015.789  001.136  000.321: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+015.870  001.352  000.216: sourcing /opt/homebrew/share/vim/vim90/syntax/synload.vim
+015.957  001.574  000.222: sourcing /opt/homebrew/share/vim/vim90/syntax/syntax.vim
+018.840  001.914  001.914: sourcing /Users/nactang/.vim/autoload/plug.vim
+022.423  000.732  000.732: sourcing /opt/homebrew/share/vim/vim90/ftoff.vim
+029.686  000.024  000.024: sourcing /Users/nactang/.vim/plugged/rust.vim/ftdetect/rust.vim
+029.983  005.549  005.525: sourcing /opt/homebrew/share/vim/vim90/filetype.vim
+030.228  000.012  000.012: sourcing /opt/homebrew/share/vim/vim90/ftplugin.vim
+030.450  000.008  000.008: sourcing /opt/homebrew/share/vim/vim90/indent.vim
+031.416  000.428  000.428: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/parts.vim
+031.873  000.112  000.112: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/init.vim
+032.374  000.012  000.012: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/formatter/short_path.vim
+033.043  001.431  001.307: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/section.vim
+034.041  000.125  000.125: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc.vim
+034.347  000.127  000.127: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/rpc.vim
+034.383  000.853  000.601: sourcing /Users/nactang/.dotfiles//coc-nvim-config.vim
+034.911  000.122  000.122: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+035.303  000.116  000.116: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+036.108  000.554  000.554: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+037.486  000.120  000.120: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+037.840  000.116  000.116: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+042.270  006.020  005.784: sourcing /Users/nactang/.vim/plugged/papercolor-theme/colors/PaperColor.vim
+042.989  000.514  000.514: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+044.504  000.222  000.222: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+045.136  000.216  000.216: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+049.106  005.997  005.559: sourcing /Users/nactang/.vim/plugged/papercolor-theme/colors/PaperColor.vim
+049.370  000.055  000.055: sourcing /Users/nactang/.dotfiles//config/theme.vim
+049.373  032.691  008.386: sourcing /Users/nactang/.vimrc.bundles
+049.376  042.852  001.463: sourcing $HOME/.vimrc
+049.378  000.308: sourcing vimrc file(s)
+049.651  000.069  000.069: sourcing /Users/nactang/.vim/plugged/rust.vim/plugin/cargo.vim
+049.709  000.024  000.024: sourcing /Users/nactang/.vim/plugged/rust.vim/plugin/rust.vim
+049.961  000.166  000.166: sourcing /Users/nactang/.vim/plugged/vim-startuptime/plugin/startuptime.vim
+050.268  000.222  000.222: sourcing /Users/nactang/.vim/plugged/winresizer/plugin/winresizer.vim
+050.733  000.381  000.381: sourcing /Users/nactang/.vim/plugged/vim-surround/plugin/surround.vim
+051.073  000.254  000.254: sourcing /Users/nactang/.vim/plugged/conflict-marker.vim/plugin/conflict_marker.vim
+051.451  000.296  000.296: sourcing /Users/nactang/.vim/plugged/auto-pairs/plugin/auto-pairs.vim
+051.831  000.137  000.137: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/plugs.vim
+052.410  000.125  000.125: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/maps.vim
+052.581  000.076  000.076: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/maps/all.vim
+053.533  001.998  001.660: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/plugin/visual-multi.vim
+053.670  000.050  000.050: sourcing /Users/nactang/.vim/plugged/restore_view.vim/plugin/restore_view.vim
+053.844  000.089  000.089: sourcing /Users/nactang/.vim/plugged/vim-startify/plugin/startify.vim
+054.412  000.486  000.486: sourcing /Users/nactang/.vim/plugged/fzf/plugin/fzf.vim
+055.116  000.615  000.615: sourcing /Users/nactang/.vim/plugged/fzf.vim/plugin/fzf.vim
+055.250  000.052  000.052: sourcing /Users/nactang/.vim/plugged/coc-fzf/plugin/coc_fzf.vim
+055.471  000.136  000.136: sourcing /Users/nactang/.vim/plugged/vim-rooter/plugin/rooter.vim
+055.675  000.122  000.122: sourcing /Users/nactang/.vim/plugged/vim-commentary/plugin/commentary.vim
+055.796  000.041  000.041: sourcing /Users/nactang/.vim/plugged/tmux-complete.vim/plugin/tmuxcomplete.vim
+055.889  000.011  000.011: sourcing /Users/nactang/.vim/plugged/readablefold.vim/plugin/readablefold.vim
+056.254  000.112  000.112: sourcing /Users/nactang/.vim/plugged/nerdtree/autoload/nerdtree.vim
+056.774  000.285  000.285: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/path.vim
+056.968  000.075  000.075: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/menu_controller.vim
+057.128  000.046  000.046: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/menu_item.vim
+057.293  000.059  000.059: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/key_map.vim
+057.535  000.135  000.135: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/bookmark.vim
+057.774  000.127  000.127: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/tree_file_node.vim
+058.128  000.243  000.243: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/tree_dir_node.vim
+058.343  000.107  000.107: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/opener.vim
+058.592  000.141  000.141: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/creator.vim
+058.724  000.024  000.024: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/flag_set.vim
+058.914  000.081  000.081: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/nerdtree.vim
+059.196  000.178  000.178: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/ui.vim
+059.318  000.015  000.015: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/event.vim
+059.447  000.020  000.020: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/notifier.vim
+059.848  000.278  000.278: sourcing /Users/nactang/.vim/plugged/nerdtree/autoload/nerdtree/ui_glue.vim
+061.545  000.053  000.053: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/exec_menuitem.vim
+062.058  000.476  000.476: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/fs_menu.vim
+062.126  000.031  000.031: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/vcs.vim
+062.486  000.238  000.238: sourcing /Users/nactang/.vim/plugged/vim-devicons/nerdtree_plugin/webdevicons.vim
+062.578  006.612  003.888: sourcing /Users/nactang/.vim/plugged/nerdtree/plugin/NERD_tree.vim
+063.160  000.121  000.121: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/util.vim
+063.219  000.552  000.431: sourcing /Users/nactang/.vim/plugged/vim-airline/plugin/airline.vim
+063.327  000.020  000.020: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/plugin/airline-themes.vim
+063.509  000.096  000.096: sourcing /Users/nactang/.vim/plugged/vim-bufferline/plugin/bufferline.vim
+064.285  000.123  000.123: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline.vim
+065.261  000.006  000.006: sourcing /Users/nactang/.vim/plugged/vim-devicons/autoload/devicons/plugins/startify.vim
+065.275  001.684  001.555: sourcing /Users/nactang/.vim/plugged/vim-devicons/plugin/webdevicons.vim
+065.811  000.226  000.226: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/util.vim
+066.202  000.147  000.147: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/client.vim
+067.780  000.409  000.409: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/api.vim
+068.459  003.097  002.315: sourcing /Users/nactang/.vim/plugged/coc.nvim/plugin/coc.vim
+068.903  000.044  000.044: sourcing /opt/homebrew/share/vim/vim90/plugin/getscriptPlugin.vim
+069.047  000.108  000.108: sourcing /opt/homebrew/share/vim/vim90/plugin/gzip.vim
+069.223  000.139  000.139: sourcing /opt/homebrew/share/vim/vim90/plugin/logiPat.vim
+069.280  000.022  000.022: sourcing /opt/homebrew/share/vim/vim90/plugin/manpager.vim
+069.422  000.107  000.107: sourcing /opt/homebrew/share/vim/vim90/plugin/matchparen.vim
+069.764  000.307  000.307: sourcing /opt/homebrew/share/vim/vim90/plugin/netrwPlugin.vim
+069.816  000.007  000.007: sourcing /opt/homebrew/share/vim/vim90/plugin/rrhelper.vim
+069.869  000.013  000.013: sourcing /opt/homebrew/share/vim/vim90/plugin/spellfile.vim
+069.984  000.076  000.076: sourcing /opt/homebrew/share/vim/vim90/plugin/tarPlugin.vim
+070.102  000.078  000.078: sourcing /opt/homebrew/share/vim/vim90/plugin/tohtml.vim
+070.227  000.085  000.085: sourcing /opt/homebrew/share/vim/vim90/plugin/vimballPlugin.vim
+070.365  000.093  000.093: sourcing /opt/homebrew/share/vim/vim90/plugin/zipPlugin.vim
+070.368  002.838: loading plugins
+070.414  000.046: loading packages
+071.323  000.692  000.692: sourcing /Users/nactang/.vim/plugged/fzf.vim/autoload/fzf/vim.vim
+071.523  000.997  000.305: sourcing /Users/nactang/.vim/plugged/coc-fzf/after/plugin/coc_fzf.vim
+071.890  000.262  000.262: sourcing /Users/nactang/.vim/plugged/indentLine/after/plugin/indentLine.vim
+071.898  000.225: loading after plugins
+071.901  000.003: inits 3
+072.083  000.182: reading viminfo
+072.094  000.011: setting raw mode
+072.100  000.006: start termcap
+072.124  000.024: clearing screen
+072.543  000.209  000.209: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions.vim
+072.727  000.030  000.030: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/quickfix.vim
+072.931  000.021  000.021: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/netrw.vim
+073.105  000.020  000.020: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/fzf.vim
+073.645  000.144  000.144: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/highlighter.vim
+073.843  000.553  000.409: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/term.vim
+074.110  000.071  000.071: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/hunks.vim
+074.349  000.015  000.015: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/bufferline.vim
+074.598  000.028  000.028: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/coc.vim
+074.889  000.101  000.101: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/whitespace.vim
+075.129  000.043  000.043: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/po.vim
+075.356  000.063  000.063: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/wordcount.vim
+075.566  000.016  000.016: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/keymap.vim
+075.882  000.025  000.025: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/searchcount.vim
+079.282  000.038  000.038: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/themes.vim
+079.542  000.463  000.425: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/autoload/airline/themes/angr.vim
+083.914  000.262  000.262: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/autoload/airline/themes/angr.vim
+096.277  000.111  000.111: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/builder.vim
+096.680  000.055  000.055: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/default.vim
+108.859  034.649: opening buffers
+109.781  000.922: BufEnter autocommands
+109.782  000.001: editing files in windows
+110.431  000.474  000.474: sourcing /Users/nactang/.vim/plugged/vim-startify/autoload/startify.vim
+118.082  000.124  000.124: sourcing /Users/nactang/.vim/plugged/vim-startify/syntax/startify.vim
+121.031  000.300  000.300: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/highlight.vim
+121.466  000.276  000.276: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/color.vim
+125.773  014.817: VimEnter autocommands
+125.774  000.001: before starting main loop
+133.224  007.450: first screen update
+133.226  000.002: --- VIM STARTED ---
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.006  000.006: --- VIM STARTING ---
+000.074  000.068: Allocated generic buffers
+000.737  000.663: locale set
+000.741  000.004: clipboard setup
+000.745  000.004: window checked
+001.353  000.608: inits 1
+001.360  000.007: parsing arguments
+001.361  000.001: expanding arguments
+005.121  003.760: shell init
+005.537  000.416: Termcap init
+005.553  000.016: inits 2
+005.695  000.142: init highlight
+012.919  006.530  006.530: sourcing /opt/homebrew/share/vim/vim90/filetype.vim
+013.095  000.061  000.061: sourcing /opt/homebrew/share/vim/vim90/ftplugin.vim
+013.235  000.034  000.034: sourcing /opt/homebrew/share/vim/vim90/indent.vim
+014.543  000.832  000.832: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+014.680  001.131  000.299: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+014.761  001.325  000.194: sourcing /opt/homebrew/share/vim/vim90/syntax/synload.vim
+014.850  001.529  000.204: sourcing /opt/homebrew/share/vim/vim90/syntax/syntax.vim
+017.500  001.710  001.710: sourcing /Users/nactang/.vim/autoload/plug.vim
+020.918  000.713  000.713: sourcing /opt/homebrew/share/vim/vim90/ftoff.vim
+027.899  000.025  000.025: sourcing /Users/nactang/.vim/plugged/rust.vim/ftdetect/rust.vim
+028.190  005.289  005.264: sourcing /opt/homebrew/share/vim/vim90/filetype.vim
+028.431  000.012  000.012: sourcing /opt/homebrew/share/vim/vim90/ftplugin.vim
+028.664  000.008  000.008: sourcing /opt/homebrew/share/vim/vim90/indent.vim
+029.666  000.462  000.462: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/parts.vim
+030.135  000.114  000.114: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/init.vim
+030.674  000.012  000.012: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/formatter/short_path.vim
+031.412  001.556  001.430: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/section.vim
+032.486  000.125  000.125: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc.vim
+032.792  000.126  000.126: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/rpc.vim
+032.828  000.865  000.614: sourcing /Users/nactang/.dotfiles//coc-nvim-config.vim
+033.350  000.122  000.122: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+033.746  000.117  000.117: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+034.573  000.573  000.573: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+035.939  000.122  000.122: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+036.291  000.117  000.117: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+040.895  006.179  005.940: sourcing /Users/nactang/.vim/plugged/papercolor-theme/colors/PaperColor.vim
+041.614  000.512  000.512: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+043.125  000.223  000.223: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+043.756  000.215  000.215: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+047.845  006.115  005.677: sourcing /Users/nactang/.vim/plugged/papercolor-theme/colors/PaperColor.vim
+048.108  000.055  000.055: sourcing /Users/nactang/.dotfiles//config/theme.vim
+048.111  032.539  008.251: sourcing /Users/nactang/.vimrc.bundles
+048.115  042.122  001.429: sourcing $HOME/.vimrc
+048.116  000.299: sourcing vimrc file(s)
+048.397  000.069  000.069: sourcing /Users/nactang/.vim/plugged/rust.vim/plugin/cargo.vim
+048.457  000.025  000.025: sourcing /Users/nactang/.vim/plugged/rust.vim/plugin/rust.vim
+048.716  000.168  000.168: sourcing /Users/nactang/.vim/plugged/vim-startuptime/plugin/startuptime.vim
+049.009  000.205  000.205: sourcing /Users/nactang/.vim/plugged/winresizer/plugin/winresizer.vim
+049.452  000.358  000.358: sourcing /Users/nactang/.vim/plugged/vim-surround/plugin/surround.vim
+049.789  000.245  000.245: sourcing /Users/nactang/.vim/plugged/conflict-marker.vim/plugin/conflict_marker.vim
+050.169  000.293  000.293: sourcing /Users/nactang/.vim/plugged/auto-pairs/plugin/auto-pairs.vim
+050.551  000.135  000.135: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/plugs.vim
+051.121  000.126  000.126: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/maps.vim
+051.295  000.076  000.076: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/maps/all.vim
+052.244  001.984  001.647: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/plugin/visual-multi.vim
+052.388  000.051  000.051: sourcing /Users/nactang/.vim/plugged/restore_view.vim/plugin/restore_view.vim
+052.959  000.484  000.484: sourcing /Users/nactang/.vim/plugged/fzf/plugin/fzf.vim
+053.676  000.625  000.625: sourcing /Users/nactang/.vim/plugged/fzf.vim/plugin/fzf.vim
+053.827  000.056  000.056: sourcing /Users/nactang/.vim/plugged/coc-fzf/plugin/coc_fzf.vim
+054.071  000.148  000.148: sourcing /Users/nactang/.vim/plugged/vim-rooter/plugin/rooter.vim
+054.292  000.131  000.131: sourcing /Users/nactang/.vim/plugged/vim-commentary/plugin/commentary.vim
+054.424  000.043  000.043: sourcing /Users/nactang/.vim/plugged/tmux-complete.vim/plugin/tmuxcomplete.vim
+054.527  000.012  000.012: sourcing /Users/nactang/.vim/plugged/readablefold.vim/plugin/readablefold.vim
+054.917  000.119  000.119: sourcing /Users/nactang/.vim/plugged/nerdtree/autoload/nerdtree.vim
+055.470  000.301  000.301: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/path.vim
+055.675  000.084  000.084: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/menu_controller.vim
+055.831  000.045  000.045: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/menu_item.vim
+055.998  000.059  000.059: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/key_map.vim
+056.237  000.132  000.132: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/bookmark.vim
+056.474  000.126  000.126: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/tree_file_node.vim
+056.827  000.243  000.243: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/tree_dir_node.vim
+057.041  000.107  000.107: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/opener.vim
+057.283  000.136  000.136: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/creator.vim
+057.414  000.025  000.025: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/flag_set.vim
+057.597  000.078  000.078: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/nerdtree.vim
+057.877  000.179  000.179: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/ui.vim
+057.990  000.010  000.010: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/event.vim
+058.121  000.026  000.026: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/notifier.vim
+058.518  000.278  000.278: sourcing /Users/nactang/.vim/plugged/nerdtree/autoload/nerdtree/ui_glue.vim
+060.200  000.052  000.052: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/exec_menuitem.vim
+060.712  000.474  000.474: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/fs_menu.vim
+060.781  000.030  000.030: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/vcs.vim
+061.142  000.238  000.238: sourcing /Users/nactang/.vim/plugged/vim-devicons/nerdtree_plugin/webdevicons.vim
+061.235  006.622  003.880: sourcing /Users/nactang/.vim/plugged/nerdtree/plugin/NERD_tree.vim
+061.814  000.118  000.118: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/util.vim
+061.876  000.548  000.430: sourcing /Users/nactang/.vim/plugged/vim-airline/plugin/airline.vim
+061.988  000.019  000.019: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/plugin/airline-themes.vim
+062.172  000.096  000.096: sourcing /Users/nactang/.vim/plugged/vim-bufferline/plugin/bufferline.vim
+062.952  000.123  000.123: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline.vim
+063.807  001.548  001.425: sourcing /Users/nactang/.vim/plugged/vim-devicons/plugin/webdevicons.vim
+064.387  000.240  000.240: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/util.vim
+064.797  000.158  000.158: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/client.vim
+066.405  000.388  000.388: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/api.vim
+067.096  003.192  002.406: sourcing /Users/nactang/.vim/plugged/coc.nvim/plugin/coc.vim
+067.577  000.044  000.044: sourcing /opt/homebrew/share/vim/vim90/plugin/getscriptPlugin.vim
+067.724  000.108  000.108: sourcing /opt/homebrew/share/vim/vim90/plugin/gzip.vim
+067.902  000.139  000.139: sourcing /opt/homebrew/share/vim/vim90/plugin/logiPat.vim
+067.964  000.024  000.024: sourcing /opt/homebrew/share/vim/vim90/plugin/manpager.vim
+068.105  000.103  000.103: sourcing /opt/homebrew/share/vim/vim90/plugin/matchparen.vim
+068.451  000.308  000.308: sourcing /opt/homebrew/share/vim/vim90/plugin/netrwPlugin.vim
+068.503  000.007  000.007: sourcing /opt/homebrew/share/vim/vim90/plugin/rrhelper.vim
+068.560  000.014  000.014: sourcing /opt/homebrew/share/vim/vim90/plugin/spellfile.vim
+068.678  000.077  000.077: sourcing /opt/homebrew/share/vim/vim90/plugin/tarPlugin.vim
+068.798  000.078  000.078: sourcing /opt/homebrew/share/vim/vim90/plugin/tohtml.vim
+068.925  000.085  000.085: sourcing /opt/homebrew/share/vim/vim90/plugin/vimballPlugin.vim
+069.068  000.094  000.094: sourcing /opt/homebrew/share/vim/vim90/plugin/zipPlugin.vim
+069.071  002.952: loading plugins
+069.118  000.047: loading packages
+070.015  000.680  000.680: sourcing /Users/nactang/.vim/plugged/fzf.vim/autoload/fzf/vim.vim
+070.240  001.008  000.328: sourcing /Users/nactang/.vim/plugged/coc-fzf/after/plugin/coc_fzf.vim
+070.604  000.262  000.262: sourcing /Users/nactang/.vim/plugged/indentLine/after/plugin/indentLine.vim
+070.612  000.224: loading after plugins
+070.615  000.003: inits 3
+070.797  000.182: reading viminfo
+070.808  000.011: setting raw mode
+070.814  000.006: start termcap
+070.834  000.020: clearing screen
+071.240  000.197  000.197: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions.vim
+071.418  000.030  000.030: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/quickfix.vim
+071.617  000.019  000.019: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/netrw.vim
+071.787  000.024  000.024: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/fzf.vim
+072.332  000.146  000.146: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/highlighter.vim
+072.529  000.560  000.414: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/term.vim
+072.790  000.070  000.070: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/hunks.vim
+073.020  000.015  000.015: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/bufferline.vim
+073.267  000.031  000.031: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/coc.vim
+073.534  000.081  000.081: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/whitespace.vim
+073.773  000.038  000.038: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/po.vim
+073.994  000.058  000.058: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/wordcount.vim
+074.213  000.020  000.020: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/keymap.vim
+074.523  000.026  000.026: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/searchcount.vim
+077.891  000.039  000.039: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/themes.vim
+078.141  000.441  000.402: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/autoload/airline/themes/angr.vim
+082.515  000.266  000.266: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/autoload/airline/themes/angr.vim
+094.654  000.099  000.099: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/builder.vim
+095.035  000.051  000.051: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/default.vim
+107.185  034.325: opening buffers
+108.089  000.904: BufEnter autocommands
+108.091  000.002: editing files in windows
+109.013  000.302  000.302: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/highlight.vim
+109.469  000.274  000.274: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/color.vim
+113.656  004.989: VimEnter autocommands
+113.657  000.001: before starting main loop
+114.669  000.069  000.069: sourcing /Users/nactang/.vim/plugged/vim-bufferline/autoload/bufferline.vim
+115.548  001.822: first screen update
+115.548  000.000: --- VIM STARTED ---
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.010  000.010: --- VIM STARTING ---
+000.080  000.070: Allocated generic buffers
+000.842  000.762: locale set
+000.846  000.004: clipboard setup
+000.851  000.005: window checked
+001.542  000.691: inits 1
+001.550  000.008: parsing arguments
+001.551  000.001: expanding arguments
+005.441  003.890: shell init
+005.874  000.433: Termcap init
+005.889  000.015: inits 2
+006.030  000.141: init highlight
+013.700  006.923  006.923: sourcing /opt/homebrew/share/vim/vim90/filetype.vim
+013.891  000.065  000.065: sourcing /opt/homebrew/share/vim/vim90/ftplugin.vim
+014.048  000.033  000.033: sourcing /opt/homebrew/share/vim/vim90/indent.vim
+015.410  000.826  000.826: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+015.560  001.155  000.329: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+015.660  001.391  000.236: sourcing /opt/homebrew/share/vim/vim90/syntax/synload.vim
+015.753  001.612  000.221: sourcing /opt/homebrew/share/vim/vim90/syntax/syntax.vim
+018.537  001.793  001.793: sourcing /Users/nactang/.vim/autoload/plug.vim
+022.009  000.722  000.722: sourcing /opt/homebrew/share/vim/vim90/ftoff.vim
+029.233  000.024  000.024: sourcing /Users/nactang/.vim/plugged/rust.vim/ftdetect/rust.vim
+029.523  005.489  005.465: sourcing /opt/homebrew/share/vim/vim90/filetype.vim
+029.754  000.012  000.012: sourcing /opt/homebrew/share/vim/vim90/ftplugin.vim
+029.974  000.008  000.008: sourcing /opt/homebrew/share/vim/vim90/indent.vim
+030.953  000.456  000.456: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/parts.vim
+031.425  000.114  000.114: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/init.vim
+032.031  000.012  000.012: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/formatter/short_path.vim
+032.767  001.622  001.496: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/section.vim
+033.761  000.126  000.126: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc.vim
+034.069  000.129  000.129: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/rpc.vim
+034.106  000.860  000.605: sourcing /Users/nactang/.dotfiles//coc-nvim-config.vim
+034.650  000.123  000.123: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+035.038  000.117  000.117: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+035.876  000.572  000.572: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+037.289  000.120  000.120: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+037.635  000.115  000.115: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+042.197  006.178  005.943: sourcing /Users/nactang/.vim/plugged/papercolor-theme/colors/PaperColor.vim
+042.913  000.508  000.508: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+044.410  000.220  000.220: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+045.040  000.215  000.215: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+049.098  006.068  005.633: sourcing /Users/nactang/.vim/plugged/papercolor-theme/colors/PaperColor.vim
+049.355  000.054  000.054: sourcing /Users/nactang/.dotfiles//config/theme.vim
+049.359  032.833  008.251: sourcing /Users/nactang/.vimrc.bundles
+049.362  043.052  001.586: sourcing $HOME/.vimrc
+049.363  000.281: sourcing vimrc file(s)
+049.639  000.069  000.069: sourcing /Users/nactang/.vim/plugged/rust.vim/plugin/cargo.vim
+049.697  000.025  000.025: sourcing /Users/nactang/.vim/plugged/rust.vim/plugin/rust.vim
+049.948  000.165  000.165: sourcing /Users/nactang/.vim/plugged/vim-startuptime/plugin/startuptime.vim
+050.233  000.202  000.202: sourcing /Users/nactang/.vim/plugged/winresizer/plugin/winresizer.vim
+050.674  000.360  000.360: sourcing /Users/nactang/.vim/plugged/vim-surround/plugin/surround.vim
+051.028  000.245  000.245: sourcing /Users/nactang/.vim/plugged/conflict-marker.vim/plugin/conflict_marker.vim
+051.412  000.302  000.302: sourcing /Users/nactang/.vim/plugged/auto-pairs/plugin/auto-pairs.vim
+051.792  000.139  000.139: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/plugs.vim
+052.374  000.126  000.126: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/maps.vim
+052.546  000.075  000.075: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/maps/all.vim
+053.498  001.999  001.659: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/plugin/visual-multi.vim
+053.638  000.050  000.050: sourcing /Users/nactang/.vim/plugged/restore_view.vim/plugin/restore_view.vim
+054.208  000.488  000.488: sourcing /Users/nactang/.vim/plugged/fzf/plugin/fzf.vim
+054.921  000.625  000.625: sourcing /Users/nactang/.vim/plugged/fzf.vim/plugin/fzf.vim
+055.071  000.059  000.059: sourcing /Users/nactang/.vim/plugged/coc-fzf/plugin/coc_fzf.vim
+055.311  000.149  000.149: sourcing /Users/nactang/.vim/plugged/vim-rooter/plugin/rooter.vim
+055.542  000.142  000.142: sourcing /Users/nactang/.vim/plugged/vim-commentary/plugin/commentary.vim
+055.673  000.043  000.043: sourcing /Users/nactang/.vim/plugged/tmux-complete.vim/plugin/tmuxcomplete.vim
+055.772  000.012  000.012: sourcing /Users/nactang/.vim/plugged/readablefold.vim/plugin/readablefold.vim
+056.183  000.118  000.118: sourcing /Users/nactang/.vim/plugged/nerdtree/autoload/nerdtree.vim
+056.732  000.285  000.285: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/path.vim
+056.936  000.091  000.091: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/menu_controller.vim
+057.085  000.044  000.044: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/menu_item.vim
+057.251  000.060  000.060: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/key_map.vim
+057.487  000.132  000.132: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/bookmark.vim
+057.721  000.126  000.126: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/tree_file_node.vim
+058.073  000.244  000.244: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/tree_dir_node.vim
+058.285  000.108  000.108: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/opener.vim
+058.526  000.137  000.137: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/creator.vim
+058.654  000.024  000.024: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/flag_set.vim
+058.835  000.077  000.077: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/nerdtree.vim
+059.117  000.181  000.181: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/ui.vim
+059.231  000.010  000.010: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/event.vim
+059.368  000.031  000.031: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/notifier.vim
+059.772  000.287  000.287: sourcing /Users/nactang/.vim/plugged/nerdtree/autoload/nerdtree/ui_glue.vim
+061.463  000.055  000.055: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/exec_menuitem.vim
+061.979  000.480  000.480: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/fs_menu.vim
+062.046  000.030  000.030: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/vcs.vim
+062.408  000.242  000.242: sourcing /Users/nactang/.vim/plugged/vim-devicons/nerdtree_plugin/webdevicons.vim
+062.507  006.638  003.876: sourcing /Users/nactang/.vim/plugged/nerdtree/plugin/NERD_tree.vim
+063.087  000.121  000.121: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/util.vim
+063.169  000.573  000.452: sourcing /Users/nactang/.vim/plugged/vim-airline/plugin/airline.vim
+063.276  000.019  000.019: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/plugin/airline-themes.vim
+063.456  000.095  000.095: sourcing /Users/nactang/.vim/plugged/vim-bufferline/plugin/bufferline.vim
+064.238  000.124  000.124: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline.vim
+065.093  001.554  001.430: sourcing /Users/nactang/.vim/plugged/vim-devicons/plugin/webdevicons.vim
+065.669  000.243  000.243: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/util.vim
+066.069  000.159  000.159: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/client.vim
+067.624  000.390  000.390: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/api.vim
+068.311  003.126  002.334: sourcing /Users/nactang/.vim/plugged/coc.nvim/plugin/coc.vim
+068.757  000.044  000.044: sourcing /opt/homebrew/share/vim/vim90/plugin/getscriptPlugin.vim
+068.902  000.108  000.108: sourcing /opt/homebrew/share/vim/vim90/plugin/gzip.vim
+069.081  000.142  000.142: sourcing /opt/homebrew/share/vim/vim90/plugin/logiPat.vim
+069.141  000.024  000.024: sourcing /opt/homebrew/share/vim/vim90/plugin/manpager.vim
+069.280  000.104  000.104: sourcing /opt/homebrew/share/vim/vim90/plugin/matchparen.vim
+069.622  000.307  000.307: sourcing /opt/homebrew/share/vim/vim90/plugin/netrwPlugin.vim
+069.672  000.007  000.007: sourcing /opt/homebrew/share/vim/vim90/plugin/rrhelper.vim
+069.728  000.014  000.014: sourcing /opt/homebrew/share/vim/vim90/plugin/spellfile.vim
+069.843  000.076  000.076: sourcing /opt/homebrew/share/vim/vim90/plugin/tarPlugin.vim
+069.960  000.078  000.078: sourcing /opt/homebrew/share/vim/vim90/plugin/tohtml.vim
+070.084  000.085  000.085: sourcing /opt/homebrew/share/vim/vim90/plugin/vimballPlugin.vim
+070.224  000.093  000.093: sourcing /opt/homebrew/share/vim/vim90/plugin/zipPlugin.vim
+070.227  002.842: loading plugins
+070.276  000.049: loading packages
+071.163  000.677  000.677: sourcing /Users/nactang/.vim/plugged/fzf.vim/autoload/fzf/vim.vim
+071.386  001.000  000.323: sourcing /Users/nactang/.vim/plugged/coc-fzf/after/plugin/coc_fzf.vim
+071.758  000.271  000.271: sourcing /Users/nactang/.vim/plugged/indentLine/after/plugin/indentLine.vim
+071.776  000.229: loading after plugins
+071.779  000.003: inits 3
+071.961  000.182: reading viminfo
+071.973  000.012: setting raw mode
+071.978  000.005: start termcap
+071.999  000.021: clearing screen
+072.409  000.198  000.198: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions.vim
+072.586  000.030  000.030: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/quickfix.vim
+072.784  000.019  000.019: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/netrw.vim
+072.954  000.024  000.024: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/fzf.vim
+073.489  000.145  000.145: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/highlighter.vim
+073.688  000.553  000.408: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/term.vim
+073.947  000.068  000.068: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/hunks.vim
+074.175  000.015  000.015: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/bufferline.vim
+074.422  000.030  000.030: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/coc.vim
+074.689  000.082  000.082: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/whitespace.vim
+074.908  000.039  000.039: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/po.vim
+075.119  000.057  000.057: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/wordcount.vim
+075.327  000.017  000.017: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/keymap.vim
+075.636  000.027  000.027: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/searchcount.vim
+078.971  000.036  000.036: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/themes.vim
+079.221  000.437  000.401: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/autoload/airline/themes/angr.vim
+083.587  000.266  000.266: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/autoload/airline/themes/angr.vim
+095.819  000.098  000.098: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/builder.vim
+096.208  000.050  000.050: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/default.vim
+108.319  034.310: opening buffers
+109.232  000.913: BufEnter autocommands
+109.234  000.002: editing files in windows
+110.174  000.318  000.318: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/highlight.vim
+110.666  000.290  000.290: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/color.vim
+114.912  005.070: VimEnter autocommands
+114.913  000.001: before starting main loop
+115.976  000.069  000.069: sourcing /Users/nactang/.vim/plugged/vim-bufferline/autoload/bufferline.vim
+116.855  001.873: first screen update
+116.856  000.001: --- VIM STARTED ---
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.008  000.008: --- VIM STARTING ---
+000.086  000.078: Allocated generic buffers
+000.789  000.703: locale set
+000.793  000.004: clipboard setup
+000.799  000.006: window checked
+001.492  000.693: inits 1
+001.499  000.007: parsing arguments
+001.500  000.001: expanding arguments
+005.449  003.949: shell init
+005.928  000.479: Termcap init
+005.943  000.015: inits 2
+006.091  000.148: init highlight
+014.057  007.197  007.197: sourcing /opt/homebrew/share/vim/vim90/filetype.vim
+014.233  000.063  000.063: sourcing /opt/homebrew/share/vim/vim90/ftplugin.vim
+014.392  000.033  000.033: sourcing /opt/homebrew/share/vim/vim90/indent.vim
+015.760  000.849  000.849: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+015.900  001.170  000.321: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+015.985  001.373  000.203: sourcing /opt/homebrew/share/vim/vim90/syntax/synload.vim
+016.079  001.596  000.223: sourcing /opt/homebrew/share/vim/vim90/syntax/syntax.vim
+019.001  001.916  001.916: sourcing /Users/nactang/.vim/autoload/plug.vim
+022.811  000.742  000.742: sourcing /opt/homebrew/share/vim/vim90/ftoff.vim
+029.916  000.025  000.025: sourcing /Users/nactang/.vim/plugged/rust.vim/ftdetect/rust.vim
+030.201  005.517  005.492: sourcing /opt/homebrew/share/vim/vim90/filetype.vim
+030.432  000.012  000.012: sourcing /opt/homebrew/share/vim/vim90/ftplugin.vim
+030.657  000.008  000.008: sourcing /opt/homebrew/share/vim/vim90/indent.vim
+031.646  000.462  000.462: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/parts.vim
+032.152  000.124  000.124: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/init.vim
+032.715  000.011  000.011: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/formatter/short_path.vim
+033.395  001.547  001.412: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/section.vim
+034.438  000.131  000.131: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc.vim
+034.785  000.127  000.127: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/rpc.vim
+034.822  000.919  000.661: sourcing /Users/nactang/.dotfiles//coc-nvim-config.vim
+035.382  000.124  000.124: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+035.785  000.124  000.124: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+036.627  000.586  000.586: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+038.014  000.123  000.123: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+038.363  000.117  000.117: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+042.836  006.068  005.828: sourcing /Users/nactang/.vim/plugged/papercolor-theme/colors/PaperColor.vim
+043.557  000.511  000.511: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+045.061  000.219  000.219: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+045.712  000.240  000.240: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+049.682  006.011  005.552: sourcing /Users/nactang/.vim/plugged/papercolor-theme/colors/PaperColor.vim
+049.950  000.054  000.054: sourcing /Users/nactang/.dotfiles//config/theme.vim
+049.953  033.086  008.485: sourcing /Users/nactang/.vimrc.bundles
+049.957  043.551  001.576: sourcing $HOME/.vimrc
+049.959  000.317: sourcing vimrc file(s)
+050.243  000.069  000.069: sourcing /Users/nactang/.vim/plugged/rust.vim/plugin/cargo.vim
+050.301  000.024  000.024: sourcing /Users/nactang/.vim/plugged/rust.vim/plugin/rust.vim
+050.552  000.165  000.165: sourcing /Users/nactang/.vim/plugged/vim-startuptime/plugin/startuptime.vim
+050.840  000.204  000.204: sourcing /Users/nactang/.vim/plugged/winresizer/plugin/winresizer.vim
+051.281  000.357  000.357: sourcing /Users/nactang/.vim/plugged/vim-surround/plugin/surround.vim
+051.616  000.247  000.247: sourcing /Users/nactang/.vim/plugged/conflict-marker.vim/plugin/conflict_marker.vim
+052.001  000.298  000.298: sourcing /Users/nactang/.vim/plugged/auto-pairs/plugin/auto-pairs.vim
+052.394  000.148  000.148: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/plugs.vim
+053.006  000.139  000.139: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/maps.vim
+053.177  000.076  000.076: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/maps/all.vim
+054.154  002.068  001.705: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/plugin/visual-multi.vim
+054.315  000.069  000.069: sourcing /Users/nactang/.vim/plugged/restore_view.vim/plugin/restore_view.vim
+054.884  000.487  000.487: sourcing /Users/nactang/.vim/plugged/fzf/plugin/fzf.vim
+055.592  000.621  000.621: sourcing /Users/nactang/.vim/plugged/fzf.vim/plugin/fzf.vim
+055.749  000.056  000.056: sourcing /Users/nactang/.vim/plugged/coc-fzf/plugin/coc_fzf.vim
+055.986  000.145  000.145: sourcing /Users/nactang/.vim/plugged/vim-rooter/plugin/rooter.vim
+056.200  000.128  000.128: sourcing /Users/nactang/.vim/plugged/vim-commentary/plugin/commentary.vim
+056.321  000.041  000.041: sourcing /Users/nactang/.vim/plugged/tmux-complete.vim/plugin/tmuxcomplete.vim
+056.414  000.011  000.011: sourcing /Users/nactang/.vim/plugged/readablefold.vim/plugin/readablefold.vim
+056.777  000.110  000.110: sourcing /Users/nactang/.vim/plugged/nerdtree/autoload/nerdtree.vim
+057.298  000.284  000.284: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/path.vim
+057.488  000.079  000.079: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/menu_controller.vim
+057.641  000.045  000.045: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/menu_item.vim
+057.809  000.065  000.065: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/key_map.vim
+058.052  000.140  000.140: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/bookmark.vim
+058.290  000.129  000.129: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/tree_file_node.vim
+058.645  000.244  000.244: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/tree_dir_node.vim
+058.857  000.108  000.108: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/opener.vim
+059.102  000.140  000.140: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/creator.vim
+059.231  000.025  000.025: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/flag_set.vim
+059.413  000.078  000.078: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/nerdtree.vim
+059.701  000.184  000.184: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/ui.vim
+059.815  000.010  000.010: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/event.vim
+059.946  000.025  000.025: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/notifier.vim
+060.350  000.282  000.282: sourcing /Users/nactang/.vim/plugged/nerdtree/autoload/nerdtree/ui_glue.vim
+062.078  000.070  000.070: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/exec_menuitem.vim
+062.584  000.469  000.469: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/fs_menu.vim
+062.651  000.029  000.029: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/vcs.vim
+063.007  000.239  000.239: sourcing /Users/nactang/.vim/plugged/vim-devicons/nerdtree_plugin/webdevicons.vim
+063.103  006.612  003.857: sourcing /Users/nactang/.vim/plugged/nerdtree/plugin/NERD_tree.vim
+063.683  000.120  000.120: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/util.vim
+063.744  000.553  000.433: sourcing /Users/nactang/.vim/plugged/vim-airline/plugin/airline.vim
+063.852  000.020  000.020: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/plugin/airline-themes.vim
+064.035  000.098  000.098: sourcing /Users/nactang/.vim/plugged/vim-bufferline/plugin/bufferline.vim
+064.811  000.123  000.123: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline.vim
+065.669  001.550  001.427: sourcing /Users/nactang/.vim/plugged/vim-devicons/plugin/webdevicons.vim
+066.230  000.227  000.227: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/util.vim
+066.607  000.147  000.147: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/client.vim
+068.245  000.450  000.450: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/api.vim
+068.946  003.185  002.361: sourcing /Users/nactang/.vim/plugged/coc.nvim/plugin/coc.vim
+069.406  000.051  000.051: sourcing /opt/homebrew/share/vim/vim90/plugin/getscriptPlugin.vim
+069.567  000.125  000.125: sourcing /opt/homebrew/share/vim/vim90/plugin/gzip.vim
+069.746  000.143  000.143: sourcing /opt/homebrew/share/vim/vim90/plugin/logiPat.vim
+069.806  000.024  000.024: sourcing /opt/homebrew/share/vim/vim90/plugin/manpager.vim
+069.961  000.121  000.121: sourcing /opt/homebrew/share/vim/vim90/plugin/matchparen.vim
+070.307  000.311  000.311: sourcing /opt/homebrew/share/vim/vim90/plugin/netrwPlugin.vim
+070.357  000.007  000.007: sourcing /opt/homebrew/share/vim/vim90/plugin/rrhelper.vim
+070.412  000.014  000.014: sourcing /opt/homebrew/share/vim/vim90/plugin/spellfile.vim
+070.526  000.075  000.075: sourcing /opt/homebrew/share/vim/vim90/plugin/tarPlugin.vim
+070.644  000.079  000.079: sourcing /opt/homebrew/share/vim/vim90/plugin/tohtml.vim
+070.767  000.083  000.083: sourcing /opt/homebrew/share/vim/vim90/plugin/vimballPlugin.vim
+070.905  000.092  000.092: sourcing /opt/homebrew/share/vim/vim90/plugin/zipPlugin.vim
+070.908  002.816: loading plugins
+070.955  000.047: loading packages
+071.859  000.692  000.692: sourcing /Users/nactang/.vim/plugged/fzf.vim/autoload/fzf/vim.vim
+072.073  001.006  000.314: sourcing /Users/nactang/.vim/plugged/coc-fzf/after/plugin/coc_fzf.vim
+072.435  000.261  000.261: sourcing /Users/nactang/.vim/plugged/indentLine/after/plugin/indentLine.vim
+072.443  000.221: loading after plugins
+072.446  000.003: inits 3
+072.628  000.182: reading viminfo
+072.639  000.011: setting raw mode
+072.645  000.006: start termcap
+072.675  000.030: clearing screen
+073.095  000.207  000.207: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions.vim
+073.272  000.031  000.031: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/quickfix.vim
+073.469  000.019  000.019: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/netrw.vim
+073.639  000.024  000.024: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/fzf.vim
+074.179  000.149  000.149: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/highlighter.vim
+074.380  000.562  000.413: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/term.vim
+074.644  000.075  000.075: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/hunks.vim
+074.873  000.015  000.015: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/bufferline.vim
+075.122  000.033  000.033: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/coc.vim
+075.393  000.086  000.086: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/whitespace.vim
+075.618  000.039  000.039: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/po.vim
+075.832  000.059  000.059: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/wordcount.vim
+076.054  000.019  000.019: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/keymap.vim
+076.380  000.029  000.029: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/searchcount.vim
+079.737  000.036  000.036: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/themes.vim
+079.987  000.439  000.403: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/autoload/airline/themes/angr.vim
+084.346  000.267  000.267: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/autoload/airline/themes/angr.vim
+096.946  000.111  000.111: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/builder.vim
+097.345  000.051  000.051: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/default.vim
+109.583  034.842: opening buffers
+110.521  000.938: BufEnter autocommands
+110.522  000.001: editing files in windows
+111.462  000.316  000.316: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/highlight.vim
+111.929  000.277  000.277: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/color.vim
+116.120  005.005: VimEnter autocommands
+116.121  000.001: before starting main loop
+117.122  000.067  000.067: sourcing /Users/nactang/.vim/plugged/vim-bufferline/autoload/bufferline.vim
+118.012  001.824: first screen update
+118.012  000.000: --- VIM STARTED ---
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.008  000.008: --- VIM STARTING ---
+000.078  000.070: Allocated generic buffers
+000.693  000.615: locale set
+000.698  000.005: clipboard setup
+000.702  000.004: window checked
+001.347  000.645: inits 1
+001.359  000.012: parsing arguments
+001.360  000.001: expanding arguments
+005.212  003.852: shell init
+005.663  000.451: Termcap init
+005.679  000.016: inits 2
+005.822  000.143: init highlight
+013.494  006.907  006.907: sourcing /opt/homebrew/share/vim/vim90/filetype.vim
+013.669  000.060  000.060: sourcing /opt/homebrew/share/vim/vim90/ftplugin.vim
+013.807  000.033  000.033: sourcing /opt/homebrew/share/vim/vim90/indent.vim
+015.086  000.812  000.812: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+015.222  001.112  000.300: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+015.302  001.297  000.185: sourcing /opt/homebrew/share/vim/vim90/syntax/synload.vim
+015.390  001.498  000.201: sourcing /opt/homebrew/share/vim/vim90/syntax/syntax.vim
+018.278  001.938  001.938: sourcing /Users/nactang/.vim/autoload/plug.vim
+021.776  000.683  000.683: sourcing /opt/homebrew/share/vim/vim90/ftoff.vim
+028.784  000.024  000.024: sourcing /Users/nactang/.vim/plugged/rust.vim/ftdetect/rust.vim
+029.067  005.379  005.355: sourcing /opt/homebrew/share/vim/vim90/filetype.vim
+029.301  000.012  000.012: sourcing /opt/homebrew/share/vim/vim90/ftplugin.vim
+029.523  000.009  000.009: sourcing /opt/homebrew/share/vim/vim90/indent.vim
+030.488  000.454  000.454: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/parts.vim
+030.941  000.108  000.108: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/init.vim
+031.424  000.011  000.011: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/formatter/short_path.vim
+032.089  001.416  001.297: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/section.vim
+033.079  000.127  000.127: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc.vim
+033.382  000.128  000.128: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/rpc.vim
+033.419  000.852  000.597: sourcing /Users/nactang/.dotfiles//coc-nvim-config.vim
+033.977  000.123  000.123: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+034.380  000.116  000.116: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+035.181  000.555  000.555: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+036.549  000.118  000.118: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+036.898  000.116  000.116: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+041.359  006.036  005.802: sourcing /Users/nactang/.vim/plugged/papercolor-theme/colors/PaperColor.vim
+042.115  000.522  000.522: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+043.636  000.220  000.220: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+044.261  000.215  000.215: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+048.284  006.049  005.614: sourcing /Users/nactang/.vim/plugged/papercolor-theme/colors/PaperColor.vim
+048.552  000.058  000.058: sourcing /Users/nactang/.dotfiles//config/theme.vim
+048.555  032.441  008.239: sourcing /Users/nactang/.vimrc.bundles
+048.558  042.413  001.474: sourcing $HOME/.vimrc
+048.560  000.325: sourcing vimrc file(s)
+048.837  000.068  000.068: sourcing /Users/nactang/.vim/plugged/rust.vim/plugin/cargo.vim
+048.895  000.024  000.024: sourcing /Users/nactang/.vim/plugged/rust.vim/plugin/rust.vim
+049.148  000.166  000.166: sourcing /Users/nactang/.vim/plugged/vim-startuptime/plugin/startuptime.vim
+049.435  000.204  000.204: sourcing /Users/nactang/.vim/plugged/winresizer/plugin/winresizer.vim
+049.900  000.359  000.359: sourcing /Users/nactang/.vim/plugged/vim-surround/plugin/surround.vim
+050.252  000.266  000.266: sourcing /Users/nactang/.vim/plugged/conflict-marker.vim/plugin/conflict_marker.vim
+050.627  000.292  000.292: sourcing /Users/nactang/.vim/plugged/auto-pairs/plugin/auto-pairs.vim
+050.999  000.135  000.135: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/plugs.vim
+051.588  000.134  000.134: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/maps.vim
+051.759  000.077  000.077: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/maps/all.vim
+052.709  001.998  001.652: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/plugin/visual-multi.vim
+052.851  000.050  000.050: sourcing /Users/nactang/.vim/plugged/restore_view.vim/plugin/restore_view.vim
+053.421  000.487  000.487: sourcing /Users/nactang/.vim/plugged/fzf/plugin/fzf.vim
+054.136  000.627  000.627: sourcing /Users/nactang/.vim/plugged/fzf.vim/plugin/fzf.vim
+054.289  000.059  000.059: sourcing /Users/nactang/.vim/plugged/coc-fzf/plugin/coc_fzf.vim
+054.527  000.147  000.147: sourcing /Users/nactang/.vim/plugged/vim-rooter/plugin/rooter.vim
+054.757  000.149  000.149: sourcing /Users/nactang/.vim/plugged/vim-commentary/plugin/commentary.vim
+054.898  000.044  000.044: sourcing /Users/nactang/.vim/plugged/tmux-complete.vim/plugin/tmuxcomplete.vim
+055.014  000.011  000.011: sourcing /Users/nactang/.vim/plugged/readablefold.vim/plugin/readablefold.vim
+055.431  000.129  000.129: sourcing /Users/nactang/.vim/plugged/nerdtree/autoload/nerdtree.vim
+056.044  000.355  000.355: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/path.vim
+056.251  000.082  000.082: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/menu_controller.vim
+056.419  000.044  000.044: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/menu_item.vim
+056.609  000.060  000.060: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/key_map.vim
+056.884  000.156  000.156: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/bookmark.vim
+057.150  000.129  000.129: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/tree_file_node.vim
+057.534  000.273  000.273: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/tree_dir_node.vim
+057.749  000.111  000.111: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/opener.vim
+058.006  000.150  000.150: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/creator.vim
+058.136  000.025  000.025: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/flag_set.vim
+058.317  000.077  000.077: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/nerdtree.vim
+058.600  000.182  000.182: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/ui.vim
+058.714  000.011  000.011: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/event.vim
+058.845  000.025  000.025: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/notifier.vim
+059.247  000.285  000.285: sourcing /Users/nactang/.vim/plugged/nerdtree/autoload/nerdtree/ui_glue.vim
+060.927  000.052  000.052: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/exec_menuitem.vim
+061.447  000.480  000.480: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/fs_menu.vim
+061.521  000.036  000.036: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/vcs.vim
+061.876  000.238  000.238: sourcing /Users/nactang/.vim/plugged/vim-devicons/nerdtree_plugin/webdevicons.vim
+061.971  006.879  003.979: sourcing /Users/nactang/.vim/plugged/nerdtree/plugin/NERD_tree.vim
+062.549  000.119  000.119: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/util.vim
+062.610  000.550  000.431: sourcing /Users/nactang/.vim/plugged/vim-airline/plugin/airline.vim
+062.716  000.019  000.019: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/plugin/airline-themes.vim
+062.898  000.095  000.095: sourcing /Users/nactang/.vim/plugged/vim-bufferline/plugin/bufferline.vim
+063.672  000.127  000.127: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline.vim
+064.518  001.537  001.410: sourcing /Users/nactang/.vim/plugged/vim-devicons/plugin/webdevicons.vim
+065.051  000.224  000.224: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/util.vim
+065.425  000.147  000.147: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/client.vim
+067.066  000.385  000.385: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/api.vim
+067.759  003.156  002.400: sourcing /Users/nactang/.vim/plugged/coc.nvim/plugin/coc.vim
+068.211  000.047  000.047: sourcing /opt/homebrew/share/vim/vim90/plugin/getscriptPlugin.vim
+068.356  000.108  000.108: sourcing /opt/homebrew/share/vim/vim90/plugin/gzip.vim
+068.534  000.142  000.142: sourcing /opt/homebrew/share/vim/vim90/plugin/logiPat.vim
+068.593  000.024  000.024: sourcing /opt/homebrew/share/vim/vim90/plugin/manpager.vim
+068.733  000.105  000.105: sourcing /opt/homebrew/share/vim/vim90/plugin/matchparen.vim
+069.078  000.310  000.310: sourcing /opt/homebrew/share/vim/vim90/plugin/netrwPlugin.vim
+069.127  000.007  000.007: sourcing /opt/homebrew/share/vim/vim90/plugin/rrhelper.vim
+069.181  000.013  000.013: sourcing /opt/homebrew/share/vim/vim90/plugin/spellfile.vim
+069.296  000.076  000.076: sourcing /opt/homebrew/share/vim/vim90/plugin/tarPlugin.vim
+069.413  000.077  000.077: sourcing /opt/homebrew/share/vim/vim90/plugin/tohtml.vim
+069.537  000.084  000.084: sourcing /opt/homebrew/share/vim/vim90/plugin/vimballPlugin.vim
+069.675  000.092  000.092: sourcing /opt/homebrew/share/vim/vim90/plugin/zipPlugin.vim
+069.678  002.846: loading plugins
+069.724  000.046: loading packages
+070.624  000.689  000.689: sourcing /Users/nactang/.vim/plugged/fzf.vim/autoload/fzf/vim.vim
+070.829  000.994  000.305: sourcing /Users/nactang/.vim/plugged/coc-fzf/after/plugin/coc_fzf.vim
+071.194  000.262  000.262: sourcing /Users/nactang/.vim/plugged/indentLine/after/plugin/indentLine.vim
+071.202  000.222: loading after plugins
+071.205  000.003: inits 3
+071.386  000.181: reading viminfo
+071.399  000.013: setting raw mode
+071.405  000.006: start termcap
+071.429  000.024: clearing screen
+071.848  000.208  000.208: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions.vim
+072.027  000.030  000.030: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/quickfix.vim
+073.225  000.019  000.019: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/netrw.vim
+073.400  000.026  000.026: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/fzf.vim
+073.937  000.144  000.144: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/highlighter.vim
+074.138  000.557  000.413: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/term.vim
+074.395  000.066  000.066: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/hunks.vim
+074.625  000.016  000.016: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/bufferline.vim
+074.891  000.029  000.029: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/coc.vim
+075.158  000.082  000.082: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/whitespace.vim
+075.381  000.039  000.039: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/po.vim
+075.592  000.057  000.057: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/wordcount.vim
+075.800  000.018  000.018: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/keymap.vim
+076.191  000.058  000.058: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/searchcount.vim
+079.608  000.039  000.039: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/themes.vim
+079.868  000.454  000.415: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/autoload/airline/themes/angr.vim
+084.209  000.267  000.267: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/autoload/airline/themes/angr.vim
+096.466  000.107  000.107: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/builder.vim
+096.859  000.049  000.049: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/default.vim
+109.119  034.608: opening buffers
+110.062  000.943: BufEnter autocommands
+110.063  000.001: editing files in windows
+111.011  000.308  000.308: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/highlight.vim
+111.468  000.282  000.282: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/color.vim
+115.666  005.013: VimEnter autocommands
+115.667  000.001: before starting main loop
+116.739  000.073  000.073: sourcing /Users/nactang/.vim/plugged/vim-bufferline/autoload/bufferline.vim
+117.651  001.911: first screen update
+117.652  000.001: --- VIM STARTED ---
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.008  000.008: --- VIM STARTING ---
+000.077  000.069: Allocated generic buffers
+000.781  000.704: locale set
+000.785  000.004: clipboard setup
+000.791  000.006: window checked
+001.481  000.690: inits 1
+001.488  000.007: parsing arguments
+001.489  000.001: expanding arguments
+005.454  003.965: shell init
+005.893  000.439: Termcap init
+005.908  000.015: inits 2
+006.059  000.151: init highlight
+013.798  006.974  006.974: sourcing /opt/homebrew/share/vim/vim90/filetype.vim
+013.972  000.063  000.063: sourcing /opt/homebrew/share/vim/vim90/ftplugin.vim
+014.120  000.033  000.033: sourcing /opt/homebrew/share/vim/vim90/indent.vim
+015.604  000.913  000.913: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+015.746  001.232  000.319: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+015.827  001.460  000.228: sourcing /opt/homebrew/share/vim/vim90/syntax/synload.vim
+015.918  001.693  000.233: sourcing /opt/homebrew/share/vim/vim90/syntax/syntax.vim
+018.718  001.854  001.854: sourcing /Users/nactang/.vim/autoload/plug.vim
+022.210  000.699  000.699: sourcing /opt/homebrew/share/vim/vim90/ftoff.vim
+029.196  000.025  000.025: sourcing /Users/nactang/.vim/plugged/rust.vim/ftdetect/rust.vim
+029.481  005.377  005.352: sourcing /opt/homebrew/share/vim/vim90/filetype.vim
+029.710  000.012  000.012: sourcing /opt/homebrew/share/vim/vim90/ftplugin.vim
+029.933  000.009  000.009: sourcing /opt/homebrew/share/vim/vim90/indent.vim
+030.913  000.457  000.457: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/parts.vim
+031.404  000.119  000.119: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/init.vim
+031.931  000.010  000.010: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/formatter/short_path.vim
+032.599  001.496  001.367: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/section.vim
+033.582  000.126  000.126: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc.vim
+033.887  000.127  000.127: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/rpc.vim
+033.924  000.849  000.596: sourcing /Users/nactang/.dotfiles//coc-nvim-config.vim
+034.454  000.124  000.124: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+034.840  000.116  000.116: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+035.643  000.556  000.556: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+037.063  000.123  000.123: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+037.411  000.116  000.116: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+041.914  006.129  005.890: sourcing /Users/nactang/.vim/plugged/papercolor-theme/colors/PaperColor.vim
+042.623  000.508  000.508: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+044.121  000.219  000.219: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+044.791  000.229  000.229: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+048.838  006.101  005.653: sourcing /Users/nactang/.vim/plugged/papercolor-theme/colors/PaperColor.vim
+049.102  000.055  000.055: sourcing /Users/nactang/.dotfiles//config/theme.vim
+049.106  032.460  008.118: sourcing /Users/nactang/.vimrc.bundles
+049.109  042.751  001.528: sourcing $HOME/.vimrc
+049.111  000.301: sourcing vimrc file(s)
+049.386  000.069  000.069: sourcing /Users/nactang/.vim/plugged/rust.vim/plugin/cargo.vim
+049.445  000.026  000.026: sourcing /Users/nactang/.vim/plugged/rust.vim/plugin/rust.vim
+049.696  000.166  000.166: sourcing /Users/nactang/.vim/plugged/vim-startuptime/plugin/startuptime.vim
+049.984  000.204  000.204: sourcing /Users/nactang/.vim/plugged/winresizer/plugin/winresizer.vim
+050.423  000.358  000.358: sourcing /Users/nactang/.vim/plugged/vim-surround/plugin/surround.vim
+050.756  000.247  000.247: sourcing /Users/nactang/.vim/plugged/conflict-marker.vim/plugin/conflict_marker.vim
+051.130  000.290  000.290: sourcing /Users/nactang/.vim/plugged/auto-pairs/plugin/auto-pairs.vim
+051.508  000.137  000.137: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/plugs.vim
+052.106  000.148  000.148: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/maps.vim
+052.291  000.078  000.078: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/maps/all.vim
+053.250  002.033  001.670: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/plugin/visual-multi.vim
+053.389  000.050  000.050: sourcing /Users/nactang/.vim/plugged/restore_view.vim/plugin/restore_view.vim
+053.955  000.484  000.484: sourcing /Users/nactang/.vim/plugged/fzf/plugin/fzf.vim
+054.668  000.625  000.625: sourcing /Users/nactang/.vim/plugged/fzf.vim/plugin/fzf.vim
+054.812  000.056  000.056: sourcing /Users/nactang/.vim/plugged/coc-fzf/plugin/coc_fzf.vim
+055.053  000.150  000.150: sourcing /Users/nactang/.vim/plugged/vim-rooter/plugin/rooter.vim
+055.271  000.131  000.131: sourcing /Users/nactang/.vim/plugged/vim-commentary/plugin/commentary.vim
+055.398  000.043  000.043: sourcing /Users/nactang/.vim/plugged/tmux-complete.vim/plugin/tmuxcomplete.vim
+055.496  000.011  000.011: sourcing /Users/nactang/.vim/plugged/readablefold.vim/plugin/readablefold.vim
+055.859  000.111  000.111: sourcing /Users/nactang/.vim/plugged/nerdtree/autoload/nerdtree.vim
+056.375  000.281  000.281: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/path.vim
+056.564  000.079  000.079: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/menu_controller.vim
+056.713  000.045  000.045: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/menu_item.vim
+056.879  000.063  000.063: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/key_map.vim
+057.117  000.135  000.135: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/bookmark.vim
+057.351  000.125  000.125: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/tree_file_node.vim
+057.707  000.248  000.248: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/tree_dir_node.vim
+057.919  000.108  000.108: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/opener.vim
+058.158  000.135  000.135: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/creator.vim
+058.287  000.024  000.024: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/flag_set.vim
+058.471  000.080  000.080: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/nerdtree.vim
+058.755  000.180  000.180: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/ui.vim
+058.869  000.010  000.010: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/event.vim
+058.999  000.025  000.025: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/notifier.vim
+059.399  000.281  000.281: sourcing /Users/nactang/.vim/plugged/nerdtree/autoload/nerdtree/ui_glue.vim
+061.103  000.052  000.052: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/exec_menuitem.vim
+061.613  000.473  000.473: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/fs_menu.vim
+061.686  000.030  000.030: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/vcs.vim
+062.041  000.239  000.239: sourcing /Users/nactang/.vim/plugged/vim-devicons/nerdtree_plugin/webdevicons.vim
+062.136  006.563  003.839: sourcing /Users/nactang/.vim/plugged/nerdtree/plugin/NERD_tree.vim
+062.716  000.124  000.124: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/util.vim
+062.779  000.555  000.431: sourcing /Users/nactang/.vim/plugged/vim-airline/plugin/airline.vim
+062.886  000.019  000.019: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/plugin/airline-themes.vim
+063.068  000.096  000.096: sourcing /Users/nactang/.vim/plugged/vim-bufferline/plugin/bufferline.vim
+063.849  000.124  000.124: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline.vim
+064.703  001.553  001.429: sourcing /Users/nactang/.vim/plugged/vim-devicons/plugin/webdevicons.vim
+065.274  000.240  000.240: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/util.vim
+065.657  000.154  000.154: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/client.vim
+067.229  000.379  000.379: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/api.vim
+067.946  003.151  002.378: sourcing /Users/nactang/.vim/plugged/coc.nvim/plugin/coc.vim
+068.447  000.064  000.064: sourcing /opt/homebrew/share/vim/vim90/plugin/getscriptPlugin.vim
+068.592  000.107  000.107: sourcing /opt/homebrew/share/vim/vim90/plugin/gzip.vim
+068.772  000.142  000.142: sourcing /opt/homebrew/share/vim/vim90/plugin/logiPat.vim
+068.833  000.026  000.026: sourcing /opt/homebrew/share/vim/vim90/plugin/manpager.vim
+068.973  000.104  000.104: sourcing /opt/homebrew/share/vim/vim90/plugin/matchparen.vim
+069.316  000.308  000.308: sourcing /opt/homebrew/share/vim/vim90/plugin/netrwPlugin.vim
+069.374  000.009  000.009: sourcing /opt/homebrew/share/vim/vim90/plugin/rrhelper.vim
+069.430  000.014  000.014: sourcing /opt/homebrew/share/vim/vim90/plugin/spellfile.vim
+069.544  000.075  000.075: sourcing /opt/homebrew/share/vim/vim90/plugin/tarPlugin.vim
+069.662  000.078  000.078: sourcing /opt/homebrew/share/vim/vim90/plugin/tohtml.vim
+069.786  000.084  000.084: sourcing /opt/homebrew/share/vim/vim90/plugin/vimballPlugin.vim
+069.928  000.093  000.093: sourcing /opt/homebrew/share/vim/vim90/plugin/zipPlugin.vim
+069.931  002.836: loading plugins
+069.978  000.047: loading packages
+070.884  000.690  000.690: sourcing /Users/nactang/.vim/plugged/fzf.vim/autoload/fzf/vim.vim
+071.087  000.998  000.308: sourcing /Users/nactang/.vim/plugged/coc-fzf/after/plugin/coc_fzf.vim
+071.456  000.265  000.265: sourcing /Users/nactang/.vim/plugged/indentLine/after/plugin/indentLine.vim
+071.463  000.222: loading after plugins
+071.467  000.004: inits 3
+071.655  000.188: reading viminfo
+071.666  000.011: setting raw mode
+071.672  000.006: start termcap
+071.692  000.020: clearing screen
+072.107  000.201  000.201: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions.vim
+072.284  000.030  000.030: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/quickfix.vim
+072.481  000.018  000.018: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/netrw.vim
+072.654  000.024  000.024: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/fzf.vim
+073.193  000.150  000.150: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/highlighter.vim
+073.392  000.558  000.408: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/term.vim
+073.651  000.069  000.069: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/hunks.vim
+073.879  000.015  000.015: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/bufferline.vim
+074.121  000.030  000.030: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/coc.vim
+074.396  000.084  000.084: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/whitespace.vim
+074.615  000.039  000.039: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/po.vim
+074.826  000.058  000.058: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/wordcount.vim
+075.035  000.018  000.018: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/keymap.vim
+075.347  000.027  000.027: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/searchcount.vim
+078.738  000.036  000.036: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/themes.vim
+078.987  000.437  000.401: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/autoload/airline/themes/angr.vim
+083.472  000.275  000.275: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/autoload/airline/themes/angr.vim
+095.891  000.109  000.109: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/builder.vim
+096.302  000.052  000.052: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/default.vim
+108.465  034.729: opening buffers
+109.393  000.928: BufEnter autocommands
+109.395  000.002: editing files in windows
+110.456  000.322  000.322: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/highlight.vim
+110.917  000.279  000.279: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/color.vim
+115.122  005.126: VimEnter autocommands
+115.122  000.000: before starting main loop
+116.197  000.074  000.074: sourcing /Users/nactang/.vim/plugged/vim-bufferline/autoload/bufferline.vim
+117.089  001.893: first screen update
+117.090  000.001: --- VIM STARTED ---
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.007  000.007: --- VIM STARTING ---
+000.075  000.068: Allocated generic buffers
+000.819  000.744: locale set
+000.824  000.005: clipboard setup
+000.838  000.014: window checked
+001.444  000.606: inits 1
+001.451  000.007: parsing arguments
+001.452  000.001: expanding arguments
+005.337  003.885: shell init
+005.778  000.441: Termcap init
+005.794  000.016: inits 2
+005.959  000.165: init highlight
+013.683  006.950  006.950: sourcing /opt/homebrew/share/vim/vim90/filetype.vim
+013.854  000.061  000.061: sourcing /opt/homebrew/share/vim/vim90/ftplugin.vim
+013.996  000.033  000.033: sourcing /opt/homebrew/share/vim/vim90/indent.vim
+015.378  000.898  000.898: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+015.522  001.214  000.316: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+015.608  001.409  000.195: sourcing /opt/homebrew/share/vim/vim90/syntax/synload.vim
+015.707  001.623  000.214: sourcing /opt/homebrew/share/vim/vim90/syntax/syntax.vim
+018.638  001.918  001.918: sourcing /Users/nactang/.vim/autoload/plug.vim
+022.043  000.666  000.666: sourcing /opt/homebrew/share/vim/vim90/ftoff.vim
+029.037  000.025  000.025: sourcing /Users/nactang/.vim/plugged/rust.vim/ftdetect/rust.vim
+029.322  005.370  005.345: sourcing /opt/homebrew/share/vim/vim90/filetype.vim
+029.552  000.013  000.013: sourcing /opt/homebrew/share/vim/vim90/ftplugin.vim
+029.770  000.008  000.008: sourcing /opt/homebrew/share/vim/vim90/indent.vim
+030.723  000.449  000.449: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/parts.vim
+031.128  000.101  000.101: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/init.vim
+031.618  000.012  000.012: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/formatter/short_path.vim
+032.278  001.391  001.278: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/section.vim
+033.253  000.124  000.124: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc.vim
+033.556  000.129  000.129: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/rpc.vim
+033.593  000.846  000.593: sourcing /Users/nactang/.dotfiles//coc-nvim-config.vim
+034.118  000.123  000.123: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+034.505  000.117  000.117: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+035.311  000.559  000.559: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+036.748  000.122  000.122: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+037.095  000.117  000.117: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+041.518  006.065  005.826: sourcing /Users/nactang/.vim/plugged/papercolor-theme/colors/PaperColor.vim
+042.242  000.509  000.509: sourcing /opt/homebrew/share/vim/vim90/colors/lists/default.vim
+043.735  000.219  000.219: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+044.362  000.216  000.216: sourcing /opt/homebrew/share/vim/vim90/syntax/syncolor.vim
+048.318  005.962  005.527: sourcing /Users/nactang/.vim/plugged/papercolor-theme/colors/PaperColor.vim
+048.580  000.055  000.055: sourcing /Users/nactang/.dotfiles//config/theme.vim
+048.583  032.087  008.036: sourcing /Users/nactang/.vimrc.bundles
+048.587  042.319  001.565: sourcing $HOME/.vimrc
+048.588  000.310: sourcing vimrc file(s)
+048.865  000.069  000.069: sourcing /Users/nactang/.vim/plugged/rust.vim/plugin/cargo.vim
+048.923  000.024  000.024: sourcing /Users/nactang/.vim/plugged/rust.vim/plugin/rust.vim
+049.175  000.166  000.166: sourcing /Users/nactang/.vim/plugged/vim-startuptime/plugin/startuptime.vim
+049.463  000.205  000.205: sourcing /Users/nactang/.vim/plugged/winresizer/plugin/winresizer.vim
+049.906  000.359  000.359: sourcing /Users/nactang/.vim/plugged/vim-surround/plugin/surround.vim
+050.240  000.245  000.245: sourcing /Users/nactang/.vim/plugged/conflict-marker.vim/plugin/conflict_marker.vim
+050.616  000.294  000.294: sourcing /Users/nactang/.vim/plugged/auto-pairs/plugin/auto-pairs.vim
+050.990  000.137  000.137: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/plugs.vim
+051.561  000.126  000.126: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/maps.vim
+051.737  000.075  000.075: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/autoload/vm/maps/all.vim
+052.689  001.989  001.651: sourcing /Users/nactang/.vim/plugged/vim-visual-multi/plugin/visual-multi.vim
+052.833  000.052  000.052: sourcing /Users/nactang/.vim/plugged/restore_view.vim/plugin/restore_view.vim
+053.405  000.490  000.490: sourcing /Users/nactang/.vim/plugged/fzf/plugin/fzf.vim
+054.121  000.624  000.624: sourcing /Users/nactang/.vim/plugged/fzf.vim/plugin/fzf.vim
+054.267  000.055  000.055: sourcing /Users/nactang/.vim/plugged/coc-fzf/plugin/coc_fzf.vim
+054.502  000.144  000.144: sourcing /Users/nactang/.vim/plugged/vim-rooter/plugin/rooter.vim
+054.704  000.122  000.122: sourcing /Users/nactang/.vim/plugged/vim-commentary/plugin/commentary.vim
+054.824  000.041  000.041: sourcing /Users/nactang/.vim/plugged/tmux-complete.vim/plugin/tmuxcomplete.vim
+054.917  000.011  000.011: sourcing /Users/nactang/.vim/plugged/readablefold.vim/plugin/readablefold.vim
+055.282  000.113  000.113: sourcing /Users/nactang/.vim/plugged/nerdtree/autoload/nerdtree.vim
+055.816  000.300  000.300: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/path.vim
+056.024  000.093  000.093: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/menu_controller.vim
+056.177  000.047  000.047: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/menu_item.vim
+056.345  000.060  000.060: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/key_map.vim
+056.603  000.149  000.149: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/bookmark.vim
+056.838  000.127  000.127: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/tree_file_node.vim
+057.195  000.246  000.246: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/tree_dir_node.vim
+057.408  000.108  000.108: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/opener.vim
+057.648  000.136  000.136: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/creator.vim
+057.777  000.024  000.024: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/flag_set.vim
+057.961  000.080  000.080: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/nerdtree.vim
+058.242  000.180  000.180: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/ui.vim
+058.355  000.010  000.010: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/event.vim
+058.486  000.025  000.025: sourcing /Users/nactang/.vim/plugged/nerdtree/lib/nerdtree/notifier.vim
+058.886  000.278  000.278: sourcing /Users/nactang/.vim/plugged/nerdtree/autoload/nerdtree/ui_glue.vim
+060.565  000.052  000.052: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/exec_menuitem.vim
+061.072  000.471  000.471: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/fs_menu.vim
+061.139  000.030  000.030: sourcing /Users/nactang/.vim/plugged/nerdtree/nerdtree_plugin/vcs.vim
+061.496  000.240  000.240: sourcing /Users/nactang/.vim/plugged/vim-devicons/nerdtree_plugin/webdevicons.vim
+061.605  006.611  003.842: sourcing /Users/nactang/.vim/plugged/nerdtree/plugin/NERD_tree.vim
+062.184  000.119  000.119: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/util.vim
+062.245  000.550  000.431: sourcing /Users/nactang/.vim/plugged/vim-airline/plugin/airline.vim
+062.354  000.019  000.019: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/plugin/airline-themes.vim
+062.536  000.095  000.095: sourcing /Users/nactang/.vim/plugged/vim-bufferline/plugin/bufferline.vim
+063.314  000.126  000.126: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline.vim
+064.173  001.554  001.428: sourcing /Users/nactang/.vim/plugged/vim-devicons/plugin/webdevicons.vim
+064.721  000.225  000.225: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/util.vim
+065.097  000.148  000.148: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/client.vim
+066.662  000.402  000.402: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/api.vim
+067.349  003.084  002.309: sourcing /Users/nactang/.vim/plugged/coc.nvim/plugin/coc.vim
+067.792  000.044  000.044: sourcing /opt/homebrew/share/vim/vim90/plugin/getscriptPlugin.vim
+067.938  000.109  000.109: sourcing /opt/homebrew/share/vim/vim90/plugin/gzip.vim
+068.117  000.144  000.144: sourcing /opt/homebrew/share/vim/vim90/plugin/logiPat.vim
+068.178  000.026  000.026: sourcing /opt/homebrew/share/vim/vim90/plugin/manpager.vim
+068.320  000.107  000.107: sourcing /opt/homebrew/share/vim/vim90/plugin/matchparen.vim
+068.664  000.309  000.309: sourcing /opt/homebrew/share/vim/vim90/plugin/netrwPlugin.vim
+068.715  000.007  000.007: sourcing /opt/homebrew/share/vim/vim90/plugin/rrhelper.vim
+068.771  000.014  000.014: sourcing /opt/homebrew/share/vim/vim90/plugin/spellfile.vim
+068.886  000.076  000.076: sourcing /opt/homebrew/share/vim/vim90/plugin/tarPlugin.vim
+069.004  000.078  000.078: sourcing /opt/homebrew/share/vim/vim90/plugin/tohtml.vim
+069.128  000.085  000.085: sourcing /opt/homebrew/share/vim/vim90/plugin/vimballPlugin.vim
+069.266  000.093  000.093: sourcing /opt/homebrew/share/vim/vim90/plugin/zipPlugin.vim
+069.269  002.786: loading plugins
+069.315  000.046: loading packages
+070.207  000.684  000.684: sourcing /Users/nactang/.vim/plugged/fzf.vim/autoload/fzf/vim.vim
+070.410  000.986  000.302: sourcing /Users/nactang/.vim/plugged/coc-fzf/after/plugin/coc_fzf.vim
+070.775  000.264  000.264: sourcing /Users/nactang/.vim/plugged/indentLine/after/plugin/indentLine.vim
+070.783  000.218: loading after plugins
+070.786  000.003: inits 3
+070.966  000.180: reading viminfo
+070.978  000.012: setting raw mode
+070.983  000.005: start termcap
+071.004  000.021: clearing screen
+071.410  000.198  000.198: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions.vim
+071.588  000.030  000.030: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/quickfix.vim
+071.792  000.019  000.019: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/netrw.vim
+071.961  000.023  000.023: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/fzf.vim
+072.506  000.149  000.149: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/highlighter.vim
+072.705  000.562  000.413: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/term.vim
+072.966  000.069  000.069: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/hunks.vim
+073.202  000.015  000.015: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/bufferline.vim
+073.458  000.032  000.032: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/coc.vim
+073.728  000.082  000.082: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/whitespace.vim
+073.947  000.039  000.039: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/po.vim
+074.161  000.059  000.059: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/wordcount.vim
+074.370  000.018  000.018: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/keymap.vim
+074.682  000.026  000.026: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/searchcount.vim
+078.029  000.040  000.040: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/themes.vim
+078.291  000.455  000.415: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/autoload/airline/themes/angr.vim
+082.669  000.265  000.265: sourcing /Users/nactang/.vim/plugged/vim-airline-themes/autoload/airline/themes/angr.vim
+094.963  000.117  000.117: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/builder.vim
+095.346  000.051  000.051: sourcing /Users/nactang/.vim/plugged/vim-airline/autoload/airline/extensions/default.vim
+107.475  034.411: opening buffers
+108.405  000.930: BufEnter autocommands
+108.406  000.001: editing files in windows
+109.369  000.326  000.326: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/highlight.vim
+109.838  000.275  000.275: sourcing /Users/nactang/.vim/plugged/coc.nvim/autoload/coc/color.vim
+114.055  005.048: VimEnter autocommands
+114.056  000.001: before starting main loop
+115.029  000.062  000.062: sourcing /Users/nactang/.vim/plugged/vim-bufferline/autoload/bufferline.vim
+115.863  001.745: first screen update
+115.864  000.001: --- VIM STARTED ---
