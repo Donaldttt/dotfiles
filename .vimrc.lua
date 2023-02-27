@@ -51,7 +51,7 @@ local function telescope_config()
         }
         require('telescope').load_extension('fzf')
     end
-    
+
     local builtin = require('telescope.builtin')
 
     vim.keymap.set('n', '<leader><leader>f', builtin.find_files, {})
@@ -60,7 +60,7 @@ local function telescope_config()
     -- vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
     -- vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
     vim.api.nvim_create_autocmd(
-        "User", 
+        "User",
         {
             pattern = "TelescopePreviewerLoaded",
             command = "setlocal wrap number"

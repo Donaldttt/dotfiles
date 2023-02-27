@@ -169,8 +169,7 @@ endfunction
     if HasPlug('wilder.nvim')
         call wilder#setup({
             \ 'modes': [':'],
-            \ 'next_key': '<C-n>',
-            \ 'previous_key': '<C-p>',
+            \ 'next_key': '<tab>',
             \ })
 
         call wilder#set_option('pipeline', [
