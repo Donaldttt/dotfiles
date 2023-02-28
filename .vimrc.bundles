@@ -45,32 +45,26 @@
             Plug 'gelguy/wilder.nvim'
 
             " To use Python remote plugin features in Vim, can be skipped
-            " Plug 'roxma/nvim-yarp'
-            " Plug 'roxma/vim-hug-neovim-rpc'
+            Plug 'roxma/nvim-yarp'
+            Plug 'roxma/vim-hug-neovim-rpc'
         endif       
 
         Plug 'dstein64/vim-startuptime'
         Plug 'simeji/winresizer'
         Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
         
-        Plug 'tpope/vim-surround'
+        Plug 'machakann/vim-sandwich'
         Plug 'rhysd/conflict-marker.vim'
 
         Plug 'jiangmiao/auto-pairs'
         Plug 'mg979/vim-visual-multi'
+        Plug 'RRethy/vim-illuminate'
 
         "Plug 'easymotion/vim-easymotion'
         Plug 'vim-scripts/restore_view.vim'
         Plug 'mhinz/vim-startify'
 
         Plug 'christoomey/vim-tmux-navigator'
-        if executable('fzf')
-            " fzf#install() makes sure that you have the latest binary, comment out because I don't want it to install binary for me
-            Plug 'junegunn/fzf' ", { 'do': { -> fzf#install() } }
-            Plug 'junegunn/fzf.vim'
-            Plug 'antoinemadec/coc-fzf'
-        endif
-
         Plug 'NLKNguyen/papercolor-theme'
         Plug 'airblade/vim-rooter'
 
@@ -83,6 +77,13 @@
         " only work with vim 
         if g:vim_type == 'vim'
             set encoding=UTF-8
+
+            if executable('fzf')
+                Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+                Plug 'junegunn/fzf.vim'
+                Plug 'antoinemadec/coc-fzf'
+            endif
+
             Plug 'scrooloose/nerdtree', { 'on' : ['NERDTreeToggle', 'NERDTreeFind'] }
             Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
             Plug 'vim-airline/vim-airline'
@@ -115,6 +116,14 @@
             if g:vim_version >= 0.7
                 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
+                " for telescope 
+                Plug 'nvim-lua/plenary.nvim'
+                Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
+                if executable('make')
+                    " c plugin for telescope to make it faster
+                    Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+                endif
+
                 " comment out this plugin if the machine doesn't have required
                 " font install
                 Plug 'nvim-tree/nvim-web-devicons'
@@ -146,6 +155,14 @@ endfunction
         let g:indentLine_fileTypeExclude = ['startify']
     endif
     " }
+
+    if HasPlug('vim-illuminate')
+        let g:Illuminate_ftHighlightGroups = {
+        \ 'vim': ['vimVar', 'vimString', 'vimLineComment',
+        \         'vimFuncName', 'vimFunction', 'vimUserFunc', 'vimFunc']
+        \ }
+        let g:Illuminate_ftblacklist = ['nerdtree', 'help']
+    endif
 
     if HasPlug('wilder.nvim')
         call wilder#setup({

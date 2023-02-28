@@ -4,6 +4,64 @@ local vim_version_minor = vim_version['minor']
 -- debug
 -- print(vim.inspect(version))
 --
+local function vim_illuminate_config()
+    require('illuminate').configure({
+        providers = {
+            'lsp',
+            'treesitter',
+            'regex',
+        },
+        delay = 100,
+        filetype_overrides = {},
+        filetypes_denylist = {
+            'dirvish',
+            'fugitive',
+            'NvimTree',
+            'help',
+        },
+        filetypes_allowlist = {},
+        modes_denylist = {},
+        modes_allowlist = {},
+        providers_regex_syntax_denylist = {},
+        providers_regex_syntax_allowlist = {},
+        under_cursor = true,
+        large_file_cutoff = nil,
+        large_file_overrides = nil,
+        min_count_to_highlight = 1,
+    })
+end
+
+local function telescope_config()
+    if vim.fn.HasPlug('telescope-fzf-native.nvim') then
+        require('telescope').setup {
+            extensions = {
+                fzf = {
+                  fuzzy = true,  -- false will only do exact matching
+                  override_generic_sorter = true,
+                  override_file_sorter = true,
+                  case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+                }
+            }
+        }
+        require('telescope').load_extension('fzf')
+    end
+    
+    local builtin = require('telescope.builtin')
+
+    vim.keymap.set('n', '<leader><leader>f', builtin.find_files, {})
+    -- need to install ripgrep
+    vim.keymap.set('n', '<leader><leader>r', builtin.live_grep, {})
+    -- vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+    -- vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+    vim.api.nvim_create_autocmd(
+        "User", 
+        {
+            pattern = "TelescopePreviewerLoaded",
+            command = "setlocal wrap number"
+        }
+    )
+end
+
 local function github_theme_config()
     -- Example config in Lua
     require("github-theme").setup({
@@ -172,6 +230,7 @@ local function nvim_tree_config()
 end
 
 if vim_version_minor >= 5 then
+    vim_illuminate_config()
     transparent_config()
     lualine_config()
     github_theme_config()
@@ -179,7 +238,8 @@ if vim_version_minor >= 5 then
 end
 if vim_version_minor >= 7 then
     nvim_treesitter_config()
-    color_picker_nvim_config()
+    telescope_config()
+    -- color_picker_nvim_config()
     -- lsp_zero_config()
 end
 if vim_version_minor >= 8 then

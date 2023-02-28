@@ -57,7 +57,7 @@
     set hidden                          " Allow buffer switching without saving
     set iskeyword-=.                    " '.' is an end of word designator
     set iskeyword-=#                    " '#' is an end of word designator
-    set iskeyword-=-                    " '-' is an end of word designator
+    set iskeyword+=-                    " let '-' not be an end of word designator
     "set iskeyword-=_                    " '_' is an end of word designator
 
     " Instead of reverting the cursor to the last position in the buffer, we
