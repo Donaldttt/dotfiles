@@ -1,6 +1,7 @@
     " get current neovim version
     let g:vim_version = -1
 
+    " set nocompatible
     " vim runtime folder
     let g:vim_dir = expand('~/.vim/')
 
@@ -57,7 +58,9 @@
     set hidden                          " Allow buffer switching without saving
     set iskeyword-=.                    " '.' is an end of word designator
     set iskeyword-=#                    " '#' is an end of word designator
-    set iskeyword+=-                    " let '-' not be an end of word designator
+
+    set iskeyword+=-
+    " let '-' not be an end of word designator
     "set iskeyword-=_                    " '_' is an end of word designator
 
     " Instead of reverting the cursor to the last position in the buffer, we
@@ -126,7 +129,7 @@
 
 
 " }
-        
+
 " Formatting {
 
     set autoindent                  " Indent at the same level of the previous line
@@ -139,9 +142,18 @@
     set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
     set splitright                  " Puts new vsplit windows to the right of the current
     set splitbelow                  " Puts new split windows to the bottom of the current
-    set nolist                      " let vim not showing '$' or other sign
-    "set list                        " Display unprintable characters f12 - switches
-    "set listchars=tab:•\ ,trail:•,extends:»,precedes:« " Unprintable chars mapping
+    " set nolist                      " let vim not showing '$' or other sign
+    set list                        " Display unprintable characters f12 - switches
+
+    set listchars=tab:•\ ,trail:•,extends:»,precedes:« " Unprintable chars mapping
+
+    "Remove all trailing whitespace by pressing <leader>ws
+    fun! TrimWhitespace()
+        let l:save = winsaveview()
+        keeppatterns %s/\s\+$//e
+        call winrestview(l:save)
+    endfun
+    nnoremap <leader>ws :call TrimWhitespace()<CR>
     set nospell                     " Spell checking off
 
 
@@ -169,16 +181,17 @@
     " Yank from the cursor to the end of the line, to be consistent with C and D.
     nnoremap Y y$
 
-"     if has('nvim')
-"         set foldmethod=expr
-"         set foldexpr=nvim_treesitter#foldexpr()
-"     else
-"         set foldmethod=syntax
-"         autocmd FileType python,vim set foldmethod=indent
-"     endif
+     if has('nvim')
+         set foldmethod=expr
+         set foldexpr=nvim_treesitter#foldexpr()
+     else
+         set foldmethod=syntax
+         autocmd FileType python,vim set foldmethod=indent
+     endif
 
     " so when a buffer open it wouldn't be fold by default
-    set nofoldenable
+    " set nofoldenable
+    set foldlevelstart=99
 
     " Find merge conflict markers
     map <leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
@@ -238,7 +251,7 @@
     endfunction
     call InitializeDirectories()
 
-    " Shell command 
+    " Shell command
     " function! s:RunShellCommand(cmdline)
     "     botright new
 
@@ -258,11 +271,11 @@
 
     " command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
     " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
-    
+
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
     vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
-    vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>    
+    vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
 " Fix file type error for typescript
     autocmd BufNewFile,BufRead *.ts set filetype=typescript
@@ -284,9 +297,9 @@
 
 "   fix paste mess up when using tmux
     if &term =~ "screen"
-        let &t_BE = "\e[?2004h"  
-        let &t_BD = "\e[?2004l" 
-        exec "set t_PS=\e[200~" 
+        let &t_BE = "\e[?2004h"
+        let &t_BD = "\e[?2004l"
+        exec "set t_PS=\e[200~"
         exec "set t_PE=\e[201~"
     endif
 
