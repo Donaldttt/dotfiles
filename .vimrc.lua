@@ -14,7 +14,7 @@ local function vim_illuminate_config()
             'treesitter',
             'regex',
         },
-        delay = 100,
+        delay = 0,
         filetype_overrides = {},
         filetypes_denylist = {
             'dirvish',

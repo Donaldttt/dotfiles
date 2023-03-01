@@ -28,21 +28,10 @@
           return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
         endfunction
 
-        if has('nvim')
-            function! UpdateRemotePlugins(...)
-                " Needed to refresh runtime files
-                let &rtp=&rtp
-                UpdateRemotePlugins
-            endfunction
-
-            Plug 'gelguy/wilder.nvim', Cond(!exists('g:vscode'), { 'do': function('UpdateRemotePlugins') })
-        else
-            Plug 'gelguy/wilder.nvim'
-
-            " To use Python remote plugin features in Vim, can be skipped
-            " Plug 'roxma/nvim-yarp'
-            " Plug 'roxma/vim-hug-neovim-rpc'
-        endif
+        Plug 'gelguy/wilder.nvim', Cond(!exists('g:vscode'))
+        " To use Python remote plugin features in Vim for wilder, can be skipped
+        " Plug 'roxma/nvim-yarp', Cond(g:vim_type == 'vim')
+        " Plug 'roxma/vim-hug-neovim-rpc', Cond(g:vim_type == 'vim')
 
         Plug 'dstein64/vim-startuptime', Cond(!exists('g:vscode'))
         Plug 'simeji/winresizer', Cond(!exists('g:vscode'))
