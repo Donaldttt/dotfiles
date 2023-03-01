@@ -152,10 +152,13 @@ endfunction
     endif
     " }
 
-    if HasPlug('vim-illuminate')
+    if HasPlug('vim-illuminate') && g:vim_type == 'vim'
         let g:Illuminate_ftHighlightGroups = {
         \ 'vim': ['vimVar', 'vimString', 'vimFuncName',
-        \ 'vimFunction', 'vimUserFunc', 'vimFunc']
+        \ 'vimFunction', 'vimUserFunc', 'vimFunc'],
+        \ 'java:blacklist' : [ 'javaType', 'javaScopeDecl', 'javaMethodDecl', 
+        \ 'javaComment', 'javaStorageClass', 'javaClassDecl', 'javaExternal', 
+        \ 'javaTypedef', 'javaLineComment', 'javaStatement' ]
         \ }
         let g:Illuminate_ftwhitelist = ['vim', 'sh', 'python', 'rust', 'java', 'c', 'cpp', 'javascript', 'typescript', 'lua']
 
@@ -465,10 +468,15 @@ endfunction
 "
     " debug function print out highlight group of cursor position
     function! SynStack()
-      if !exists("*synstack")
-        return
-      endif
-      echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+        if !exists("*synstack")
+            return
+        endif
+        echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+
+        :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+        \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+        \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
+
     endfunc
 
     nmap <Leader>db :call SynStack()<CR>
