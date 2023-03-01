@@ -5,6 +5,9 @@ local vim_version_minor = vim_version['minor']
 -- print(vim.inspect(version))
 --
 local function vim_illuminate_config()
+    if not vim.fn.HasPlug('vim-illuminate') then
+        return
+    end
     require('illuminate').configure({
         providers = {
             'lsp',
@@ -32,6 +35,9 @@ local function vim_illuminate_config()
 end
 
 local function telescope_config()
+    if not vim.fn.HasPlug('telescope.nvim') then
+        return
+    end
     if vim.fn.HasPlug('telescope-fzf-native.nvim') then
         require('telescope').setup {
             extensions = {
@@ -63,6 +69,9 @@ local function telescope_config()
 end
 
 local function github_theme_config()
+    if not vim.fn.HasPlug('github-nvim-theme') then
+        return
+    end
     -- Example config in Lua
     require("github-theme").setup({
         -- Overwrite the highlight groups
@@ -89,6 +98,9 @@ local function color_picker_nvim_config()
 end
 
 local function indent_blankline_config()
+    if not vim.fn.HasPlug('indent-blankline.nvim') then
+        return
+    end
     -- Example config in Lua
     require("indent_blankline").setup {
         show_current_context = true,
@@ -99,6 +111,9 @@ local function indent_blankline_config()
 end
 
 local function transparent_config()
+    if not vim.fn.HasPlug('nvim-transparent') then
+        return
+    end
     require("transparent").setup({
       enable = true, -- boolean: enable transparent
       extra_groups = { -- table/string: additional groups that should be cleared
@@ -111,6 +126,9 @@ local function transparent_config()
 end
 
 local function lualine_config()
+    if not vim.fn.HasPlug('lualine.nvim') then
+        return
+    end
     for i=1,9 do
         vim.api.nvim_set_keymap('n', '<Leader>'..i, ':LualineBuffersJump '..i..'<CR>', { noremap = true, silent = true, nowait = true })
         -- :nnoremap <silent> <Leader>1 :LualineBuffersJump 1<CR>
@@ -173,6 +191,9 @@ local function lualine_config()
 end
 
 local function nvim_treesitter_config()
+    if not vim.fn.HasPlug('nvim-treesitter') then
+        return
+    end
     require('nvim-treesitter.configs').setup {
         -- ensure_installed = { "c", "bash", "lua" },
         sync_install = false,
@@ -186,6 +207,9 @@ local function nvim_treesitter_config()
 end
 
 local function nvim_tree_config()
+    if not vim.fn.HasPlug('nvim-tree.lua') then
+        return
+    end
     -- disable netrw at the very start of your init.lua (strongly advised)
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1

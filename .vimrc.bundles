@@ -22,16 +22,12 @@
 
     call plug#begin(s:plugin_dir)
 
-        "Plug 'NoahTheDuke/vim-just'
-        " Plug 'mbbill/undotree'
-        " {
-            " Plug 'alvan/vim-closetag'
-            " let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.js'
-        " }
+        " https://github.com/junegunn/vim-plug/wiki/tips
+        function! Cond(cond, ...)
+          let opts = get(a:000, 0, {})
+          return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+        endfunction
 
-        " for markdown{
-            " Plug 'preservim/vim-markdown'
-        "}
         if has('nvim')
             function! UpdateRemotePlugins(...)
                 " Needed to refresh runtime files
@@ -39,17 +35,17 @@
                 UpdateRemotePlugins
             endfunction
 
-            Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
+            Plug 'gelguy/wilder.nvim', Cond(!exists('g:vscode'), { 'do': function('UpdateRemotePlugins') })
         else
             Plug 'gelguy/wilder.nvim'
 
             " To use Python remote plugin features in Vim, can be skipped
-            Plug 'roxma/nvim-yarp'
-            Plug 'roxma/vim-hug-neovim-rpc'
+            " Plug 'roxma/nvim-yarp'
+            " Plug 'roxma/vim-hug-neovim-rpc'
         endif
 
-        Plug 'dstein64/vim-startuptime'
-        Plug 'simeji/winresizer'
+        Plug 'dstein64/vim-startuptime', Cond(!exists('g:vscode'))
+        Plug 'simeji/winresizer', Cond(!exists('g:vscode'))
         Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
 
         Plug 'machakann/vim-sandwich'
@@ -57,20 +53,20 @@
 
         Plug 'jiangmiao/auto-pairs'
         Plug 'mg979/vim-visual-multi'
-        Plug 'RRethy/vim-illuminate'
+        Plug 'RRethy/vim-illuminate', Cond(!exists('g:vscode'))
 
         "Plug 'easymotion/vim-easymotion'
         Plug 'vim-scripts/restore_view.vim'
-        Plug 'mhinz/vim-startify'
+        Plug 'mhinz/vim-startify', Cond(!exists('g:vscode'))
 
-        Plug 'christoomey/vim-tmux-navigator'
-        Plug 'NLKNguyen/papercolor-theme'
+        Plug 'christoomey/vim-tmux-navigator', Cond(!exists('g:vscode'))
+        Plug 'NLKNguyen/papercolor-theme', Cond(!exists('g:vscode'))
         Plug 'airblade/vim-rooter'
 
         " Comment stuff out
         Plug 'tpope/vim-commentary'
 
-        Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
+        Plug 'ludovicchabant/vim-gutentags', Cond(!exists('g:vscode'), { 'for': ['c', 'cpp'] })
         " Plug 'lambdalisue/readablefold.vim'
 
         " only work with vim
@@ -95,7 +91,7 @@
         endif
 
         if executable('node')
-             Plug 'neoclide/coc.nvim', {'branch': 'release'}
+             Plug 'neoclide/coc.nvim', Cond(!exists('g:vscode'), {'branch': 'release'})
         endif
 
         " only work with nvim > 0.5
@@ -103,35 +99,35 @@
         " cause error
         if g:vim_type == 'nvim'
             if g:vim_version >= 0.5
-                Plug 'xiyaowong/nvim-transparent'
-                Plug 'lukas-reineke/indent-blankline.nvim'
+                Plug 'xiyaowong/nvim-transparent', Cond(!exists('g:vscode'))
+                Plug 'lukas-reineke/indent-blankline.nvim', Cond(!exists('g:vscode'))
                 " nvim theme
-                Plug 'EdenEast/nightfox.nvim'
-                Plug 'projekt0n/github-nvim-theme', { 'tag': 'v0.0.7' }
+                Plug 'EdenEast/nightfox.nvim', Cond(!exists('g:vscode'))
+                Plug 'projekt0n/github-nvim-theme', Cond(!exists('g:vscode'), { 'tag': 'v0.0.7' })
 
-                Plug 'nvim-lualine/lualine.nvim'
+                Plug 'nvim-lualine/lualine.nvim', Cond(!exists('g:vscode'))
 
             endif
             if g:vim_version >= 0.7
                 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
                 " for telescope
-                Plug 'nvim-lua/plenary.nvim'
-                Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
+                Plug 'nvim-lua/plenary.nvim', Cond(!exists('g:vscode'))
+                Plug 'nvim-telescope/telescope.nvim', Cond(!exists('g:vscode'), { 'tag': '0.1.x' })
                 if executable('make')
                     " c plugin for telescope to make it faster
-                    Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+                    Plug 'nvim-telescope/telescope-fzf-native.nvim', Cond(!exists('g:vscode'), { 'do': 'make' })
                 endif
 
                 " comment out this plugin if the machine doesn't have required
                 " font install
-                Plug 'nvim-tree/nvim-web-devicons'
+                Plug 'nvim-tree/nvim-web-devicons', Cond(!exists('g:vscode'))
             endif
             if g:vim_version >= 0.8
-                Plug 'nvim-tree/nvim-tree.lua'
+                Plug 'nvim-tree/nvim-tree.lua', Cond(!exists('g:vscode'))
             endif
             if g:vim_version < 0.8
-                Plug 'scrooloose/nerdtree'
+                Plug 'scrooloose/nerdtree', Cond(!exists('g:vscode'))
             endif
         endif
 
@@ -148,9 +144,15 @@
 function! HasPlug(plug_name, ...)
     let plug_dir_name = get(a:, 1, a:plug_name) " optional argument for the name of plug's folder
     if has_key(g:plugs, a:plug_name) && isdirectory(s:plugin_dir . "/" . plug_dir_name)
+        if has_key(g:plugs[a:plug_name], 'for') || has_key(g:plugs[a:plug_name], 'on')
+            if (has_key(g:plugs[a:plug_name], 'for') && len(g:plugs[a:plug_name]['for']) == 0) || 
+                        \ (has_key(g:plugs[a:plug_name], 'on') && len(g:plugs[a:plug_name]['on']) == 0)
+                return v:false
+            endif
+        endif
         return v:true
     endif
-        return v:false
+    return v:false
 endfunction
 
 " Plugin_Preferences
