@@ -528,10 +528,9 @@ endfunction
     endfunction
 
     " Change bottom airline/lualine theme
-    " Currently only support airline
     function! SetStatusLineTheme(theme)
         if g:vim_type == 'nvim' && g:vim_version >= 0.5
-            "execute('AirlineTheme ' . a:theme)
+            " lualine will change theme automatically
         else
             if HasPlug('vim-airline') && HasPlug('vim-airline-themes')
                 execute('AirlineTheme ' . a:theme)
@@ -540,7 +539,6 @@ endfunction
     endfunction
 
     " Fix colorscheme not working correctly under transparent background
-    " There is no plugin for this for nvim < 0.5 or vim without lua support
     function! TransparentBackgroundFix()
         if !has('nvim') || g:vim_version < 0.5
         endif
