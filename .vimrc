@@ -298,10 +298,18 @@
     else
         set clipboard=unnamedplus
         if g:isWSL
-                augroup Yank
-                    autocmd!
-                    autocmd TextYankPost * :call system('/mnt/c/windows/system32/clip.exe ',@")
-                augroup END
+                " will cause freezing of vim, not sure why
+                " function CopyToWin(timer)
+                "     try
+                "         call system('/mnt/c/windows/system32/clip.exe ',@")
+                "     catch
+                "     endtry
+                " endfunction
+                " augroup Yank
+                "     autocmd!
+                "     " autocmd TextYankPost * :call system('/mnt/c/windows/system32/clip.exe ',@")
+                "      autocmd TextYankPost * let _ = timer_start(0, 'CopyToWin', { 'repeat': 1 })
+                " augroup END
         endif
     endif
 
