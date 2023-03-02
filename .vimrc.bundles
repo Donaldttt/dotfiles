@@ -1,20 +1,12 @@
-" If anything not work as expected. Please make sure all plugins
-" are installed by running:
-" :PlugInstall
+" (jump to the topic)
 "
-" Content
-" ('#' jump to the topic)
-"
-" Plugin_Install
-" Plugin_Preferences
-" Theme_Appearance
-" Key_Mappings
-" Useful_Info
+" PLUGIN_INSTALL
+" PLUGIN_CONFIGURATION
+" THEME_CONFIGURATION
+" KEY_MAPS
+" OTHER_CONFIGS
 
-" Environment {
-" }
-
-" Plugin_Install
+" PLUGIN_INSTALL
 " {
     " Plugin environment
     let g:mydotfiles_directory = expand('~/.dotfiles/')
@@ -75,7 +67,6 @@
             " The bottom buffer display
             Plug 'Donaldttt/vim-bufferline'
             Plug 'ryanoasis/vim-devicons'
-            " Plug 'lambdalisue/nerdfont.vim'
             Plug 'sainnhe/everforest'
         endif
 
@@ -83,14 +74,10 @@
              Plug 'neoclide/coc.nvim', Cond(!exists('g:vscode'), {'branch': 'release'})
         endif
 
-        " only work with nvim > 0.5
-        " For other versions, just loading the plugin may
-        " cause error
         if g:vim_type == 'nvim'
             if g:vim_version >= 0.5
                 Plug 'xiyaowong/nvim-transparent', Cond(!exists('g:vscode'))
                 Plug 'lukas-reineke/indent-blankline.nvim', Cond(!exists('g:vscode'))
-                " nvim theme
                 Plug 'EdenEast/nightfox.nvim', Cond(!exists('g:vscode'))
                 Plug 'projekt0n/github-nvim-theme', Cond(!exists('g:vscode'), { 'tag': 'v0.0.7' })
 
@@ -122,7 +109,7 @@
 
     call plug#end()
 
-    " Automatically install missing plugins on startup
+    " Automatically install missing plugins at startup
     autocmd VimEnter *
         \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
         \|   PlugInstall --sync | q
@@ -144,7 +131,7 @@ function! HasPlug(plug_name, ...)
     return v:false
 endfunction
 
-" Plugin_Preferences
+" PLUGIN_CONFIGURATION
 " {
     " Yggdroot/indentLine {
     if HasPlug('indentLine')
@@ -460,7 +447,7 @@ endfunction
     " }
 " }
 
-" Theme_Appearance
+" THEME_CONFIGURATION
 " {
 "
     " debug function print out highlight group of cursor position
@@ -751,7 +738,7 @@ endfunction
 
 " }
 
-" Key_Mappings
+" KEY_MAPS
 " (This doesn't include plugin specific mapping.
 " For them please check plugin Preferences)
 " {
@@ -772,22 +759,14 @@ endfunction
     " leader num change tab
     " only for vim or nvim without lualine
     if g:vim_type == 'vim' || (g:vim_type == 'nvim' && g:vim_version < 0.5)
-        nnoremap <silent> <nowait> <Leader>1 :call bufferline#jump(1)<CR>
-        nnoremap <silent> <nowait> <Leader>2 :call bufferline#jump(2)<CR>
-        nnoremap <silent> <nowait> <Leader>3 :call bufferline#jump(3)<CR>
-        nnoremap <silent> <nowait> <Leader>4 :call bufferline#jump(4)<CR>
-        nnoremap <silent> <nowait> <Leader>5 :call bufferline#jump(5)<CR>
-        nnoremap <silent> <nowait> <Leader>6 :call bufferline#jump(6)<CR>
-        nnoremap <silent> <nowait> <Leader>7 :call bufferline#jump(7)<CR>
-        nnoremap <silent> <nowait> <Leader>8 :call bufferline#jump(8)<CR>
-        nnoremap <silent> <nowait> <Leader>9 :call bufferline#jump(9)<CR>
-        nnoremap <silent> <nowait> <Space>10 :call bufferline#jump(10)<CR>
-        nnoremap <silent> <nowait> <Space>11 :call bufferline#jump(11)<CR>
-        nnoremap <silent> <nowait> <Space>12 :call bufferline#jump(12)<CR>
-        nnoremap <silent> <nowait> <Space>13 :call bufferline#jump(13)<CR>
-        nnoremap <silent> <nowait> <Space>14 :call bufferline#jump(14)<CR>
-        nnoremap <silent> <nowait> <Space>15 :call bufferline#jump(15)<CR>
-        nnoremap <silent> <nowait> <Space>16 :call bufferline#jump(16)<CR>
+        for i in range(1, 9)
+            execute "nnoremap <silent> <nowait> <leader>" . i . 
+                \ " :call bufferline#jump(" . i . ")<CR>"
+        endfor
+        for i in range(10, 20)
+            execute "nnoremap <silent> <nowait> <space>" . i . 
+                \ " :call bufferline#jump(" . i . ")<CR>"
+        endfor
     end
 
     " split window comform with other window management shortcuts
@@ -801,7 +780,8 @@ endfunction
         execute('source ' . g:mydotfiles_directory . '/.vimrc.lua')
     endif
 "
-" Useful_Info{
+" OTHER_CONFIGS
+" {
 "   show mapping info
 "   :verbose map ,cf
 " }
