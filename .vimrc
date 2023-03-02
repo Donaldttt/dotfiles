@@ -19,10 +19,14 @@
     endif
 
     " detect operating system (Windows/Linux/Darwin)
+    let g:isWSL = 0
     if has("win64") || has("win32") || has("win16")
         let g:os = "Windows"
     else
         let g:os = substitute(system('uname'), '\n', '', '')
+        if system('uname -r') =~ "icrosoft"
+            let g:isWSL = 1
+        endif
     endif
 
     let g:vim_version = str2float(g:vim_version)
@@ -196,9 +200,6 @@
     " set nofoldenable
     set foldlevelstart=99
 
-    " Find merge conflict markers
-    map <leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
-
     " Visual shifting (does not exit Visual mode)
     vnoremap < <gv
     vnoremap > >gv
@@ -296,6 +297,12 @@
         set clipboard=unnamed
     else
         set clipboard=unnamedplus
+        if g:isWSL
+                augroup Yank
+                    autocmd!
+                    autocmd TextYankPost * :call system('/mnt/c/windows/system32/clip.exe ',@")
+                augroup END
+        endif
     endif
 
 "   fix paste mess up when using tmux

@@ -1,6 +1,7 @@
 " (jump to the topic)
 "
 " PLUGIN_INSTALL
+" UTILITIES
 " PLUGIN_CONFIGURATION
 " THEME_CONFIGURATION
 " KEY_MAPS
@@ -43,6 +44,7 @@
         Plug 'christoomey/vim-tmux-navigator', Cond(!exists('g:vscode'))
         Plug 'NLKNguyen/papercolor-theme', Cond(!exists('g:vscode'))
         Plug 'airblade/vim-rooter'
+        Plug 'roxma/vim-tmux-clipboard', Cond(executable('tmux'))
 
         " Comment stuff out
         Plug 'tpope/vim-commentary'
@@ -50,6 +52,7 @@
         Plug 'ludovicchabant/vim-gutentags', Cond(!exists('g:vscode'), { 'for': ['c', 'cpp'] })
         " Plug 'lambdalisue/readablefold.vim'
 
+        Plug 'liuchengxu/vista.vim'
         " only work with vim
         if g:vim_type == 'vim'
             set encoding=UTF-8
@@ -116,7 +119,8 @@
         \| endif
 " }
 
-" only work for Plug.vim
+" UTILITIES
+" {
 function! HasPlug(plug_name, ...)
     let plug_dir_name = get(a:, 1, a:plug_name) " optional argument for the name of plug's folder
     if has_key(g:plugs, a:plug_name) && isdirectory(s:plugin_dir . "/" . plug_dir_name)
@@ -131,13 +135,49 @@ function! HasPlug(plug_name, ...)
     return v:false
 endfunction
 
+" display the name of the buffers which are displaied on screen
+" like command :ls! a
+function! GetActiveBuffers()
+    " let l:blist = getbufinfo({'bufloaded': 1, 'buflisted': 1})
+    let l:blist = getbufinfo({'bufloaded': 1})
+    let l:result = []
+    for l:item in l:blist
+        "skip unnamed buffers; also skip hidden buffers?
+        if empty(l:item.name) || l:item.hidden
+            continue
+        endif
+        " call add(l:result, { 'name' : shellescape(l:item.name), 'bufnr' : l:item.bufnr })
+        call add(l:result, l:item.bufnr )
+    endfor
+    return l:result
+endfunction
+
+" }
+
 " PLUGIN_CONFIGURATION
 " {
-    " Yggdroot/indentLine {
+
+    if HasPlug('vista.vim')
+        let g:vista_default_executive = 'coc'
+        nnoremap <silent> <leader>v :Vista!!<CR>
+        let g:vista_cursor_delay = 0
+        let g:vista_echo_cursor_strategy = 'floating_win'
+        let g:vista_close_on_jump = 0
+        let g:vista_floating_delay = 0
+        let g:vista_ignore_kinds = ['Variable', 'Field', 'EnumMember']
+        let g:vista_floating_border = 'rounded'
+        let g:vista_disable_statusline = 1
+        " let g:vista_keep_fzf_colors = 1
+        let g:vista_update_on_text_changed_delay = 0
+        let g:vista_update_on_text_changed = 1
+        let g:vista#renderer#enable_kind = 1
+        let g:vista#renderer#enable_icon = 0
+
+    endif
+
     if HasPlug('indentLine')
         let g:indentLine_fileTypeExclude = ['startify']
     endif
-    " }
 
     if HasPlug('vim-illuminate') && g:vim_type == 'vim'
         let g:Illuminate_ftHighlightGroups = {
@@ -145,7 +185,7 @@ endfunction
         \ 'vimFunction', 'vimUserFunc', 'vimFunc'],
         \ 'java:blacklist' : [ 'javaType', 'javaScopeDecl', 'javaMethodDecl', 
         \ 'javaComment', 'javaStorageClass', 'javaClassDecl', 'javaExternal', 
-        \ 'javaTypedef', 'javaLineComment', 'javaStatement' ]
+        \ 'javaTypedef', 'javaLineComment', 'javaStatement', 'javaCommentTitle', 'javaDocComment' ]
         \ }
         let g:Illuminate_ftwhitelist = ['vim', 'sh', 'python', 'rust', 'java', 'c', 'cpp', 'javascript', 'typescript', 'lua']
 
@@ -153,6 +193,7 @@ endfunction
             autocmd!
             " autocmd VimEnter * hi link illuminatedWord CursorLine
             autocmd VimEnter * hi illuminatedWord cterm=underline gui=underline
+            autocmd ColorScheme * hi illuminatedWord cterm=underline gui=underline
         augroup END
     endif
 
@@ -221,7 +262,7 @@ endfunction
         \ ]
 
         " session related KeyBinding. These KeyBinding uses function from startify
-        nnoremap <silent> <leader><leader>s :SSave<CR>
+        nnoremap <silent> <leader><leader>s :SSave!<CR>
         nnoremap <silent> <leader><leader>l :SLoad<CR>
         nnoremap <silent> <leader><leader>d :SDelete!<CR>
         nnoremap <silent> <leader><leader>c :SClose<CR>
@@ -353,7 +394,6 @@ endfunction
 
     " nvim-tree.lua {
     if g:vim_type == 'nvim' && HasPlug("nvim-tree.lua")
-
     endif
     " }
 
@@ -375,7 +415,7 @@ endfunction
         let g:airline_section_y       = ''
         let g:airline_section_z       = airline#section#create(['filetype'])
         let g:airline_skip_empty_sections = 1
-        " let g:airline_exclude_filetypes = ['nerdtree']
+        let g:airline_exclude_filetypes = ['vista']
         " see source for current list
         let g:airline#extensions#nerdtree_statusline = 0
 

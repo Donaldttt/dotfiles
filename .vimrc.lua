@@ -21,6 +21,7 @@ local function vim_illuminate_config()
             'fugitive',
             'NvimTree',
             'help',
+            'vista',
         },
         filetypes_allowlist = {},
         modes_denylist = {},
@@ -144,7 +145,8 @@ local function lualine_config()
         disabled_filetypes_data = {     -- Filetypes to disable lualine for.
           statusline = {},       -- only ignores the ft for statusline.
           winbar = {},           -- only ignores the ft for winbar.
-          'NvimTree'
+          'NvimTree',
+          'vista'
         }
     end
     require('lualine').setup {
