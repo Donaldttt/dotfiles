@@ -1,6 +1,10 @@
 local vim_version = vim.version()
 local vim_version_minor = vim_version['minor']
 
+show_icon = false
+if vim.fn.HasPlug('nvim-web-devicons') then
+    show_icon = true
+end
 -- debug
 -- print(vim.inspect(version))
 --
@@ -151,6 +155,7 @@ local function lualine_config()
     end
     require('lualine').setup {
         options = {
+            icons_enabled = show_icon,
             theme = 'auto', -- lualine theme
             -- theme = 'ayu', -- lualine theme
             always_divide_middle = false,  -- When set to true, left sections i.e. 'a','b' and 'c'
@@ -234,6 +239,15 @@ local function nvim_tree_config()
         },
         renderer = {
             group_empty = true,
+            icons = { 
+                show = {
+                    file = show_icon,
+                    folder = show_icon,
+                    folder_arrow = show_icon,
+                    git = show_icon,
+                    modified = show_icon,
+                }
+            }
         },
         filters = {
             dotfiles = false,

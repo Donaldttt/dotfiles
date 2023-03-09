@@ -34,7 +34,7 @@
         Plug 'rhysd/conflict-marker.vim'
 
         Plug 'jiangmiao/auto-pairs'
-        Plug 'mg979/vim-visual-multi'
+        " Plug 'mg979/vim-visual-multi'
         Plug 'RRethy/vim-illuminate', Cond(!exists('g:vscode'))
 
         "Plug 'easymotion/vim-easymotion'
@@ -161,17 +161,34 @@ endfunction
         let g:vista_default_executive = 'coc'
         nnoremap <silent> <leader>v :Vista!!<CR>
         let g:vista_cursor_delay = 0
+        let g:vista_echo_cursor = 0
         let g:vista_echo_cursor_strategy = 'floating_win'
         let g:vista_close_on_jump = 0
         let g:vista_floating_delay = 0
-        let g:vista_ignore_kinds = ['Variable', 'Field', 'EnumMember']
+        let g:vista_ignore_kinds = ['Variable', 'Field', 'EnumMember', 
+                    \ 'String', 'Object', 'Array', 'Constant', 'Package', 'Boolean', 'Number'
+                    \ ]
         let g:vista_floating_border = 'rounded'
         let g:vista_disable_statusline = 1
         " let g:vista_keep_fzf_colors = 1
         let g:vista_update_on_text_changed_delay = 0
         let g:vista_update_on_text_changed = 1
         let g:vista#renderer#enable_kind = 1
-        let g:vista#renderer#enable_icon = 0
+        let g:vista#renderer#enable_icon = 1
+
+        function VistaHelper()
+            if winnr('$') == 1 && bufname() == "__vista__"
+                let bufs = map(filter(copy(getbufinfo()), 'v:val.listed'), 'v:val.bufnr')
+                if len(bufs) > 1
+                   execute("normal! :bw\<CR>") 
+                else
+                    execute "normal! :q!\<CR>" 
+                endif
+            endif
+        endfunction
+        " close vista when it is the last window
+        " autocmd BufEnter * if winnr('$') == 1 && bufname() == "__vista__" | execute "normal! :q!\<CR>" | endif
+        " autocmd BufEnter * call VistaHelper()
 
     endif
 
