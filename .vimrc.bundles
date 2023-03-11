@@ -176,6 +176,30 @@ endfunction
         let g:vista#renderer#enable_kind = 1
         let g:vista#renderer#enable_icon = 1
 
+        let g:vista_last_raw = v:null
+        function VistaCursorJump()
+            " let found = vista#util#BinarySearch(g:vista.raw, line('.'), 'line', '')
+            let found = g:vista_last_raw
+            if empty(found)
+                return
+            endif
+            let vlnum = get(found, 'vlnum', v:null)
+            call cursor(vlnum, 3)
+        endfunction
+
+        function VistaH2()
+            if exists('*vista#util#BinarySearch')  
+                let found = vista#util#BinarySearch(g:vista.raw, line('.'), 'line', '')  
+                if empty(found)
+                    return
+                endif
+                let g:vista_last_raw = found
+            endif
+        endfunction
+
+        autocmd BufLeave * call VistaH2()
+        autocmd FileType vista call VistaCursorJump() 
+
         function VistaHelper()
             if winnr('$') == 1 && bufname() == "__vista__"
                 let bufs = map(filter(copy(getbufinfo()), 'v:val.listed'), 'v:val.bufnr')
@@ -186,6 +210,7 @@ endfunction
                 endif
             endif
         endfunction
+
         " close vista when it is the last window
         " autocmd BufEnter * if winnr('$') == 1 && bufname() == "__vista__" | execute "normal! :q!\<CR>" | endif
         " autocmd BufEnter * call VistaHelper()
