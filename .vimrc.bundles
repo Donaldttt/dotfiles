@@ -189,6 +189,10 @@ endfunction
 
         function VistaH2()
             if exists('*vista#util#BinarySearch')  
+                let bufs = map(filter(copy(getbufinfo()), 'v:val.listed'), 'v:val.bufnr')
+                if index(bufs, bufnr('%')) > 0
+                    return
+                endif
                 let found = vista#util#BinarySearch(g:vista.raw, line('.'), 'line', '')  
                 if empty(found)
                     return
