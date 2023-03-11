@@ -176,10 +176,10 @@ endfunction
         let g:vista#renderer#enable_kind = 1
         let g:vista#renderer#enable_icon = 1
 
-        let g:vista_last_raw = v:null
+        let g:vista_last_row = v:null
         function VistaCursorJump()
             " let found = vista#util#BinarySearch(g:vista.raw, line('.'), 'line', '')
-            let found = g:vista_last_raw
+            let found = g:vista_last_row
             if empty(found)
                 return
             endif
@@ -190,18 +190,20 @@ endfunction
         function VistaH2()
             if exists('*vista#util#BinarySearch')  
                 let bufs = map(filter(copy(getbufinfo()), 'v:val.listed'), 'v:val.bufnr')
-                if index(bufs, bufnr('%')) > 0
+                if index(bufs, bufnr('%')) < 0
                     return
                 endif
                 let found = vista#util#BinarySearch(g:vista.raw, line('.'), 'line', '')  
                 if empty(found)
                     return
                 endif
-                let g:vista_last_raw = found
+                let g:vista_last_row = found
             endif
         endfunction
 
+        let count = 0
         autocmd BufLeave * call VistaH2()
+        " autocmd WinLeave call VistaH2()
         autocmd FileType vista call VistaCursorJump() 
 
         function VistaHelper()
