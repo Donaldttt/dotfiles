@@ -201,7 +201,6 @@ endfunction
             endif
         endfunction
 
-        let count = 0
         autocmd BufLeave * call VistaH2()
         " autocmd WinLeave call VistaH2()
         autocmd FileType vista call VistaCursorJump() 
