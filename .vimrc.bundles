@@ -88,15 +88,14 @@
 
             endif
             if g:vim_version >= 0.7
-                Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+                Plug 'nvim-treesitter/nvim-treesitter', Cond(!exists('g:vscode') && executable('make'), {'do': ':TSUpdate'})
 
                 " for telescope
                 Plug 'nvim-lua/plenary.nvim', Cond(!exists('g:vscode'))
                 Plug 'nvim-telescope/telescope.nvim', Cond(!exists('g:vscode'), { 'tag': '0.1.x' })
-                if executable('make')
-                    " c plugin for telescope to make it faster
-                    Plug 'nvim-telescope/telescope-fzf-native.nvim', Cond(!exists('g:vscode'), { 'do': 'make' })
-                endif
+
+                " c plugin for telescope to make it faster
+                Plug 'nvim-telescope/telescope-fzf-native.nvim', Cond(!exists('g:vscode') && executable('make'), { 'do': 'make' })
 
                 " comment out this plugin if the machine doesn't have required
                 " font install
@@ -158,7 +157,11 @@ endfunction
 " {
 
     if HasPlug('vista.vim')
-        let g:vista_default_executive = 'coc'
+        if HasPlug('coc.nvim')
+            let g:vista_default_executive = 'coc'
+        elseif HasPlug('coc.nvim')
+            let g:vista_default_executive = 'ctags'
+        endif
         nnoremap <silent> <leader>v :Vista!!<CR>
         let g:vista_cursor_delay = 0
         let g:vista_echo_cursor = 0

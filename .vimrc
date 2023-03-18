@@ -150,7 +150,7 @@
     set list                        " Display unprintable characters f12 - switches
 
     " stop inserting the current comment leader after hitting 'o' or 'O' in Normal mode
-    au FileType java setlocal formatoptions-=o
+    au FileType * setlocal formatoptions-=o
 
     set listchars=tab:•\ ,trail:•,extends:»,precedes:« " Unprintable chars mapping
 
