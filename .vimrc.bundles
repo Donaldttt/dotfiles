@@ -157,6 +157,7 @@ endfunction
 " {
 
     if HasPlug('vista.vim')
+        let g:vista_default_executive = 'vim_lsp'
         if HasPlug('coc.nvim')
             let g:vista_default_executive = 'coc'
         elseif HasPlug('coc.nvim')
