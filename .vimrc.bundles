@@ -1,11 +1,18 @@
 " (jump to the topic)
 "
+" OPTIONS
 " PLUGIN_INSTALL
 " UTILITIES
 " PLUGIN_CONFIGURATION
 " THEME_CONFIGURATION
 " KEY_MAPS
 " OTHER_CONFIGS
+
+
+let g:high_performence = v:false
+" only used by neovim
+let g:classic_vim_ui = v:false
+let g:animation_enable = v:true
 
 " PLUGIN_INSTALL
 " {
@@ -37,7 +44,7 @@
         """""""""""""""""""""""
 
 
-        Plug 'gelguy/wilder.nvim'
+        Plug 'gelguy/wilder.nvim', Cond(g:vim_type == 'vim' \|\| g:classic_vim_ui)
         " To use Python remote plugin features in Vim for wilder, can be skipped
         " Plug 'roxma/nvim-yarp', Cond(g:vim_type == 'vim')
         " Plug 'roxma/vim-hug-neovim-rpc', Cond(g:vim_type == 'vim')
@@ -71,7 +78,7 @@
 
         " vim only plugins
         Plug 'scrooloose/nerdtree', Cond(g:vim_type == 'vim' \|\| g:vim_version < 0.8, { 'on' : ['NERDTreeToggle', 'NERDTreeFind'] })
-        Plug 'tiagofumo/vim-nerdtree-syntax-highlight', Cond(g:vim_type == 'vim')
+        Plug 'tiagofumo/vim-nerdtree-syntax-highlight', Cond(g:vim_type == 'vim' && !g:high_performence)
 
         Plug 'neoclide/coc.nvim', Cond(!exists('g:vscode') && executable('node'), {'branch': 'release'})
 
@@ -95,7 +102,7 @@
         if g:vim_type == 'nvim'
             if g:vim_version >= 0.5
                 Plug 'xiyaowong/nvim-transparent'
-                Plug 'lukas-reineke/indent-blankline.nvim'
+                Plug 'lukas-reineke/indent-blankline.nvim', Cond(!g:animation_enable)
                 Plug 'echasnovski/mini.indentscope'
                 Plug 'echasnovski/mini.animate'
 
@@ -490,24 +497,28 @@ endfunction
             let time = float2nr(str2float(reltime()->reltimestr()[4:]) * 1000)
             let speed = 800
             let loadidx = time % speed
-            let msg = 'lsp[' . id . ']'
+            let msg = 'lsp:' . id
             if state == "starting"
-                return msg . " " . loading[loadidx/(speed/10)]
+                let s:coc_lsp_loading = 1
+                return msg . " " . loading[loadidx/(speed/10)] . " "
             endif
-            return msg . " ✔"
+            if exists('s:coc_lsp_loading')
+                unlet s:coc_lsp_loading
+            endif
+            return msg . " ✔ "
         endfunction
 
         " Set configuration options for the statusline plugin vim-airline.
         " Use the powerline theme and optionally enable powerline symbols.
 
-        " This must using my fork version of bufferline
 
         " TODO
         " 22 is a magic number, it is best it can change as buffer width
         " changing
+        " This must use my fork version of bufferline
         let g:bufferline_max_length = &columns - 22
         function! AirlineBufferNumber()
-            return len(g:index_to_buffer)
+            return len(g:index_to_buffer) . " "
         endfunction
         call airline#parts#define_function('bufnum', 'AirlineBufferNumber')
         call airline#parts#define_function('cocstatus', 'AirlineCocStatus')
@@ -526,9 +537,20 @@ endfunction
             let g:airline_section_x       = airline#section#create(['bufnum'])
             let g:airline_section_y       = airline#section#create(['cocstatus'])
             let g:airline_section_z       = airline#section#create(['filetype'])
+
             " see source for current list
+            function s:aireline_refresh(timer)
+                if exists(':AirlineRefresh')
+                    :AirlineRefresh!
+                end
+            endfunction
+
+            if !g:high_performence
+                call timer_start(100, 's:aireline_refresh', {'repeat' : -1 })
+            endif
+
         endfunction
-        autocmd User AirlineAfterInit call AirlineInit()
+        autocmd! User AirlineAfterInit call AirlineInit()
 
         let g:airline#extensions#localsearch#enabled = 0
         let g:airline_extensions = ['bufferline']
@@ -1035,3 +1057,4 @@ endif
 if filereadable(g:mydotfiles_directory . "/config/theme.vim")
     " exec "source " . g:mydotfiles_directory . "/config/theme.vim"
 endif
+

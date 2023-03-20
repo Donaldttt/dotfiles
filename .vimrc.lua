@@ -4,29 +4,40 @@
 
 -- enable animation of command like "<C-u>" and "<C-d>", or cursor
 -- jump animation. (Performence will be effected)
-local animation_enable = true
+local animation_enable = vim.g.animation_enable
+local high_performence = vim.g.high_performence
 
 -- false basicly enable plugins like noice, nvim-notify etc.
--- local classic_vim_ui = true
+local classic_vim_ui = vim.g.classic_vim_ui 
 
 -------------------------------------------------
 ------------------UTILITIES----------------------
 -------------------------------------------------
-local vim = vim
 
+local vim = vim
 function HasPlug(name)
     return vim.fn.HasPlug(name)
 end
 
-function _G.put(...)
-  local objects = {}
-  for i = 1, select('#', ...) do
-    local v = select(i, ...)
-    table.insert(objects, vim.inspect(v))
-  end
+-- use as a wrapper function to set keymap that call a function with
+-- parameters
+local _wrap = function(func, ...)
+    local args = { ... }
+    return function()
+        func(unpack(args))
+    end
+end
 
-  print(table.concat(objects, '\n'))
-  return ...
+-- use to print object
+function _G.put(...)
+    local objects = {}
+    for i = 1, select('#', ...) do
+        local v = select(i, ...)
+        table.insert(objects, vim.inspect(v))
+    end
+
+    print(table.concat(objects, '\n'))
+    return ...
 end
 
 local wk = nil
@@ -143,7 +154,8 @@ local function vim_illuminate_config()
     if not HasPlug('vim-illuminate') then
         return
     end
-    require('illuminate').configure({
+    local illuminate = require('illuminate')
+    illuminate.configure({
         providers = {
             'lsp',
             'treesitter',
@@ -290,7 +302,8 @@ local function indentline_config()
             -- Example config in Lua
             require("indent_blankline").setup {
                 show_current_context = true,
-                filetype_exclude =   { "lspinfo", "packer", "checkhealth", "help", "man", "", "startify",}
+                filetype_exclude = { "lspinfo", "packer", "checkhealth",
+                    "help", "man", "", "startify", }
                 -- use_treesitter = true,
             }
         end
