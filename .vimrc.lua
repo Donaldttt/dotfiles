@@ -1,15 +1,146 @@
+-------------------------------------------------
+-------------------OPTIONS-----------------------
+-------------------------------------------------
+
+-- enable animation of command like "<C-u>" and "<C-d>", or cursor
+-- jump animation. (Performence will be effected)
+local animation_enable = true
+
+-- false basicly enable plugins like noice, nvim-notify etc.
+-- local classic_vim_ui = true
+
+-------------------------------------------------
+------------------UTILITIES----------------------
+-------------------------------------------------
+local vim = vim
+
+function HasPlug(name)
+    return vim.fn.HasPlug(name)
+end
+
+function _G.put(...)
+  local objects = {}
+  for i = 1, select('#', ...) do
+    local v = select(i, ...)
+    table.insert(objects, vim.inspect(v))
+  end
+
+  print(table.concat(objects, '\n'))
+  return ...
+end
+
+local wk = nil
+local function wk_register(opt)
+    if wk == nil then
+        return
+    end
+    wk.register(opt)
+end
+
+-------------------------------------------------
+----------------CONFIGURATION--------------------
+-------------------------------------------------
+
 local vim_version = vim.version()
+
 local vim_version_minor = vim_version['minor']
 
-show_icon = false
-if vim.fn.HasPlug('nvim-web-devicons') then
+local show_icon = false
+if HasPlug('nvim-web-devicons') then
     show_icon = true
 end
--- debug
--- print(vim.inspect(version))
---
+
+local function nvim_noice_config()
+    if classic_vim_ui
+        or not HasPlug('noice.nvim')
+        or not HasPlug('nvim-notify')
+        or not HasPlug('nui.nvim') then
+        return
+    end
+
+    require("noice").setup({
+        lsp = {
+            -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+            override = {
+                    ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                    ["vim.lsp.util.stylize_markdown"] = true,
+                    ["cmp.entry.get_documentation"] = true,
+            },
+        },
+        -- you can enable a preset for easier configuration
+        presets = {
+            bottom_search = true, -- use a classic bottom cmdline for search
+            -- command_palette = true, -- position the cmdline and popupmenu together
+            long_message_to_split = true, -- long messages will be sent to a split
+            inc_rename = false,   -- enables an input dialog for inc-rename.nvim
+            lsp_doc_border = false, -- add a border to hover docs and signature help
+        },
+        cmdline = {
+            enabled = true,   -- enables the Noice cmdline UI
+            -- view = "cmdline", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
+            opts = {},        -- global options for the cmdline. See section on views
+            format = {
+                -- cmdline = false,
+                search_down = false,
+                search_up = false,
+                -- filter = false,
+                -- help = false,
+                -- input = {},  -- Used by input()
+                -- lua = false, -- to disable a format, set to `false`
+            },
+        },
+        messages = {
+            -- NOTE: If you enable messages, then the cmdline is enabled automatically.
+            -- This is a current Neovim limitation.
+            enabled = true,      -- enables the Noice messages UI
+            view = "notify",     -- default view for messages
+            view_error = "notify", -- view for errors
+            view_warn = "notify", -- view for warnings
+            view_history = "messages", -- view for :messages
+            view_search = false, -- view for search count messages. Set to `false` to disable
+        },
+    })
+end
+
+local function nvim_scrollbar_config()
+    if classic_vim_ui or
+        not HasPlug('nvim-scrollbar') then
+        return
+    end
+    require("scrollbar").setup({
+        excluded_filetypes = {
+            "prompt",
+            "TelescopePrompt",
+            "noice",
+            "startify",
+            "vista",
+        },
+    })
+end
+
+local function toggleterm_config()
+    if not HasPlug('toggleterm.nvim') then
+        return
+    end
+    require("toggleterm").setup({
+        open_mapping = [[<c-\>]],
+    })
+    function _G.set_terminal_keymaps()
+        local opts = {buffer = 0}
+        vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+        vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
+        vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+        vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+        vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+        vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+        vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
+    end
+
+    vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
+end
+
 local function vim_illuminate_config()
-    if not vim.fn.HasPlug('vim-illuminate') then
+    if not HasPlug('vim-illuminate') then
         return
     end
     require('illuminate').configure({
@@ -39,12 +170,25 @@ local function vim_illuminate_config()
     })
 end
 
-local function telescope_config()
-    if not vim.fn.HasPlug('telescope.nvim') then
+local function which_key_config()
+    if not HasPlug('which-key.nvim') then
         return
     end
-    if vim.fn.HasPlug('telescope-fzf-native.nvim') then
+    wk = require("which-key")
+    wk.setup()
+end
+
+local function telescope_config()
+    if not HasPlug('telescope.nvim') then
+        return
+    end
+    if HasPlug('telescope-fzf-native.nvim') then
         require('telescope').setup {
+            pickers = {
+                colorscheme = {
+                    enable_preview = true
+                }
+            },
             extensions = {
                 fzf = {
                   fuzzy = true,  -- false will only do exact matching
@@ -59,64 +203,123 @@ local function telescope_config()
 
     local builtin = require('telescope.builtin')
 
-    vim.keymap.set('n', '<leader><leader>f', builtin.find_files, {})
+    vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = "Search files inside cwd" })
     -- need to install ripgrep
-    vim.keymap.set('n', '<leader><leader>r', builtin.live_grep, {})
-    -- vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-    -- vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
-    vim.api.nvim_create_autocmd(
-        "User",
-        {
+    vim.keymap.set('n', '<leader>fr', builtin.live_grep, { desc = "Regex search inside files" })
+    vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "Search buffers" })
+    vim.keymap.set('n', '<leader>fc', builtin.colorscheme, { desc = "Search colorscheme" })
+    wk_register({ ["<leader>f"] = { name = "+Telescope" }})
+
+    vim.api.nvim_create_autocmd("User", {
             pattern = "TelescopePreviewerLoaded",
-            command = "setlocal wrap number"
-        }
-    )
+            command = "setlocal wrap number" })
 end
 
 local function github_theme_config()
-    if not vim.fn.HasPlug('github-nvim-theme') then
+    if not HasPlug('github-nvim-theme') then
         return
     end
     -- Example config in Lua
     require("github-theme").setup({
         -- Overwrite the highlight groups
         overrides = function(c)
-        return {
-            NormalFloat = { link = 'Pmenu' },
-        }
+            return {
+                NormalFloat = { link = 'Pmenu' },
+            }
         end
     })
 end
 
-local function color_picker_nvim_config()
-    -- config for ziontee113/color-picker.nvim
-    require("color-picker").setup({
-        ["keymap"] = { -- mapping example:
-            ["U"] = "<Plug>ColorPickerSlider5Decrease",
-            ["O"] = "<Plug>ColorPickerSlider5Increase",
-        },
-    })
-    local opts = { noremap = true, silent = true }
-
-    vim.keymap.set("n", "cp", "<cmd>PickColor<cr>", opts)
-    -- vim.keymap.set("i", "<C-u>c", "<cmd>PickColorInsert<cr>", opts)
-end
-
-local function indent_blankline_config()
-    if not vim.fn.HasPlug('indent-blankline.nvim') then
+local function animate_config()
+    if not animation_enable then
         return
     end
-    -- Example config in Lua
-    require("indent_blankline").setup {
-        show_current_context = true,
-        filetype_exclude =   { "lspinfo", "packer", "checkhealth", "help", "man", "", "startify",}
-        -- use_treesitter = true,
-    }
 
+    if HasPlug('mini.animate') then
+
+        local animate = require('mini.animate')
+        animate.setup({
+            cursor = {
+                -- Whether to enable this animation
+                enable = true,
+                -- Timing of animation (how steps will progress in time)
+                -- timing = --<function: implements linear total 250ms animation duration>,
+            },
+             scroll = {
+                -- Whether to enable this animation
+                enable = true,
+                -- Timing of animation (how steps will progress in time)
+                timing = animate.gen_timing.linear({ duration = 150, unit = 'total' }),
+             },
+            open = {
+                -- Whether to enable this animation
+                enable = false,
+            },
+        })
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason",
+                "NvimTree", "vista", "toggleterm", "noice" },
+            callback = function()
+                vim.b.minianimate_disable = true
+            end,
+        })
+    end
+
+    -- if HasPlug('neoscroll.nvim') then
+    --     require('neoscroll').setup({
+    --     -- Set any options as needed
+    --         mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
+    --                 },
+    --     })
+
+    --     local t = {}
+    --     -- Syntax: t[keys] = {function, {function arguments}}
+    --     t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '150'}}
+    --     t['<C-d>'] = {'scroll', { 'vim.wo.scroll', 'true', '150'}}
+    --     t['<C-b>'] = {'scroll', {'-vim.api.nvim_win_get_height(0)', 'true', '200'}}
+    --     t['<C-f>'] = {'scroll', { 'vim.api.nvim_win_get_height(0)', 'true', '200'}}
+    --     -- t['zb']    = {'zb', {'250'}}
+
+    --     require('neoscroll.config').set_mappings(t)
+    -- end
+end
+
+local function indentline_config()
+    if not animation_enable then
+        if HasPlug('indent-blankline.nvim') then
+            -- Example config in Lua
+            require("indent_blankline").setup {
+                show_current_context = true,
+                filetype_exclude =   { "lspinfo", "packer", "checkhealth", "help", "man", "", "startify",}
+                -- use_treesitter = true,
+            }
+        end
+    else
+        if HasPlug('mini.indentscope') then
+            MiniIndentscope = require('mini.indentscope')
+            MiniIndentscope.setup({
+                symbol = '│',
+                -- draw = {
+                --      animation = MiniIndentscope.gen_animation.linear({
+                --          easing = 'out',
+                --          duration = 150,
+                --          unit = 'total'
+                --      })
+                -- },
+            })
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason",
+                    "NvimTree", "vista", "startify", "toggleterm" },
+                callback = function()
+                    vim.b.miniindentscope_disable = true
+                end,
+            })
+        end
+    end
 end
 
 local function transparent_config()
-    if not vim.fn.HasPlug('nvim-transparent') then
+    if not HasPlug('nvim-transparent') then
         return
     end
     require("transparent").setup({
@@ -131,16 +334,37 @@ local function transparent_config()
 end
 
 local function lualine_config()
-    if not vim.fn.HasPlug('lualine.nvim') then
+    if not HasPlug('lualine.nvim') then
         return
     end
-    for i=1,9 do
-        vim.api.nvim_set_keymap('n', '<Leader>'..i, ':LualineBuffersJump '..i..'<CR>', { noremap = true, silent = true, nowait = true })
-        -- :nnoremap <silent> <Leader>1 :LualineBuffersJump 1<CR>
-    end
-    for i=10,20 do
-        vim.api.nvim_set_keymap('n', '<Space>'..i, ':LualineBuffersJump '..i..'<CR>', { noremap = true, silent = true, nowait = true })
-        -- :nnoremap <silent> <Leader>1 :LualineBuffersJump 1<CR>
+
+    vim.api.nvim_set_hl(0, 'CocstatusSucceed', { fg = "#e32be0"})
+    vim.api.nvim_set_hl(0, 'CocstatusLoading', { fg = "#35f0e9"})
+    -- custom lualine plugin show coc lsp status
+    local function cocstatus()
+        local loading = {"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"}
+        local step = #loading
+        local ok, result = pcall( vim.fn.CocAction, 'services')
+        if not ok then
+            return
+        end
+        local ft = vim.bo.filetype
+        local state, id
+        for _, entry in ipairs(result) do
+            if entry['languageIds'][1] == ft then
+                state = entry['state']
+                id = entry['id']
+                break
+            end
+        end
+
+        local speed = 1600
+        local loadidx = (vim.loop.now() % speed)
+        local msg = "LSP(" .. id .. ")"
+        if state == "starting" then
+            return msg .. " %#CocstatusLoading#" .. loading[math.floor(loadidx/(step * (speed/100))) + 1]
+        end
+        return msg .. " %#CocstatusSucceed#✔"
     end
 
     local disabled_filetypes_data = {}
@@ -153,52 +377,69 @@ local function lualine_config()
           'vista'
         }
     end
-    require('lualine').setup {
+
+    local opt = {
         options = {
             icons_enabled = show_icon,
             theme = 'auto', -- lualine theme
             -- theme = 'ayu', -- lualine theme
-            always_divide_middle = false,  -- When set to true, left sections i.e. 'a','b' and 'c'
-                                           -- can't take over the entire statusline even
-                                           -- if neither of 'x', 'y' or 'z' are present.
+            -- component_separators = { left = '', right = ''},
+            -- section_separators = { left = '', right = ''},
+            component_separators = { left = '', right = ''},
+            section_separators = { left = '', right = ''},
+
+            always_divide_middle = false,
             globalstatus = true,
             disabled_filetypes = disabled_filetypes_data,
+            refresh = {statusline = 200}
         },
         sections = {
-            lualine_a = {'mode'},
+            lualine_a = { 'mode' },
             lualine_b = {},
             lualine_c = {
                 {
-                'buffers',
-                mode = 2,
-                filetype_names = {
-                    TelescopePrompt = 'Telescope',
-                    dashboard = 'Dashboard',
-                    packer = 'Packer',
-                    fzf = 'FZF',
-                    alpha = 'Alpha',
-                    NvimTree = ''
-                },
-                max_length = vim.o.columns - 27,   -- Maximum width of buffers component,
-                                                      -- it can also be a function that returns
-                                                      -- the value of `max_length` dynamically.
-                symbols = {
-                    modified = ' ●',      -- Text to show when the buffer is modified
-                    alternate_file = '', -- Text to show to identify the alternate file
-                    directory =  '',     -- Text to show when the buffer is a directory
-                },
+                    'buffers',
+                    mode = 2,
+                    filetype_names = {
+                        TelescopePrompt = 'Telescope',
+                        dashboard = 'Dashboard',
+                        packer = 'Packer',
+                        fzf = 'FZF',
+                        alpha = 'Alpha',
+                        NvimTree = '',
+                        vista = ''
+                    },
+                    symbols = {
+                        modified = ' ●', -- Text to show when the buffer is modified
+                        alternate_file = '', -- Text to show to identify the alternate file
+                        directory = '', -- Text to show when the buffer is a directory
+                    },
                 }
             },
             -- lualine_x = {'encoding', 'fileformat', 'filetype'},
-            lualine_x = {},
-            lualine_y = {},
-            lualine_z = {'encoding', 'location'}
+            lualine_x = { cocstatus },
+            lualine_y = {'encoding'},
+            lualine_z = {'location' }
         },
     }
+
+    require('lualine').setup(opt)
+
+    for i=1,9 do
+        -- :nnoremap <silent> <Leader>1 :LualineBuffersJump 1<CR>
+        vim.api.nvim_set_keymap('n', '<Leader>' .. i, ':LualineBuffersJump ' .. i .. '<CR>',
+            { noremap = true, silent = true, nowait = true })
+    end
+    for i=10,20 do
+        -- :nnoremap <silent> <Leader>1 :LualineBuffersJump 1<CR>
+        vim.api.nvim_set_keymap('n', '<Space>' .. i, ':LualineBuffersJump ' .. i .. '<CR>',
+            { noremap = true, silent = true, nowait = true })
+    end
+
 end
 
 local function nvim_treesitter_config()
-    if not vim.fn.HasPlug('nvim-treesitter') then
+    if not HasPlug('nvim-treesitter') then
         return
     end
     require('nvim-treesitter.configs').setup {
@@ -214,7 +455,7 @@ local function nvim_treesitter_config()
 end
 
 local function nvim_tree_config()
-    if not vim.fn.HasPlug('nvim-tree.lua') then
+    if not HasPlug('nvim-tree.lua') then
         return
     end
     -- disable netrw at the very start of your init.lua (strongly advised)
@@ -239,7 +480,7 @@ local function nvim_tree_config()
         },
         renderer = {
             group_empty = true,
-            icons = { 
+            icons = {
                 show = {
                     file = show_icon,
                     folder = show_icon,
@@ -272,17 +513,26 @@ end
 if vim_version_minor >= 5 then
     vim_illuminate_config()
     transparent_config()
-    lualine_config()
     github_theme_config()
-    indent_blankline_config()
+    indentline_config()
+    which_key_config()
+    animate_config()
+    nvim_scrollbar_config()
 end
 if vim_version_minor >= 7 then
     nvim_treesitter_config()
     telescope_config()
-    -- color_picker_nvim_config()
-    -- lsp_zero_config()
+    toggleterm_config()
 end
 if vim_version_minor >= 8 then
     nvim_tree_config()
+    nvim_noice_config()
 end
 
+local function late_loading()
+    lualine_config()
+end
+
+-- late loading
+vim.api.nvim_create_autocmd({ "VimEnter" },
+    { pattern = { "*" }, callback = late_loading, })
