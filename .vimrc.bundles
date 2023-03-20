@@ -88,7 +88,7 @@
             Plug 'vim-airline/vim-airline-themes'
             Plug 'Donaldttt/vim-bufferline'
             Plug 'ryanoasis/vim-devicons'
-            Plug 'wfxr/minimap.vim', Cond(!exists('g:vscode') && executable('code-minimap'))
+            Plug 'wfxr/minimap.vim', Cond(executable('code-minimap'), {'on' : ['MinimapToggle']})
         endif
 
 
@@ -163,8 +163,10 @@ endfunction
 " PLUGIN_CONFIGURATION
 " {
     if HasPlug('minimap.vim')
-        let g:special_fts += ['minimap']
         nnoremap <silent> <leader>mm :MinimapToggle<CR>
+        let g:minimap_highlight_search = 1
+        let g:minimap_git_colors = 1
+        let g:minimap_enable_highlight_colorgroup = 1
     endif
 
     if HasPlug('vista.vim')
@@ -248,7 +250,8 @@ endfunction
         \ 'vimFunction', 'vimUserFunc', 'vimFunc'],
         \ 'java:blacklist' : [ 'javaType', 'javaScopeDecl', 'javaMethodDecl',
         \ 'javaComment', 'javaStorageClass', 'javaClassDecl', 'javaExternal',
-        \ 'javaTypedef', 'javaLineComment', 'javaStatement', 'javaCommentTitle', 'javaDocComment' ]
+        \ 'javaTypedef', 'javaLineComment', 'javaStatement', 'javaCommentTitle', 'javaDocComment' ],
+        \ 'lua:blacklist' : [ 'luaComment', 'luaCond', 'luaStatement', 'luaFunction' ]
         \ }
         let g:Illuminate_ftwhitelist = ['vim', 'sh', 'python', 'rust', 'java', 'c', 'cpp', 'javascript', 'typescript', 'lua']
 
@@ -461,7 +464,7 @@ endfunction
     endif
     " }
 
-    if HasPlug("vim-airline") || HasPlug('lualine.nvim')
+    if HasPlug("vim-airline")
 
         function! AirlineCocStatus()
             if ! exists('*CocAction')
@@ -494,9 +497,6 @@ endfunction
             return msg . " ✔"
         endfunction
 
-    endif
-
-    if HasPlug("vim-airline")
         " Set configuration options for the statusline plugin vim-airline.
         " Use the powerline theme and optionally enable powerline symbols.
 
@@ -786,14 +786,14 @@ endfunction
 
     function! SetDarkTheme()
         set background=dark
-        hi clear
+        " hi clear
         execute("colorscheme " . g:dark_theme)
         let g:dark_or_light_theme = 'dark'
     endfunction
 
     function! SetLightTheme()
         set background=light
-        hi clear
+        " hi clear
         execute("colorscheme " . g:light_theme)
         execute("colorscheme " . g:light_theme)
         let g:dark_or_light_theme = 'light'
@@ -843,7 +843,6 @@ endfunction
             let dark_cb_name = 'CB_dark_tb_disable_' . colorscheme_name
             if exists('*' . dark_cb_name)
                 set background=dark
-                hi clear
                 execute('call ' . dark_cb_name . '()')
             elseif g:dark_transparent_disable_cb != ''
                 execute('call ' . g:dark_transparent_disable_cb . '()')
@@ -856,7 +855,6 @@ endfunction
             let light_cb_name = 'CB_light_tb_disable_' . colorscheme_name
             if exists('*' . light_cb_name)
                 set background=light
-                hi clear
                 execute('call ' . light_cb_name . '()')
             elseif g:light_transparent_disable_cb != ''
                 execute('call ' . g:light_transparent_disable_cb . '()')
