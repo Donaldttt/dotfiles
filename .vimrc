@@ -10,12 +10,14 @@
     let after_directory = g:mydotfiles_directory . 'config/vi-plugs/coc-theme/after/'
 
     " detect vim type(vim or nvim)
+    let g:vim_v = 0
     if has('nvim')
         let g:vim_type = 'nvim'
         let g:vim_version = matchstr(execute('version'), 'NVIM v\zs[^\n]*')
     else
         let g:vim_type = 'vim'
         let g:vim_version = matchstr(execute('version'), 'Vi IMproved \zs[^\n]*')
+        let g:vim_v = v:version
     endif
 
     " detect operating system (Windows/Linux/Darwin)
@@ -100,12 +102,12 @@
 "
     " set tabpagemax=15               " Only show 15 tabs
     " set showmode                    " Display the current mode
-    " set cursorline                    " Highlight current line
+    set nocursorline                    " Highlight current line
 
     " get rid of current line highlight, instead just highlight the number column
-    augroup CLClear
-        autocmd! ColorScheme * hi clear CursorLine
-    augroup END
+    " augroup CLClear
+    "     autocmd! ColorScheme * hi clear CursorLine
+    " augroup END
 
     set cmdheight=1                 " get rid of the extra useless line at the bottom(if not working, probably a plugin is changing the value)
 
@@ -141,8 +143,12 @@
     set shiftwidth=4                " Use indents of 4 spaces
     set tabstop=4                   " An indentation every four columns
     set softtabstop=4               " Let backspace delete indent
-    autocmd FileType javascript,typescript set tabstop=2 shiftwidth=2 softtabstop=2
-    autocmd FileType c,cpp,python,java set tabstop=4 shiftwidth=4 softtabstop=4
+    augroup FileFormat
+        autocmd!
+        autocmd FileType javascript,typescript,lua setlocal tabstop=2 shiftwidth=2 softtabstop=2
+        " autocmd FileType c,cpp,python,java setlocal tabstop=4 shiftwidth=4 softtabstop=4
+    augroup END
+
     set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
     set splitright                  " Puts new vsplit windows to the right of the current
     set splitbelow                  " Puts new split windows to the bottom of the current

@@ -3,54 +3,64 @@
 " OPTIONS
 " PLUGIN_INSTALL
 " UTILITIES
-" PLUGIN_CONFIGURATION
-" THEME_CONFIGURATION
+" PLUGIN_CONFIGURATION " THEME_CONFIGURATION
 " KEY_MAPS
 " OTHER_CONFIGS
 
+let g:debug_mode = v:false
+let g:high_performence = v:false                 " set true will also disable animation
+let g:autocomplte_enable = v:true
+let g:copilot_enable = v:false
 
-let g:high_performence = v:false
 " only used by neovim
 let g:classic_vim_ui = v:false
 let g:animation_enable = v:true
+
+let g:swap_dict = [
+    \ ['false', '0', 'dark' ],
+    \ ['true' , '1', 'light']]
+" convinient function to swap between two options
+nmap <leader><leader>t :call SwapWord()<CR>
 
 " PLUGIN_INSTALL
 " {
     " Plugin environment
     let g:mydotfiles_directory = expand('~/.dotfiles/')
     let s:plugin_dir = expand('~/.vim/plugged/')
-
+    let g:config_file_path = g:vim_dir . ".config.vim"
     call plug#begin(s:plugin_dir)
-
         " https://github.com/junegunn/vim-plug/wiki/tips
         function! Cond(cond, ...)
           let opts = get(a:000, 0, {})
           return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
         endfunction
+        let g:animation_enable = g:high_performence ? v:false : g:animation_enable
 
-        """""""""""""""""""""""
         """" THEME_PLUGINS """"
-        """""""""""""""""""""""
 
-        Plug 'sainnhe/everforest', Cond(g:vim_type == 'vim')
-        Plug 'NLKNguyen/papercolor-theme'
+        Plug 'sainnhe/everforest'
+        if !g:high_performence
+            Plug 'jacoborus/tender.vim'
+            Plug 'cocopon/iceberg.vim'
+            Plug 'catppuccin/nvim', Cond( has('nvim-0.8.2')  \|\| g:vim_v >= 900  , { 'as': 'catppuccin' })
+            Plug 'NLKNguyen/papercolor-theme'
+            Plug 'EdenEast/nightfox.nvim', Cond(has('nvim-0.5'))
+            Plug 'projekt0n/github-nvim-theme', Cond(has('nvim-0.5'), { 'tag': 'v0.0.7' })
+            Plug 'folke/tokyonight.nvim', Cond(g:vim_type == 'nvim', { 'branch': 'main' })
+        endif
 
-        " Neovim only
-        Plug 'EdenEast/nightfox.nvim', Cond(g:vim_type == 'nvim' && g:vim_version >= 0.5)
-        Plug 'projekt0n/github-nvim-theme', Cond(g:vim_type == 'nvim' && g:vim_version >= 0.5, { 'tag': 'v0.0.7' })
-
-        """""""""""""""""""""""
         """""""" END """"""""""
-        """""""""""""""""""""""
+        Plug 'lervag/vimtex'
+        Plug 'github/copilot.vim', Cond(( g:vim_type == 'nvim' \|\| g:vim_v >= 900 )
+            \ && g:copilot_enable && executable('node'))
 
-
-        Plug 'gelguy/wilder.nvim', Cond(g:vim_type == 'vim' \|\| g:classic_vim_ui)
+        Plug 'gelguy/wilder.nvim', Cond((g:vim_type == 'vim' \|\| g:classic_vim_ui) && !g:high_performence)
         " To use Python remote plugin features in Vim for wilder, can be skipped
         " Plug 'roxma/nvim-yarp', Cond(g:vim_type == 'vim')
         " Plug 'roxma/vim-hug-neovim-rpc', Cond(g:vim_type == 'vim')
 
-        Plug 'dstein64/vim-startuptime'
-        Plug 'simeji/winresizer'
+        Plug 'dstein64/vim-startuptime', Cond(!g:high_performence)
+        Plug 'simeji/winresizer', Cond(!g:high_performence)
         Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
 
         Plug 'machakann/vim-sandwich'
@@ -58,29 +68,27 @@ let g:animation_enable = v:true
 
         Plug 'jiangmiao/auto-pairs'
         " Plug 'mg979/vim-visual-multi'
-        Plug 'RRethy/vim-illuminate'
+        Plug 'RRethy/vim-illuminate', Cond(!g:high_performence)
         "Plug 'easymotion/vim-easymotion'
         Plug 'mhinz/vim-startify'
-        Plug 'ludovicchabant/vim-gutentags', Cond(!exists('g:vscode'), { 'for': ['c', 'cpp'] })
+        Plug 'ludovicchabant/vim-gutentags'
 
         Plug 'christoomey/vim-tmux-navigator'
         Plug 'airblade/vim-rooter'
         Plug 'roxma/vim-tmux-clipboard', Cond(executable('tmux'))
-        Plug 'liuchengxu/vista.vim'
+        Plug 'liuchengxu/vista.vim', Cond(!g:high_performence)
 
-        """""""""""""""""""""""
         "" ESSENTIAL_PLUGINS ""
-        """""""""""""""""""""""
 
         " Comment stuff out
         Plug 'tpope/vim-commentary'
         Plug 'vim-scripts/restore_view.vim'
 
         " vim only plugins
-        Plug 'scrooloose/nerdtree', Cond(g:vim_type == 'vim' \|\| g:vim_version < 0.8, { 'on' : ['NERDTreeToggle', 'NERDTreeFind'] })
+        Plug 'scrooloose/nerdtree', Cond(g:vim_type == 'vim' \|\| g:vim_v < 800, { 'on' : ['NERDTreeToggle', 'NERDTreeFind'] })
         Plug 'tiagofumo/vim-nerdtree-syntax-highlight', Cond(g:vim_type == 'vim' && !g:high_performence)
 
-        Plug 'neoclide/coc.nvim', Cond(!exists('g:vscode') && executable('node'), {'branch': 'release'})
+        Plug 'neoclide/coc.nvim', Cond(g:autocomplte_enable && executable('node'), {'branch': 'release'})
 
         " only work with vim
         if g:vim_type == 'vim'
@@ -103,22 +111,22 @@ let g:animation_enable = v:true
             if g:vim_version >= 0.5
                 Plug 'xiyaowong/nvim-transparent'
                 Plug 'lukas-reineke/indent-blankline.nvim', Cond(!g:animation_enable)
-                Plug 'echasnovski/mini.indentscope'
-                Plug 'echasnovski/mini.animate'
+                Plug 'echasnovski/mini.indentscope', Cond(g:animation_enable)
+                Plug 'echasnovski/mini.animate', Cond(g:animation_enable)
 
                 Plug 'nvim-lualine/lualine.nvim'
-                Plug 'karb94/neoscroll.nvim'
-                Plug 'petertriho/nvim-scrollbar'
-                Plug 'folke/which-key.nvim'
+                Plug 'karb94/neoscroll.nvim', Cond(g:animation_enable)
+                Plug 'petertriho/nvim-scrollbar', Cond(g:animation_enable)
+                Plug 'folke/which-key.nvim', Cond(!g:high_performence)
             endif
             if g:vim_version >= 0.7
-                Plug 'nvim-treesitter/nvim-treesitter', Cond(!exists('g:vscode') && executable('make'), {'do': ':TSUpdate'})
+                Plug 'nvim-treesitter/nvim-treesitter', Cond(executable('make'), {'do': ':TSUpdate'})
 
                 " for telescope
                 Plug 'nvim-lua/plenary.nvim'
-                Plug 'nvim-telescope/telescope.nvim', Cond(g:vim_type == 'nvim', { 'tag': '0.1.x' })
+                Plug 'nvim-telescope/telescope.nvim', Cond(g:vim_type == 'nvim', { 'branch': '0.1.x' })
                 " c plugin for telescope to make it faster
-                Plug 'nvim-telescope/telescope-fzf-native.nvim', Cond(!exists('g:vscode') && executable('make'), { 'do': 'make' })
+                Plug 'nvim-telescope/telescope-fzf-native.nvim', Cond(executable('make'), { 'do': 'make' })
 
                 " comment out this plugin if the machine doesn't have required
                 " font install
@@ -128,19 +136,24 @@ let g:animation_enable = v:true
             if g:vim_version >= 0.8
                 Plug 'nvim-tree/nvim-tree.lua'
 
-                Plug 'rcarriga/nvim-notify'
-                Plug 'folke/noice.nvim'
-                Plug 'MunifTanjim/nui.nvim'
+                Plug 'rcarriga/nvim-notify', Cond(!g:high_performence && g:animation_enable)
+                Plug 'folke/noice.nvim', Cond(!g:high_performence && g:animation_enable)
+                Plug 'MunifTanjim/nui.nvim', Cond(!g:high_performence && g:animation_enable)
             endif
         endif
 
     call plug#end()
 
-    " Automatically install missing plugins at startup
-    autocmd VimEnter *
-        \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-        \|   PlugInstall --sync | q
-        \| endif
+    augroup InitConfig
+        autocmd VimLeave * call SaveConfig()
+
+        " Automatically install missing plugins at startup
+        autocmd VimEnter *
+            \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+            \|   PlugInstall --sync | q
+            \| endif
+    augroup end
+
 " }
 
 " UTILITIES
@@ -149,7 +162,8 @@ let g:animation_enable = v:true
 " special filetypes probably defined by plugins that we don't want other
 " plugins to mess around with them
 
-let g:special_fts = ['help', 'nerdtree']
+" import ultilities functions
+execute('source ' . g:mydotfiles_directory . '/utils.vim')
 
 function! HasPlug(plug_name, ...)
     let plug_dir_name = get(a:, 1, a:plug_name) " optional argument for the name of plug's folder
@@ -165,19 +179,60 @@ function! HasPlug(plug_name, ...)
     return v:false
 endfunction
 
+function! SaveConfig()
+    let p = ReadVariable(g:config_file_path)
+    if type(p) != type({})
+        let p = {}
+    endif
+
+    let config = has_key(p, g:vim_type) && type(p[g:vim_type]) == 4
+        \ ? p[g:vim_type] : {}
+    let config = Merge(config, g:my_config)
+
+    " vim and nvim may have diferenrt available plugins
+    let p[g:vim_type] = config
+    call SaveVariable(p, g:config_file_path)
+endfunction
+
+function! LoadConfig()
+    let result = ReadVariable(g:config_file_path)
+    " if it is dictionary
+    if type(result) == 4
+        if has_key(result, g:vim_type)
+            let config = result[g:vim_type]
+            if type(config) == 4 | return config | endif
+        endif
+    endif
+    return {}
+endfunction
+
 " }
 
 " PLUGIN_CONFIGURATION
 " {
+
+    if HasPlug('Copilot.vim')
+        " imap <expr> <C-n> <Plug>(copilot-next)
+        " imap <expr> <C-p> <Plug>(copilot-prev)
+    endif
+
+    if HasPlug('vimtex')
+        if g:os == 'Darwin'
+            let g:vimtex_view_method = 'skim'
+        endif
+        nmap <leader>lv <plug>(vimtex-view)
+        nmap <leader>lc :VimtexCompile<CR>
+        let g:vimtex_quickfix_open_on_warning = 0
+    endif
     if HasPlug('minimap.vim')
         nnoremap <silent> <leader>mm :MinimapToggle<CR>
         let g:minimap_highlight_search = 1
         let g:minimap_git_colors = 1
         let g:minimap_enable_highlight_colorgroup = 1
+        let g:minimap_block_filetypes = ['help', 'nerdtree']
     endif
 
     if HasPlug('vista.vim')
-        let g:special_fts += ['vista']
         let g:vista_default_executive = 'vim_lsp'
         if HasPlug('coc.nvim')
             let g:vista_default_executive = 'coc'
@@ -524,7 +579,12 @@ endfunction
         call airline#parts#define_function('cocstatus', 'AirlineCocStatus')
         call airline#parts#define_accent('cocstatus', 'italic')
 
+
         function! AirlineInit()
+            let _airline_section_y = ''
+            if HasPlug('coc.nvim')
+                let _airline_section_y .= airline#section#create(['cocstatus'])
+            endif
             " this create function returns a format string for status line (:h
             " stl). the string we append is what will happend if we pass
             " cocstatus into the create function. By appending them we have
@@ -535,7 +595,7 @@ endfunction
             let g:airline_section_error       = ''
             let g:airline_section_warning       = ''
             let g:airline_section_x       = airline#section#create(['bufnum'])
-            let g:airline_section_y       = airline#section#create(['cocstatus'])
+            let g:airline_section_y       = _airline_section_y
             let g:airline_section_z       = airline#section#create(['filetype'])
 
             " see source for current list
@@ -545,12 +605,21 @@ endfunction
                 end
             endfunction
 
-            if !g:high_performence
-                call timer_start(100, 's:aireline_refresh', {'repeat' : -1 })
-            endif
+            autocmd! CursorMoved * call s:aireline_refresh(0)
+            " if !g:high_performence
+            "     call timer_start(100, 's:aireline_refresh', {'repeat' : -1 })
+            " endif
+
+            function! s:airlineconfig()
+                let g:my_config[&background].airline_theme = g:airline_theme 
+            endfunction
+            autocmd AirlineAu User AirlineAfterTheme  call s:airlineconfig()
 
         endfunction
-        autocmd! User AirlineAfterInit call AirlineInit()
+        augroup AirlineAu
+            autocmd!
+            autocmd User AirlineAfterInit call AirlineInit()
+        augroup end 
 
         let g:airline#extensions#localsearch#enabled = 0
         let g:airline_extensions = ['bufferline']
@@ -591,16 +660,18 @@ endfunction
     if HasPlug("fzf") && HasPlug("fzf.vim")
         " [Buffers] Jump to the existing window if possible
         let g:fzf_buffers_jump = 1
-
         "let $FZF_DEFAULT_COMMAND='find . \( -name node_modules -o -name .git \) -prune -o -print'
 
-        "   - Preview window on the right with 50% width
         "   - CTRL-/ will toggle preview window.
         if g:os == 'Windows'
             let g:fzf_preview_window = []
         else
             let g:fzf_preview_window = ['right:50%', 'ctrl-/']
         end
+
+        let g:fzf_colors = {
+        \ 'gutter':      ['bg', 'normal'],
+        \ }
 
         " check if ripgrep is installed
         if ! executable('rg')
@@ -609,9 +680,19 @@ endfunction
               \   'grep -R --line-number --exclude-dir=".git;.svn" --color=always -- '.shellescape(<q-args>), 1,
               \   fzf#vim#with_preview(), <bang>0)
         endif
+
+        function! FzfColorSelect(color_name)
+            execute("colorscheme " . a:color_name)
+            call Theme_persistent(a:color_name)
+            if has_key(g:colo2airline, a:color_name )
+                call SetStatusLineTheme(g:colo2airline[a:color_name])
+            endif
+        endfunction
+
         noremap <leader>fr :Rg<CR>
         noremap <leader>ff :Files<CR>
-        noremap <leader>fc :Colors<CR>
+        noremap <leader>fc :call fzf#vim#colors({
+                                \ 'sink': function('FzfColorSelect')})<CR>
     endif
     " }
 
@@ -654,17 +735,14 @@ endfunction
     """""""""""""""""""""""""""""""""""""""
 
     " a list contains all available themes
-    let g:all_dark_themes = []
-    let g:all_light_themes = []
+
+    if HasPlug("tokyonight.nvim")
+    end
 
     if HasPlug("github-nvim-theme")
-        let g:all_dark_themes += ['github_dark', 'github_dark_default', 'github_dimmed', 'github_dark_colorblind']
-        let g:all_light_themes += ['github_light', 'github_light_default', 'github_light_colorblind']
     end
 
     if HasPlug("nightfox.nvim")
-        let g:all_dark_themes += ['nightfox']
-        let g:all_light_themes += ['dawnfox']
     end
 
     if HasPlug('nvim-transparent')
@@ -684,18 +762,13 @@ endfunction
     endif
 
     if HasPlug('everforest')
-        let g:all_dark_themes += ['everforest']
-        let g:all_light_themes += ['everforest']
-
         let g:everforest_better_performance = 1
         let g:everforest_background = 'hard'
         " let g:everforest_enable_italic = 1
         function! Everforest_trans_enable()
             let g:everforest_transparent_background = 2
             colorscheme everforest
-            if exists(':AirlineTheme')
-                execute('AirlineTheme  everforest')
-            endif
+            call SetStatusLineTheme('everforest')
             " hack to fix caret characters appearing in the statusline when StatusLine
             " and StatusLineNC has same highlight(https://vi.stackexchange.com/questions/15873/carets-in-status-line)
             hi StatusLine guifg=#d3c6aa ctermfg=223
@@ -703,9 +776,7 @@ endfunction
         function! Everforest_trans_disable()
             let g:everforest_transparent_background = 0
             colorscheme everforest
-            if exists(':AirlineTheme')
-                execute('AirlineTheme  everforest')
-            endif
+            call SetStatusLineTheme('everforest')
         endfunction
         function! CB_dark_tb_enable_everforest()
             call Everforest_trans_enable()
@@ -722,184 +793,113 @@ endfunction
 
     endif
     if HasPlug('papercolor-theme')
-        let g:all_dark_themes += ['PaperColor']
-        let g:all_light_themes += ['PaperColor']
-
         function! CB_dark_tb_enable_PaperColor()
             let g:PaperColor_Theme_Options = {
-            \   'theme': {'default.dark': { 'transparent_background': 1 }}
-            \ }
-            execute("colorscheme " . g:dark_theme)
+            \   'theme': {'default.dark': { 'transparent_background': 1 }}}
+            colorscheme PaperColor
         endfunction
         function! CB_light_tb_enable_PaperColor()
             let g:PaperColor_Theme_Options = {
-            \   'theme': {'default.light': { 'transparent_background': 1 }}
-            \ }
-            execute("colorscheme " . g:light_theme)
+            \   'theme': {'default.light': { 'transparent_background': 1 }}}
+            colorscheme PaperColor
         endfunction
         function! CB_dark_tb_disable_PaperColor()
             let g:PaperColor_Theme_Options = {
-            \   'theme': {'default.dark': { 'transparent_background': 0 }}
-            \ }
-            execute("colorscheme " . g:dark_theme)
+            \   'theme': {'default.dark': { 'transparent_background': 0 }}}
+            colorscheme PaperColor
         endfunction
         function! CB_light_tb_disable_PaperColor()
             let g:PaperColor_Theme_Options = {
-            \   'theme': {'default.light': { 'transparent_background': 0 }}
-            \ }
-            execute("colorscheme " . g:light_theme)
+            \   'theme': {'default.light': { 'transparent_background': 0 }}}
+            colorscheme PaperColor
         endfunction
     endif
 
     """""""""""""""""""""""""""""""""""""""
     """""""""" THEME_ULTILITIES """""""""""
     """""""""""""""""""""""""""""""""""""""
-
-    " debug function print out highlight group of cursor position
-    function! ShowHighLightGroup()
-        if !exists("*synstack")
-            return
-        endif
-        echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-
-        :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-        \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-        \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
-
-    endfunc
-
     nmap <Leader>db :call ShowHighLightGroup()<CR>
 
-    " search and filter highlight group
-    " :call Sh('airline')
-    function! Sh(pattern)
-        execute("filter /" . a:pattern . "/ highlight")
-    endfunc
-
-    " get current colorscheme name
-    function! ColourSchemeName()
-        try
-            return g:colors_name
-        catch /^Vim:E121/
-            return "default"
-        catch /.*/
-            return "default"
-        endtry
-    endfunction
-
-    " delete signal file if exist
-    function! DeleteSignalFile(name)
-        if filereadable(g:vim_dir . a:name)
-            call delete(g:vim_dir . a:name)
+    function! SetDarkTheme(...)
+        let colors_name = a:0 > 0 ? a:1 : g:my_config.dark.theme
+        if HasColorscheme(colors_name)
+            execute("colorscheme " . colors_name)
+            if &background == 'light'
+                set background=dark
+            endif
+            let g:my_config.dark.theme = colors_name
+            let g:my_config.background = 'dark'
         endif
     endfunction
 
-    " Create signal file if not exist
-    function! CreateSignalFile(name)
-        call system("touch " . g:vim_dir . a:name)
-    endfunction
-
-    function! SignalFileExists(filename)
-        if filereadable(g:vim_dir . a:filename)
-            return v:true
+    function! SetLightTheme(...)
+        let colors_name = a:0 > 0 ? a:1 : g:my_config.light.theme
+        if HasColorscheme(colors_name)
+            execute("colorscheme " . colors_name)
+            if &background == 'dark'
+                set background=light
+            endif
+            let g:my_config.light.theme = colors_name
+            let g:my_config.background = 'light'
         endif
-        return v:false
-    endfunction
-
-    function! SetDarkTheme()
-        set background=dark
-        " hi clear
-        execute("colorscheme " . g:dark_theme)
-        let g:dark_or_light_theme = 'dark'
-    endfunction
-
-    function! SetLightTheme()
-        set background=light
-        " hi clear
-        execute("colorscheme " . g:light_theme)
-        execute("colorscheme " . g:light_theme)
-        let g:dark_or_light_theme = 'light'
     endfunction
 
     " Change bottom airline/lualine theme
-    function! SetStatusLineTheme(theme)
-        if g:vim_type == 'nvim' && g:vim_version >= 0.5
+    function! SetStatusLineTheme(...)
+        if has('nvim-0.5')
             " lualine will change theme automatically
         else
-            if HasPlug('vim-airline') && HasPlug('vim-airline-themes')
-                execute('AirlineTheme ' . a:theme)
+            if HasPlug('vim-airline') && HasPlug('vim-airline-themes') && exists(':AirlineTheme')
+                let theme = a:0 > 0 ? a:1 : g:my_config[&background].airline_theme
+                try
+                    execute('AirlineTheme ' . a:theme)
+                catch
+                    let theme = g:default_config[&background].airline_theme
+                    execute('AirlineTheme ' . theme)
+                endtry
             endif
         endif
     endfunction
 
     function! EnableTransparent()
         let colorscheme_name = ColourSchemeName()
-        if g:dark_or_light_theme == 'dark'
-            let dark_cb_name = 'CB_dark_tb_enable_' . colorscheme_name
-            if exists('*' . dark_cb_name)
-                execute('call ' . dark_cb_name . '()')
-            elseif g:dark_transparent_enable_cb != ''
-                execute('call ' . g:dark_transparent_enable_cb . '()')
-            else
-                return
+        let bg = &background
+        let cb_name = 'CB_' .bg. '_tb_enable_'.colorscheme_name
+        if exists('*' . cb_name)
+            execute('call ' . cb_name . '()')
+        elseif exists('g:'.bg.'_transparent_enable_cb') && g:dark_transparent_enable_cb != ''
+            let cb_name = get(g:, bg.'_transparent_enable_cb', '')
+            if cb_name != ''
+                execute('call '.cb_name.'()')
             endif
-            let g:transparent_dark_theme = v:true
-            call CreateSignalFile('.transparent_dark_theme.signal')
         else
-            let light_cb_name = 'CB_light_tb_enable_' . colorscheme_name
-            if exists('*' . light_cb_name)
-                execute('call ' . light_cb_name . '()')
-            elseif g:light_transparent_enable_cb != ''
-                execute('call ' . g:light_transparent_enable_cb . '()')
-            else
-                return
-            endif
-            let g:transparent_light_theme = v:true
-            call CreateSignalFile('.transparent_light_theme.signal')
+            return
         endif
+        let g:my_config[&background].transparent = v:true
     endfunction
 
     function! DisableTransparent()
         let colorscheme_name = ColourSchemeName()
-        if g:dark_or_light_theme == 'dark'
-            let dark_cb_name = 'CB_dark_tb_disable_' . colorscheme_name
-            if exists('*' . dark_cb_name)
-                set background=dark
-                execute('call ' . dark_cb_name . '()')
-            elseif g:dark_transparent_disable_cb != ''
-                execute('call ' . g:dark_transparent_disable_cb . '()')
-            else
-                return
+        let bg = &background
+        let cb_name = 'CB_' . bg . '_tb_disable_'.colorscheme_name
+        if exists('*' . cb_name)
+            execute('call ' . cb_name . '()')
+        elseif exists('g:'.bg.'_transparent_disable_cb') 
+            let cb_name = get(g:, bg.'_transparent_disable_cb', '')
+            if cb_name != ''
+                execute('call '.cb_name.'()')
             endif
-            let g:transparent_dark_theme = v:false
-            call DeleteSignalFile('.transparent_dark_theme.signal')
         else
-            let light_cb_name = 'CB_light_tb_disable_' . colorscheme_name
-            if exists('*' . light_cb_name)
-                set background=light
-                execute('call ' . light_cb_name . '()')
-            elseif g:light_transparent_disable_cb != ''
-                execute('call ' . g:light_transparent_disable_cb . '()')
-            else
-                return
-            endif
-            let g:transparent_light_theme = v:false
-            call DeleteSignalFile('.transparent_light_theme.signal')
+            return
         endif
-        " if g:vim_type == 'nvim' && g:vim_version > 0.5
-        "     :TransparentDisable
-        " endif
+        let g:my_config[&background].transparent = v:false
     endfunction
 
     " ToggleTransparent background
     function! ToggleTransparent()
-        if g:transparent_dark_theme && g:dark_or_light_theme == 'dark'
+        if g:my_config[&background].transparent
             call DisableTransparent()
-        elseif g:transparent_light_theme && g:dark_or_light_theme == 'light'
-            call DisableTransparent()
-        elseif ! g:transparent_light_theme && g:dark_or_light_theme == 'light'
-            call EnableTransparent()
-        elseif ! g:transparent_dark_theme && g:dark_or_light_theme == 'dark'
+        else
             call EnableTransparent()
         endif
     endfunction
@@ -907,21 +907,26 @@ endfunction
     " Allow to trigger background
     function! ToggleBG()
         " Inversion
-        if g:dark_or_light_theme == "dark"
+        if &background == "dark"
             call SetLightTheme()
-            call SetStatusLineTheme(g:airline_light_theme)
-            call CreateSignalFile('.light_theme.signal')
         else
             call SetDarkTheme()
-            call SetStatusLineTheme(g:airline_dark_theme)
-            call DeleteSignalFile('.light_theme.signal')
         endif
+        call SetStatusLineTheme(g:my_config[&background].airline_theme)
 
-        if (g:transparent_dark_theme && g:dark_or_light_theme == 'dark') || (g:transparent_light_theme && g:dark_or_light_theme == 'light')
+        if g:my_config[&background].transparent
             call EnableTransparent()
         else
             call DisableTransparent()
         endif
+    endfunction
+
+    " persistent config over colorscheme change
+    function! Theme_persistent(...)
+        let color_name = a:0 > 0 ? a:1 : ColourSchemeName()
+
+        let g:my_config.background = &background
+        let g:my_config[&background].theme = color_name
     endfunction
 
     """""""""""""""""""""""""""""""""""""""
@@ -931,84 +936,80 @@ endfunction
     " transparent backgroud for supported terminal emulator
     " check if transparent_dark_theme.signl or transparent_light_theme.signl
     " exist and set respect variable
-    let g:transparent_dark_theme = v:false
-    let g:transparent_light_theme = v:false
 
     function! Theme_initilize()
-        if SignalFileExists('.transparent_dark_theme.signal')
-            let g:transparent_dark_theme = v:true
-        endif
-        if SignalFileExists('.transparent_light_theme.signal')
-            let g:transparent_light_theme = v:true
+        if has('termguicolors')
+            set termguicolors
         endif
 
-        " dark or light
-        if filereadable(g:vim_dir . '.light_theme.signal')
-            let g:dark_or_light_theme = 'light'
+        if g:my_config.background == 'dark'
+            if HasColorscheme(g:my_config.dark.theme)
+                call SetDarkTheme()
+            else
+                call SetDarkTheme(g:my_config.dark.default)
+            endif
+            call SetStatusLineTheme(g:my_config.dark.airline_theme)
         else
-            let g:dark_or_light_theme = 'dark'
+            if HasColorscheme(g:my_config.dark.theme)
+                call SetLightTheme()
+            else
+                call SetLightTheme(g:my_config.light.default)
+            endif
+            call SetStatusLineTheme(g:my_config.light.airline_theme)
         endif
 
-        if g:dark_or_light_theme == 'dark'
-            let g:airline_theme=g:airline_dark_theme
-            call SetDarkTheme()
-        else
-            let g:airline_theme=g:airline_light_theme
-            call SetLightTheme()
-        endif
-        if (g:transparent_dark_theme && g:dark_or_light_theme == 'dark')
-                    \  || (g:transparent_light_theme && g:dark_or_light_theme == 'light')
+        if g:my_config[g:my_config.background].transparent
             call EnableTransparent()
         else
             call DisableTransparent()
         endif
     endfunction
-    au! VimEnter * call Theme_initilize()
+
+    augroup ThemeAuGroup
+        autocmd!
+        autocmd VimEnter * call Theme_initilize()
+    augroup END
 
     """""""""""""""""""""""""""""""""""""""
     """"""""""" THEME_OPTIONS """""""""""""
     """""""""""""""""""""""""""""""""""""""
 
-    " Default
-    let g:dark_theme = 'default'
-    let g:light_theme = 'default'
+    let g:default_config = {
+        \ 'background': 'dark',
+        \ 'dark': {
+        \   'theme': 'default',
+        \   'default': 'default',
+        \   'transparent': v:false,
+        \   'airline_theme': 'angr',
+        \ },
+        \ 'light': {
+        \   'theme': 'default',
+        \   'default': 'default',
+        \   'transparent': v:false,
+        \   'airline_theme': 'silver',
+        \ },
+    \ }
 
-    " for airline
-    let g:airline_dark_theme = "angr"
-    let g:airline_light_theme = "silver"
+    let g:my_config = {}
 
-    " vim theme
-    if g:vim_type == 'vim'
-        set t_Co=256
-        if has('termguicolors')
-          set termguicolors
-        endif
+    let g:colo2airline = {
+    \ }
 
-        if HasPlug("papercolor-theme")
-            " improve coc color in this theme
-            let g:light_theme = 'PaperColor'
-        endif
-
-        if HasPlug("everforest")
-            let g:light_theme = 'everforest'
-            let g:dark_theme = 'everforest'
-            let g:airline_dark_theme = "everforest"
-            let g:airline_light_theme = "everforest"
-        endif
+    " permenent default
+    if HasPlug("everforest")
+        let g:default_config = Merge(g:default_config, {
+            \ 'dark': {
+            \   'airline_theme': 'everforest',
+            \   'default': 'everforest',
+            \   },
+            \ 'light': {
+            \   'airline_theme': 'everforest',
+            \   'default': 'everforest',
+            \   },
+        \ })
     endif
 
-    if g:vim_type == 'nvim'
-        if HasPlug("nightfox.nvim")
-            let g:light_theme = 'dawnfox'
-            let g:dark_theme = 'nightfox'
-        end
-
-        if HasPlug("github-nvim-theme")
-            let g:dark_theme = 'github_dark'
-            let g:airline_dark_theme = "hybrid"
-        end
-    endif
-
+    let g:my_config = Merge(g:default_config, LoadConfig())
 " }
 
 " KEY_MAPS
@@ -1031,7 +1032,8 @@ endfunction
 
     " leader num change tab
     " only for vim or nvim without lualine
-    if g:vim_type == 'vim' || (g:vim_type == 'nvim' && g:vim_version < 0.5)
+
+    if (g:vim_type == 'vim' || !has('nvim-0.5')) && HasPlug('vim-bufferline')
         for i in range(1, 9)
             execute "nnoremap <silent> <nowait> <leader>" . i .
                 \ " :call bufferline#jump(" . i . ")<CR>"
@@ -1050,11 +1052,5 @@ endfunction
 " Lua configuration
 if g:vim_type == 'nvim' && filereadable(g:mydotfiles_directory . '.vimrc.lua')
     execute('source ' . g:mydotfiles_directory . '/.vimrc.lua')
-endif
-
-" OTHER_CONFIGS
-
-if filereadable(g:mydotfiles_directory . "/config/theme.vim")
-    " exec "source " . g:mydotfiles_directory . "/config/theme.vim"
 endif
 
