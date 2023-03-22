@@ -357,32 +357,10 @@ endfunction
     if HasPlug("vim-startify")
         if g:vim_type == 'nvim'
             let buffer_str_len = (&columns - 60) / 2
-            let buf_str = repeat(' ', buffer_str_len)
-            let g:startify_custom_header = [
-                \ buf_str . ' __    __  ________   ______   __     __  ______  __       __ ',
-                \ buf_str . '|  \  |  \|        \ /      \ |  \   |  \|      \|  \     /  \',
-                \ buf_str . '| $$\ | $$| $$$$$$$$|  $$$$$$\| $$   | $$ \$$$$$$| $$\   /  $$',
-                \ buf_str . '| $$$\| $$| $$__    | $$  | $$| $$   | $$  | $$  | $$$\ /  $$$',
-                \ buf_str . '| $$$$\ $$| $$  \   | $$  | $$ \$$\ /  $$  | $$  | $$$$\  $$$$',
-                \ buf_str . '| $$\$$ $$| $$$$$   | $$  | $$  \$$\  $$   | $$  | $$\$$ $$ $$',
-                \ buf_str . '| $$ \$$$$| $$_____ | $$__/ $$   \$$ $$   _| $$_ | $$ \$$$| $$',
-                \ buf_str . '| $$  \$$$| $$     \ \$$    $$    \$$$   |   $$ \| $$  \$ | $$',
-                \ buf_str . ' \$$   \$$ \$$$$$$$$  \$$$$$$      \$     \$$$$$$ \$$      \$$',
-                \]
+            let g:startify_custom_header = GenVimAsciiArt(buffer_str_len)
         else
             let buffer_str_len = (&columns - 30) / 2
-            let buf_str = repeat(' ', buffer_str_len)
-            let g:startify_custom_header = [
-                \ buf_str . ' __     __  ______  __       __ ',
-                \ buf_str . '|  \   |  \|      \|  \     /  \',
-                \ buf_str . '| $$   | $$ \$$$$$$| $$\   /  $$',
-                \ buf_str . '| $$   | $$  | $$  | $$$\ /  $$$',
-                \ buf_str . ' \$$\ /  $$  | $$  | $$$$\  $$$$',
-                \ buf_str . '  \$$\  $$   | $$  | $$\$$ $$ $$',
-                \ buf_str . '   \$$ $$   _| $$_ | $$ \$$$| $$',
-                \ buf_str . '    \$$$   |   $$ \| $$  \$ | $$',
-                \ buf_str . '     \$     \$$$$$$ \$$      \$$',
-                \]
+            let g:startify_custom_header = GenVimAsciiArt(buffer_str_len)
         endif
 
         let g:startify_lists = [
@@ -460,8 +438,6 @@ endfunction
 
         let g:bufferline_active_buffer_left = ''
         let g:bufferline_active_buffer_right = ''
-        " let g:bufferline_inactive_highlight = 'StatusLineNC'
-        " let g:bufferline_active_highlight = 'StatusLine'
     endif
 
     " }
@@ -566,7 +542,6 @@ endfunction
 
         " Set configuration options for the statusline plugin vim-airline.
         " Use the powerline theme and optionally enable powerline symbols.
-
 
         " TODO
         " 22 is a magic number, it is best it can change as buffer width
