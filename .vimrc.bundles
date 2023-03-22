@@ -12,8 +12,11 @@ let g:high_performence = v:false                 " set true will also disable an
 let g:autocomplte_enable = v:true
 let g:copilot_enable = v:false
 
+" only in nvim (using which-key)
+let g:key_prompt = v:false
+
 " only used by neovim
-let g:classic_vim_ui = v:false
+let g:classic_vim_ui = v:true
 let g:animation_enable = v:true
 
 let g:swap_dict = [
@@ -86,13 +89,14 @@ nmap <leader><leader>t :call SwapWord()<CR>
         Plug 'vim-scripts/restore_view.vim'
 
         " vim only plugins
-        Plug 'scrooloose/nerdtree', Cond(g:vim_type == 'vim' \|\| g:vim_v < 800, { 'on' : ['NERDTreeToggle', 'NERDTreeFind'] })
+        Plug 'scrooloose/nerdtree', Cond(g:vim_type == 'vim' \|\| !has('nvim-0.8'), { 'on' : ['NERDTreeToggle', 'NERDTreeFind'] })
         Plug 'tiagofumo/vim-nerdtree-syntax-highlight', Cond(g:vim_type == 'vim' && !g:high_performence)
 
         Plug 'neoclide/coc.nvim', Cond(g:autocomplte_enable && executable('node'), {'branch': 'release'})
 
         " only work with vim
         if g:vim_type == 'vim'
+            Plug 'voldikss/vim-floaterm', Cond(has('terminal'))
             set encoding=UTF-8
             if executable('fzf')
                 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -118,7 +122,7 @@ nmap <leader><leader>t :call SwapWord()<CR>
                 Plug 'nvim-lualine/lualine.nvim'
                 Plug 'karb94/neoscroll.nvim', Cond(g:animation_enable)
                 Plug 'petertriho/nvim-scrollbar', Cond(g:animation_enable)
-                Plug 'folke/which-key.nvim', Cond(!g:high_performence)
+                Plug 'folke/which-key.nvim', Cond(!g:high_performence && g:key_prompt)
             endif
             if g:vim_version >= 0.7
                 Plug 'nvim-treesitter/nvim-treesitter', Cond(executable('make'), {'do': ':TSUpdate'})
@@ -137,9 +141,9 @@ nmap <leader><leader>t :call SwapWord()<CR>
             if g:vim_version >= 0.8
                 Plug 'nvim-tree/nvim-tree.lua'
 
-                Plug 'rcarriga/nvim-notify', Cond(!g:high_performence && g:animation_enable)
-                Plug 'folke/noice.nvim', Cond(!g:high_performence && g:animation_enable)
-                Plug 'MunifTanjim/nui.nvim', Cond(!g:high_performence && g:animation_enable)
+                Plug 'rcarriga/nvim-notify', Cond(!g:high_performence && !g:classic_vim_ui)
+                Plug 'folke/noice.nvim', Cond(!g:high_performence && !g:classic_vim_ui)
+                Plug 'MunifTanjim/nui.nvim', Cond(!g:high_performence && !g:classic_vim_ui)
             endif
         endif
 
@@ -211,7 +215,15 @@ endfunction
 
 " PLUGIN_CONFIGURATION
 " {
-
+    if HasPlug('vim-floaterm')
+        let g:floaterm_wintype = 'float'
+        let g:floaterm_keymap_toggle = '<c-\>'
+        let g:floaterm_position = 'bottomright'
+        let g:floaterm_width = 0.5
+        let g:floaterm_height = 0.5
+        autocmd QuitPre * :FloatermKill!<CR>
+        tmap <C-[> <c-w>N 
+    endif
     if HasPlug('Copilot.vim')
         " imap <expr> <C-n> <Plug>(copilot-next)
         " imap <expr> <C-p> <Plug>(copilot-prev)
@@ -320,7 +332,6 @@ endfunction
 
         augroup illuminate_augroup
             autocmd!
-            " autocmd VimEnter * hi link illuminatedWord CursorLine
             autocmd VimEnter * hi illuminatedWord cterm=underline gui=underline
             autocmd ColorScheme * hi illuminatedWord cterm=underline gui=underline
         augroup END
@@ -340,7 +351,19 @@ endfunction
             \     wilder#cmdline_pipeline({'language': g:vim_type == 'nvim' ? 'python' : 'vim'}),
             \   ),
             \ ])
-        call wilder#set_option('renderer', wilder#popupmenu_renderer())
+
+        if g:vim_type == 'vim'
+            call wilder#set_option('renderer', wilder#popupmenu_renderer())
+        else
+            call wilder#set_option('renderer', wilder#popupmenu_renderer(
+                \ wilder#popupmenu_border_theme({
+                \ 'highlights': {
+                \   'default': 'Normal',
+                \ },
+                \ 'pumblend': 20,
+                \ 'border': 'rounded',
+                \ })))
+        endif
     endif
 
     if HasPlug('vim-tmux-navigator')
@@ -599,7 +622,6 @@ endfunction
 
         let g:airline#extensions#localsearch#enabled = 0
         let g:airline_extensions = ['bufferline']
-
         let g:airline_exclude_filetypes = ['vista', 'minimap']
         let g:airline_skip_empty_sections = 1
         " without this airline will overwrite some setting like bufferline_active_buffer_left, etc.
@@ -656,6 +678,10 @@ endfunction
               \   'grep -R --line-number --exclude-dir=".git;.svn" --color=always -- '.shellescape(<q-args>), 1,
               \   fzf#vim#with_preview(), <bang>0)
         endif
+        command! -bang -nargs=* CFile
+          \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case --vimgrep -- "
+          \ .shellescape(<q-args>). " ".expand('%'),
+          \ 1, fzf#vim#with_preview(), <bang>0)
 
         function! FzfColorSelect(color_name)
             execute("colorscheme " . a:color_name)
@@ -667,6 +693,7 @@ endfunction
 
         noremap <leader>fr :Rg<CR>
         noremap <leader>ff :Files<CR>
+        noremap <leader>ft :CFile<CR>
         noremap <leader>fc :call fzf#vim#colors({
                                 \ 'sink': function('FzfColorSelect')})<CR>
     endif
@@ -908,11 +935,6 @@ endfunction
     """""""""""""""""""""""""""""""""""""""
     """"""""""""" THEME_INIT """"""""""""""
     """""""""""""""""""""""""""""""""""""""
-
-    " transparent backgroud for supported terminal emulator
-    " check if transparent_dark_theme.signl or transparent_light_theme.signl
-    " exist and set respect variable
-
     function! Theme_initilize()
         if has('termguicolors')
             set termguicolors

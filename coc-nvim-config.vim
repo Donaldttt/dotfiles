@@ -92,3 +92,9 @@ call coc#config("java.jdt.ls.vmargs", '-javaagent:' . g:mydotfiles_directory . '
 call coc#config("java.jdt.ls.lombokSupport.enabled", v:false)
 call coc#config("java.inlayHints.parameterNames.enabled", v:false)
 call coc#config("inlayHint.enable", v:false)
+
+for section in ['suggest', 'diagnostic', 'signature', 'hover']
+    call coc#config(section.'.floatConfig.border', v:true)
+    call coc#config(section.'.floatConfig.rounded', v:true)
+    call coc#config(section.'.floatConfig.highlight', 'Normal')
+endfor

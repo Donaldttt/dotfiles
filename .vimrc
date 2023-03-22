@@ -215,7 +215,7 @@
     vnoremap . :normal .<CR>
 
     " For when you forget to sudo.. Really Write the file.
-    cmap w!! w !sudo tee % >/dev/null
+    " cmap w!! w !sudo tee % >/dev/null
 
     " Adjust viewports to the same size
     map <Leader>= <C-w>=

@@ -135,6 +135,15 @@ local function toggleterm_config()
   end
   require("toggleterm").setup({
     open_mapping = [[<c-\>]],
+    direction = 'float',
+    float_opts = {
+      border = 'rounded',
+      width = function(term) return math.floor(vim.o.columns * 0.5) end,
+      height = function(term) return math.floor(vim.o.lines * 0.5) end,
+      winblend = 2,
+      row = vim.o.lines * 0.5 - 3,
+      col = vim.o.columns * 0.5,
+    },
   })
   function _G.set_terminal_keymaps()
     local opts = { buffer = 0 }
@@ -187,9 +196,14 @@ local function which_key_config()
     return
   end
   wk = require("which-key")
-  wk.setup()
+  wk.setup({
+    triggers_blacklist = {
+      i = { "j", "k" },
+      v = { "j", "k" },
+      c = { "w" },
+    },
+  })
 end
-
 vim.g.hhx = ''
 local function telescope_config()
   if not HasPlug('telescope.nvim') then
