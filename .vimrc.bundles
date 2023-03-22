@@ -40,6 +40,7 @@ nmap <leader><leader>t :call SwapWord()<CR>
 
         Plug 'sainnhe/everforest'
         if !g:high_performence
+            Plug 'bluz71/vim-moonfly-colors', { 'as': 'moonfly' }
             Plug 'jacoborus/tender.vim'
             Plug 'cocopon/iceberg.vim'
             Plug 'catppuccin/nvim', Cond( has('nvim-0.8.2')  \|\| g:vim_v >= 900  , { 'as': 'catppuccin' })
@@ -611,7 +612,7 @@ endfunction
             " endif
 
             function! s:airlineconfig()
-                let g:my_config[&background].airline_theme = g:airline_theme 
+                let g:my_config[&background].airline_theme = g:airline_theme
             endfunction
             autocmd AirlineAu User AirlineAfterTheme  call s:airlineconfig()
 
@@ -619,7 +620,7 @@ endfunction
         augroup AirlineAu
             autocmd!
             autocmd User AirlineAfterInit call AirlineInit()
-        augroup end 
+        augroup end
 
         let g:airline#extensions#localsearch#enabled = 0
         let g:airline_extensions = ['bufferline']
@@ -670,8 +671,8 @@ endfunction
         end
 
         let g:fzf_colors = {
-        \ 'gutter':      ['bg', 'normal'],
-        \ }
+            \ 'gutter':      ['bg', 'Normal'],
+            \ }
 
         " check if ripgrep is installed
         if ! executable('rg')
@@ -852,7 +853,7 @@ endfunction
             if HasPlug('vim-airline') && HasPlug('vim-airline-themes') && exists(':AirlineTheme')
                 let theme = a:0 > 0 ? a:1 : g:my_config[&background].airline_theme
                 try
-                    execute('AirlineTheme ' . a:theme)
+                    execute('AirlineTheme ' . theme)
                 catch
                     let theme = g:default_config[&background].airline_theme
                     execute('AirlineTheme ' . theme)
@@ -884,7 +885,7 @@ endfunction
         let cb_name = 'CB_' . bg . '_tb_disable_'.colorscheme_name
         if exists('*' . cb_name)
             execute('call ' . cb_name . '()')
-        elseif exists('g:'.bg.'_transparent_disable_cb') 
+        elseif exists('g:'.bg.'_transparent_disable_cb')
             let cb_name = get(g:, bg.'_transparent_disable_cb', '')
             if cb_name != ''
                 execute('call '.cb_name.'()')
