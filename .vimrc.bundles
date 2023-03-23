@@ -7,7 +7,7 @@
 " KEY_MAPS
 " OTHER_CONFIGS
 
-let g:debug_mode = v:false
+let g:debug_mode = v:true
 let g:high_performence = v:false                 " set true will also disable animation
 let g:autocomplte_enable = v:true
 let g:copilot_enable = v:false
@@ -20,8 +20,8 @@ let g:classic_vim_ui = v:true
 let g:animation_enable = v:true
 
 let g:swap_dict = [
-    \ ['false', '0', 'dark' ],
-    \ ['true' , '1', 'light']]
+    \ ['v:false', '0', 'dark', 'false' ],
+    \ ['v:true' , '1', 'light', 'true']]
 " convinient function to swap between two options
 nmap <leader><leader>t :call SwapWord()<CR>
 
@@ -59,9 +59,9 @@ nmap <leader><leader>t :call SwapWord()<CR>
             \ && g:copilot_enable && executable('node'))
 
         Plug 'gelguy/wilder.nvim', Cond((g:vim_type == 'vim' \|\| g:classic_vim_ui) && !g:high_performence)
-        " To use Python remote plugin features in Vim for wilder, can be skipped
-        " Plug 'roxma/nvim-yarp', Cond(g:vim_type == 'vim')
-        " Plug 'roxma/vim-hug-neovim-rpc', Cond(g:vim_type == 'vim')
+        "     " To use Python remote plugin features in Vim for wilder, can be skipped
+        "     " Plug 'roxma/nvim-yarp', Cond(g:vim_type == 'vim')
+        Plug 'roxma/vim-hug-neovim-rpc', Cond(g:vim_v >= 800 && has('python3'))
 
         Plug 'dstein64/vim-startuptime', Cond(!g:high_performence)
         Plug 'simeji/winresizer', Cond(!g:high_performence)
@@ -75,7 +75,7 @@ nmap <leader><leader>t :call SwapWord()<CR>
         Plug 'RRethy/vim-illuminate', Cond(!g:high_performence)
         "Plug 'easymotion/vim-easymotion'
         Plug 'mhinz/vim-startify'
-        Plug 'ludovicchabant/vim-gutentags'
+        " Plug 'ludovicchabant/vim-gutentags'
 
         Plug 'christoomey/vim-tmux-navigator'
         Plug 'airblade/vim-rooter'
@@ -168,6 +168,7 @@ nmap <leader><leader>t :call SwapWord()<CR>
 " plugins to mess around with them
 
 " import ultilities functions
+
 execute('source ' . g:mydotfiles_directory . '/utils.vim')
 
 function! HasPlug(plug_name, ...)
@@ -217,12 +218,12 @@ endfunction
 " {
     if HasPlug('vim-floaterm')
         let g:floaterm_wintype = 'float'
-        let g:floaterm_keymap_toggle = '<c-\>'
+        let g:floaterm_keymap_toggle = '<C-\>'
         let g:floaterm_position = 'bottomright'
         let g:floaterm_width = 0.5
         let g:floaterm_height = 0.5
         autocmd QuitPre * :FloatermKill!<CR>
-        tmap <C-[> <c-w>N 
+        autocmd FileType floaterm tmap <buffer> <C-[> <C-\><C-n> 
     endif
     if HasPlug('Copilot.vim')
         " imap <expr> <C-n> <Plug>(copilot-next)
@@ -269,6 +270,7 @@ endfunction
         let g:vista#renderer#enable_kind = 1
         let g:vista#renderer#enable_icon = 1
 
+        " return to last position of vista
         let g:vista_last_row = v:null
         function VistaCursorJump()
             " let found = vista#util#BinarySearch(g:vista.raw, line('.'), 'line', '')
@@ -280,6 +282,7 @@ endfunction
             call cursor(vlnum, 3)
         endfunction
 
+        " save tag for VistaCursorJump use
         function VistaH2()
             if exists('*vista#util#BinarySearch')
                 let bufs = map(filter(copy(getbufinfo()), 'v:val.listed'), 'v:val.bufnr')
@@ -293,25 +296,8 @@ endfunction
                 let g:vista_last_row = found
             endif
         endfunction
-
         autocmd BufLeave * call VistaH2()
-        " autocmd WinLeave call VistaH2()
         autocmd FileType vista call VistaCursorJump()
-
-        function VistaHelper()
-            if winnr('$') == 1 && bufname() == "__vista__"
-                let bufs = map(filter(copy(getbufinfo()), 'v:val.listed'), 'v:val.bufnr')
-                if len(bufs) > 1
-                   execute("normal! :bw\<CR>")
-                else
-                    execute "normal! :q!\<CR>"
-                endif
-            endif
-        endfunction
-
-        " close vista when it is the last window
-        " autocmd BufEnter * if winnr('$') == 1 && bufname() == "__vista__" | execute "normal! :q!\<CR>" | endif
-        " autocmd BufEnter * call VistaHelper()
 
     endif
 
@@ -319,21 +305,26 @@ endfunction
         let g:indentLine_fileTypeExclude = ['startify']
     endif
 
-    if HasPlug('vim-illuminate') && g:vim_type == 'vim'
+    if HasPlug('vim-illuminate') && g:vim_type == 'vim' " nvim doesn't need this config 
         let g:Illuminate_ftHighlightGroups = {
-        \ 'vim': ['vimVar', 'vimString', 'vimFuncName',
-        \ 'vimFunction', 'vimUserFunc', 'vimFunc'],
+        \ 'vim:blacklist': ['vimLet', 'vimFuncKey', 'vimNotFunc', 'vimOperParen', 'vimLineComment'],
         \ 'java:blacklist' : [ 'javaType', 'javaScopeDecl', 'javaMethodDecl',
         \ 'javaComment', 'javaStorageClass', 'javaClassDecl', 'javaExternal',
         \ 'javaTypedef', 'javaLineComment', 'javaStatement', 'javaCommentTitle', 'javaDocComment' ],
         \ 'lua:blacklist' : [ 'luaComment', 'luaCond', 'luaStatement', 'luaFunction' ]
         \ }
-        let g:Illuminate_ftwhitelist = ['vim', 'sh', 'python', 'rust', 'java', 'c', 'cpp', 'javascript', 'typescript', 'lua']
+        let g:Illuminate_ftwhitelist = ['vim', 'sh', 'python', 'rust', 'java',
+            \ 'c', 'cpp', 'javascript', 'typescript', 'lua']
 
+        " ugly workaround for the bug that illuminate not working after first
+        " enter vim
+        function s:init_illuminate(timer)
+            hi illuminatedWord cterm=underline gui=underline
+        endfunction
         augroup illuminate_augroup
             autocmd!
-            autocmd VimEnter * hi illuminatedWord cterm=underline gui=underline
             autocmd ColorScheme * hi illuminatedWord cterm=underline gui=underline
+            autocmd VimEnter * call timer_start(100, 's:init_illuminate')
         augroup END
     endif
 
@@ -342,6 +333,7 @@ endfunction
         call wilder#setup({
             \ 'modes': [':'],
             \ 'next_key': '<tab>',
+            \ 'previous_key': '<S-Tab>',
             \ 'enable_cmdline_enter': 0,
             \ })
 
@@ -420,6 +412,7 @@ endfunction
         if exists("*gutentags#statusline()")
             set statusline+=%{gutentags#statusline()}
         endif
+        let g:gutentags_trace = 1
         let g:gutentags_cache_dir=g:vim_dir . '/.vimtags/'
         let g:gutentags_project_root=['.git', '.hg', '.svn', '.bzr', '_darcs', '_FOSSIL_', '.fslckout', 'src']
     endif
@@ -452,7 +445,6 @@ endfunction
     endif
     " }
 
-    " bling/vim-bufferline {
     if HasPlug("vim-bufferline") && HasPlug("vim-airline")
         let g:bufferline_echo = 0
         let g:bufferline_modified = '+'
@@ -461,9 +453,9 @@ endfunction
 
         let g:bufferline_active_buffer_left = ''
         let g:bufferline_active_buffer_right = ''
+        let g:bufferline_inactive_highlight = 'airline_b_inactive'
+        let g:bufferline_active_highlight = 'airline_b_bold'
     endif
-
-    " }
 
     " mbbill/undotree {
     if HasPlug("undotree")
@@ -490,7 +482,16 @@ endfunction
         let g:NERDTreeMinimalMenu = v:true
         let g:NERDTreeMinimalUI = v:true
 
-        "nnoremap <C-e> :NERDTreeToggle<CR>
+        function! NERDTreeEchoPathHandler(node)
+            echo a:node.path.str()
+        endfunction
+
+       autocmd! User nerdtree call NERDTreeAddKeyMap({
+               \ 'key': 'p',
+               \ 'callback': 'NERDTreeEchoPathHandler',
+               \ 'quickhelpText': 'echo full path of current node',
+               \ 'scope': 'Node' })
+
         function! NERDTreeFindToggle()
             let my_filetype = &filetype
             let specical_fts = ['nerdtree', 'startify']
@@ -519,6 +520,7 @@ endfunction
         " Exit Vim if NERDTree is the only window remaining in the only tab.
         autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
     endif
+
     " }
 
     " nvim-tree.lua {
@@ -572,17 +574,20 @@ endfunction
         " This must use my fork version of bufferline
         let g:bufferline_max_length = &columns - 22
         function! AirlineBufferNumber()
-            return len(g:index_to_buffer) . " "
+            return len(g:index_to_buffer)
         endfunction
         call airline#parts#define_function('bufnum', 'AirlineBufferNumber')
         call airline#parts#define_function('cocstatus', 'AirlineCocStatus')
         call airline#parts#define_accent('cocstatus', 'italic')
+        call airline#parts#define_accent('bufnum', 'bold')
+        call airline#parts#define_accent('bufnum', 'italic')
+        call airline#parts#define_accent('filetype', 'italic')
 
-
+        let g:airline_experimental = g:vim_v >= 900 ? 1 : 0
         function! AirlineInit()
             let _airline_section_y = ''
             if HasPlug('coc.nvim')
-                let _airline_section_y .= airline#section#create(['cocstatus'])
+                let _airline_section_y = airline#section#create(['cocstatus'])
             endif
             " this create function returns a format string for status line (:h
             " stl). the string we append is what will happend if we pass
@@ -596,27 +601,34 @@ endfunction
             let g:airline_section_x       = airline#section#create(['bufnum'])
             let g:airline_section_y       = _airline_section_y
             let g:airline_section_z       = airline#section#create(['filetype'])
-
             " see source for current list
-            function s:aireline_refresh(timer)
-                if exists(':AirlineRefresh')
-                    :AirlineRefresh!
-                end
+            function s:airline_refresh(timer)
+                :AirlineRefresh!
             endfunction
 
-            autocmd! CursorMoved * call s:aireline_refresh(0)
+            autocmd! CursorMoved * call s:airline_refresh(0)
             " if !g:high_performence
             "     call timer_start(100, 's:aireline_refresh', {'repeat' : -1 })
             " endif
 
-            function! s:airlineconfig()
-                let g:my_config[&background].airline_theme = g:airline_theme
-            endfunction
-            autocmd AirlineAu User AirlineAfterTheme  call s:airlineconfig()
-
         endfunction
+
+        function! s:airlineconfig()
+            " TODO
+            " the problem is that colorscheme command will trigger this function
+            " and at that time background=new but airline_theme=old
+            " Right now I decide to modify airline them first and if the
+            " colorscheme has it's own ariline theme it will override user
+            " choice.
+            " call add(g:msgs, g:ccc)
+            " call add(g:msgs, g:airline_theme)
+            " call add(g:msgs, &background)
+            " let g:my_config[&background].airline_theme = g:airline_theme
+        endfunction
+
         augroup AirlineAu
             autocmd!
+            autocmd User AirlineAfterTheme  call s:airlineconfig()
             autocmd User AirlineAfterInit call AirlineInit()
         augroup end
 
@@ -647,12 +659,7 @@ endfunction
             \ ''     : 'V',
             \ }
 
-        if HasPlug("vim-airline-themes/")
-            "let g:airline_theme = 'solarized'
-        endif
     endif
-    " }
-    "endif
 
     " junegunn/fzf {
     if HasPlug("fzf") && HasPlug("fzf.vim")
@@ -678,6 +685,7 @@ endfunction
               \   'grep -R --line-number --exclude-dir=".git;.svn" --color=always -- '.shellescape(<q-args>), 1,
               \   fzf#vim#with_preview(), <bang>0)
         endif
+
         command! -bang -nargs=* CFile
           \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case --vimgrep -- "
           \ .shellescape(<q-args>). " ".expand('%'),
@@ -685,10 +693,15 @@ endfunction
 
         function! FzfColorSelect(color_name)
             execute("colorscheme " . a:color_name)
-            call Theme_persistent(a:color_name)
+            let g:my_config.background = &background
+            let g:my_config[&background].theme = a:color_name
             if has_key(g:colo2airline, a:color_name )
-                call SetStatusLineTheme(g:colo2airline[a:color_name])
+                call SetStatusLineTheme(&background, g:colo2airline[a:color_name])
             endif
+        endfunction
+
+        function! FzfAirlineColorSelect(color_name)
+            call SetStatusLineTheme(&background, a:color_name)
         endfunction
 
         noremap <leader>fr :Rg<CR>
@@ -696,6 +709,9 @@ endfunction
         noremap <leader>ft :CFile<CR>
         noremap <leader>fc :call fzf#vim#colors({
                                 \ 'sink': function('FzfColorSelect')})<CR>
+        noremap <leader>fa :call fzf#run(fzf#wrap({
+                                \ 'source': airline#util#themes(''),
+                                \ 'sink': function('FzfAirlineColorSelect')}))<CR>
     endif
     " }
 
@@ -771,7 +787,7 @@ endfunction
         function! Everforest_trans_enable()
             let g:everforest_transparent_background = 2
             colorscheme everforest
-            call SetStatusLineTheme('everforest')
+            call SetStatusLineTheme(&background, 'everforest')
             " hack to fix caret characters appearing in the statusline when StatusLine
             " and StatusLineNC has same highlight(https://vi.stackexchange.com/questions/15873/carets-in-status-line)
             hi StatusLine guifg=#d3c6aa ctermfg=223
@@ -779,7 +795,7 @@ endfunction
         function! Everforest_trans_disable()
             let g:everforest_transparent_background = 0
             colorscheme everforest
-            call SetStatusLineTheme('everforest')
+            call SetStatusLineTheme(&background, 'everforest')
         endfunction
         function! CB_dark_tb_enable_everforest()
             call Everforest_trans_enable()
@@ -823,43 +839,33 @@ endfunction
     """""""""""""""""""""""""""""""""""""""
     nmap <Leader>db :call ShowHighLightGroup()<CR>
 
-    function! SetDarkTheme(...)
-        let colors_name = a:0 > 0 ? a:1 : g:my_config.dark.theme
+    function! SetTheme(bg, ...)
+        let colors_name = a:0 > 0 ? a:1 : g:my_config[a:bg].theme
         if HasColorscheme(colors_name)
+            let g:my_config.background = a:bg
+            let g:my_config[a:bg].theme = colors_name
+            call SetStatusLineTheme(a:bg)
             execute("colorscheme " . colors_name)
-            if &background == 'light'
-                set background=dark
+            if &background != a:bg
+                execute('set background='.a:bg)
             endif
-            let g:my_config.dark.theme = colors_name
-            let g:my_config.background = 'dark'
-        endif
-    endfunction
-
-    function! SetLightTheme(...)
-        let colors_name = a:0 > 0 ? a:1 : g:my_config.light.theme
-        if HasColorscheme(colors_name)
-            execute("colorscheme " . colors_name)
-            if &background == 'dark'
-                set background=light
-            endif
-            let g:my_config.light.theme = colors_name
-            let g:my_config.background = 'light'
         endif
     endfunction
 
     " Change bottom airline/lualine theme
-    function! SetStatusLineTheme(...)
+    function! SetStatusLineTheme(bg, ...)
         if has('nvim-0.5')
             " lualine will change theme automatically
         else
             if HasPlug('vim-airline') && HasPlug('vim-airline-themes') && exists(':AirlineTheme')
-                let theme = a:0 > 0 ? a:1 : g:my_config[&background].airline_theme
+                let theme = a:0 > 0 ? a:1 : g:my_config[a:bg].airline_theme
                 try
                     execute('AirlineTheme ' . theme)
                 catch
-                    let theme = g:default_config[&background].airline_theme
+                    let theme = g:default_config[a:bg].airline_theme
                     execute('AirlineTheme ' . theme)
                 endtry
+                let g:my_config[a:bg].airline_theme = theme
             endif
         endif
     endfunction
@@ -910,13 +916,8 @@ endfunction
     " Allow to trigger background
     function! ToggleBG()
         " Inversion
-        if &background == "dark"
-            call SetLightTheme()
-        else
-            call SetDarkTheme()
-        endif
-        call SetStatusLineTheme(g:my_config[&background].airline_theme)
-
+        let newbg = &background == "dark" ? 'light' : 'dark'
+        call SetTheme(newbg)
         if g:my_config[&background].transparent
             call EnableTransparent()
         else
@@ -927,7 +928,6 @@ endfunction
     " persistent config over colorscheme change
     function! Theme_persistent(...)
         let color_name = a:0 > 0 ? a:1 : ColourSchemeName()
-
         let g:my_config.background = &background
         let g:my_config[&background].theme = color_name
     endfunction
@@ -940,23 +940,15 @@ endfunction
             set termguicolors
         endif
 
-        if g:my_config.background == 'dark'
-            if HasColorscheme(g:my_config.dark.theme)
-                call SetDarkTheme()
-            else
-                call SetDarkTheme(g:my_config.dark.default)
-            endif
-            call SetStatusLineTheme(g:my_config.dark.airline_theme)
+        let bg = g:my_config.background
+        if HasColorscheme(g:my_config[bg].theme)
+            call SetTheme(bg)
         else
-            if HasColorscheme(g:my_config.dark.theme)
-                call SetLightTheme()
-            else
-                call SetLightTheme(g:my_config.light.default)
-            endif
-            call SetStatusLineTheme(g:my_config.light.airline_theme)
+            call SetTheme(bg, g:my_config[bg].default)
         endif
+        call SetStatusLineTheme(bg)
 
-        if g:my_config[g:my_config.background].transparent
+        if g:my_config[bg].transparent
             call EnableTransparent()
         else
             call DisableTransparent()
@@ -1015,6 +1007,8 @@ endfunction
 " For them please check plugin Preferences)
 " {
 
+    nnoremap <leader>ws :call TrimWhitespace()<CR>
+
     " Toggle dark/light theme
     noremap <silent> <leader>bg :call ToggleBG()<CR>
 
@@ -1027,6 +1021,10 @@ endfunction
 
     " leader s change all occurence
     nnoremap <Leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>
+
+    " disable two easily mispressed yet useless key
+    nnoremap q: <nop>
+    nnoremap Q <nop>
 
     " leader num change tab
     " only for vim or nvim without lualine
@@ -1048,7 +1046,7 @@ endfunction
 " }
 
 " Lua configuration
-if g:vim_type == 'nvim' && filereadable(g:mydotfiles_directory . '.vimrc.lua')
+if has('nvim') && filereadable(g:mydotfiles_directory . '.vimrc.lua')
     execute('source ' . g:mydotfiles_directory . '/.vimrc.lua')
 endif
 

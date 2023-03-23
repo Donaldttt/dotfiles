@@ -197,3 +197,10 @@ function! GenVimAsciiArt(buffer_str_len)
         endif
     return ascii_art
 endfunction
+
+"Remove all trailing whitespace by pressing <leader>ws
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun

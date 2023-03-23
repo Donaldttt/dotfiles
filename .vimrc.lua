@@ -140,7 +140,7 @@ local function toggleterm_config()
       border = 'rounded',
       width = function(term) return math.floor(vim.o.columns * 0.5) end,
       height = function(term) return math.floor(vim.o.lines * 0.5) end,
-      winblend = 2,
+      winblend = 20,
       row = vim.o.lines * 0.5 - 3,
       col = vim.o.columns * 0.5,
     },
@@ -502,33 +502,39 @@ local function nvim_tree_config()
   vim.g.loaded_netrw = 1
   vim.g.loaded_netrwPlugin = 1
 
-  -- set termguicolors to enable highlight groups
-  vim.opt.termguicolors = true
+  local api = require('nvim-tree.api') 
+  local M = {}
 
-  -- setup with some options
+  function M.print_node_path()
+    local node = api.tree.get_node_under_cursor()
+    print(node.absolute_path)
+  end
+
+  function M.on_attach(bufnr)
+    local function opts(desc)
+      return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+    end
+    -- vim.keymap.set('n', 'u',     api.node.navigate.parent,              opts('Parent Directory'))
+    vim.keymap.set('n', 'u', api.tree.change_root_to_parent, opts('Up'))
+    vim.keymap.set('n', 'a', api.fs.create, opts('Create'))
+    vim.keymap.set('n', 'dd', api.fs.remove, opts('Delete'))
+    vim.keymap.set('n', 'rn', api.fs.rename_basename, opts('Rename: Basename'))
+    vim.keymap.set('n', 'I', api.tree.toggle_gitignore_filter, opts('Toggle Git Ignore'))
+    vim.keymap.set('n', 'cd', api.tree.change_root_to_node, opts('CD'))
+    vim.keymap.set('n', 'X', api.tree.collapse_all, opts('Collapse'))
+    vim.keymap.set('n', 'O', api.tree.expand_all, opts('Expand All'))
+    vim.keymap.set('n', 'p', M.print_node_path, opts('Print node path'))
+    vim.keymap.set('n', 'o', api.node.open.edit, opts('Open'))
+    vim.keymap.set('n', '<CR>', api.node.open.edit, opts('Open'))
+  end
+
+  vim.api.nvim_set_keymap('n', '<Leader>e', ':NvimTreeFindFileToggle<CR>',
+    { desc = 'Toggle nvim-tree', noremap = true, silent = true, nowait = true })
   require("nvim-tree").setup({
     sort_by = "case_sensitive",
+    on_attach = M.on_attach,
     view = {
       width = 30,
-      mappings = {
-        list = {
-          { key = "C-[",   action = "dir_up" },
-          { key = "C-]",   action = "cd" },
-          { key = "<C-k>", action = "toggle_file_info" },
-        },
-      },
-    },
-    renderer = {
-      group_empty = true,
-      icons = {
-        show = {
-          file = show_icon,
-          folder = show_icon,
-          folder_arrow = show_icon,
-          git = show_icon,
-          modified = show_icon,
-        }
-      }
     },
     filters = {
       dotfiles = false,
@@ -539,15 +545,14 @@ local function nvim_tree_config()
         resize_window = true,
         window_picker = {
           exclude = {
-            filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
-            buftype = { "nofile", "terminal", "help" },
+            filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame", "vista" },
+              buftype = { "nofile", "terminal", "help" },
           },
         },
       },
     },
   })
 
-  vim.api.nvim_set_keymap('n', '<Leader>e', ':NvimTreeFindFileToggle<CR>', { noremap = true, silent = true })
 end
 
 if vim_version_minor >= 5 then

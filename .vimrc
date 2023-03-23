@@ -64,14 +64,19 @@
     set hidden                          " Allow buffer switching without saving
     set iskeyword-=.                    " '.' is an end of word designator
     set iskeyword-=#                    " '#' is an end of word designator
-
     set iskeyword+=-
-    " let '-' not be an end of word designator
-    "set iskeyword-=_                    " '_' is an end of word designator
 
-    " Instead of reverting the cursor to the last position in the buffer, we
-    " set it to the first line when editing a git commit message
-    au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+    augroup FileFormat
+        autocmd!
+        autocmd FileType javascript,typescript,lua setlocal tabstop=2 shiftwidth=2 softtabstop=2
+        " autocmd FileType c,cpp,python,java setlocal tabstop=4 shiftwidth=4 softtabstop=4
+        autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
+        autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
+        autocmd FileType vim execute('setlocal iskeyword='.&iskeyword.',:')
+        " Instead of reverting the cursor to the last position in the buffer, we
+        " set it to the first line when editing a git commit message
+        autocmd FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+    augroup END
 
     " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
     " Restore cursor to file position in previous editing session
@@ -103,11 +108,6 @@
     " set tabpagemax=15               " Only show 15 tabs
     " set showmode                    " Display the current mode
     set nocursorline                    " Highlight current line
-
-    " get rid of current line highlight, instead just highlight the number column
-    " augroup CLClear
-    "     autocmd! ColorScheme * hi clear CursorLine
-    " augroup END
 
     set cmdheight=1                 " get rid of the extra useless line at the bottom(if not working, probably a plugin is changing the value)
 
@@ -143,11 +143,6 @@
     set shiftwidth=4                " Use indents of 4 spaces
     set tabstop=4                   " An indentation every four columns
     set softtabstop=4               " Let backspace delete indent
-    augroup FileFormat
-        autocmd!
-        autocmd FileType javascript,typescript,lua setlocal tabstop=2 shiftwidth=2 softtabstop=2
-        " autocmd FileType c,cpp,python,java setlocal tabstop=4 shiftwidth=4 softtabstop=4
-    augroup END
 
     set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
     set splitright                  " Puts new vsplit windows to the right of the current
@@ -160,28 +155,8 @@
 
     set listchars=tab:•\ ,trail:•,extends:»,precedes:« " Unprintable chars mapping
 
-    "Remove all trailing whitespace by pressing <leader>ws
-    fun! TrimWhitespace()
-        let l:save = winsaveview()
-        keeppatterns %s/\s\+$//e
-        call winrestview(l:save)
-    endfun
-    nnoremap <leader>ws :call TrimWhitespace()<CR>
     set nospell                     " Spell checking off
-
-
     set matchpairs+=<:>             " Match, to be used with %
-    "set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
-
-    autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
-    autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
-
-    autocmd BufNewFile,BufRead *.coffee set filetype=coffee
-
-    " Workaround vim-commentary for Haskell
-    autocmd FileType haskell setlocal commentstring=--\ %s
-    " Workaround broken colour highlighting in Haskell
-    autocmd FileType haskell,rust setlocal nospell
 
 " }
 
@@ -324,4 +299,3 @@
         source ~/.vimrc.bundles
     endif
 " }
-
