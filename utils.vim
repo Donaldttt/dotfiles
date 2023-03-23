@@ -5,6 +5,21 @@ function! Notify(msg)
     echo msg
 endfunction
 
+" Check if plugin exists
+function! HasPlug(plug_name, ...)
+    let plug_dir_name = get(a:, 1, a:plug_name) " optional argument for the name of plug's folder
+    if has_key(g:plugs, a:plug_name) && isdirectory(g:plugin_dir . "/" . plug_dir_name)
+        if has_key(g:plugs[a:plug_name], 'for') || has_key(g:plugs[a:plug_name], 'on')
+            if (has_key(g:plugs[a:plug_name], 'for') && len(g:plugs[a:plug_name]['for']) == 0) ||
+                        \ (has_key(g:plugs[a:plug_name], 'on') && len(g:plugs[a:plug_name]['on']) == 0)
+                return v:false
+            endif
+        endif
+        return v:true
+    endif
+    return v:false
+endfunction
+
 " This function is used to save a variable to a file
 function! SaveVariable(var, file)
     let serialized = string(a:var)
@@ -204,3 +219,49 @@ fun! TrimWhitespace()
     keeppatterns %s/\s\+$//e
     call winrestview(l:save)
 endfun
+
+
+""" AIRLINE EXTENSIONS """
+if HasPlug('vim-airline')
+
+    function! AirlineCocStatus()
+        if ! exists('*CocAction')
+            return
+        endif
+        " let loading = ["⢿", "⣻", "⣽", "⣾", "⣷", "⣯", "⣟", "⡿"]
+        let loading = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]
+        try
+            let result = CocAction('services')
+        catch
+            return
+        endtry
+        let state = ''
+        let id = ''
+        for e in result
+            if e['languageIds'][0] == &ft
+                let state = e['state']
+                let id = e['id']
+            endif
+        endfor
+
+        " messy way to get time in millisecond in vim
+        let time = float2nr(str2float(reltime()->reltimestr()[4:]) * 1000)
+        let speed = 800
+        let loadidx = time % speed
+        let msg = 'lsp:' . id
+        if state == "starting"
+            let s:coc_lsp_loading = 1
+            return msg . " " . loading[loadidx/(speed/10)] . " "
+        endif
+        if exists('s:coc_lsp_loading')
+            unlet s:coc_lsp_loading
+        endif
+        return msg . " ✔ "
+    endfunction
+
+    function! AirlineBufferNumber()
+        return len(g:index_to_buffer)
+    endfunction
+
+endif
+""" AIRLINE EXTENSIONS END """

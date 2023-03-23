@@ -78,44 +78,41 @@
         autocmd FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
     augroup END
 
-    " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
-    " Restore cursor to file position in previous editing session
-        function! ResCur()
-            if line("'\"") <= line("$")
-                silent! normal! g`"
-                return 1
-            endif
-        endfunction
+    " " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
+    " " Restore cursor to file position in previous editing session
+    "     function! ResCur()
+    "         if line("'\"") <= line("$")
+    "             silent! normal! g`"
+    "             return 1
+    "         endif
+    "     endfunction
 
-        augroup resCur
-            autocmd!
-            autocmd BufWinEnter * call ResCur()
-        augroup END
+    "     augroup resCur
+    "         autocmd!
+    "         autocmd BufWinEnter * call ResCur()
+    "     augroup END
 
     " Setting up the directories {
-        set backup                  " Backups are nice ...
-        if has('persistent_undo')
-            set undofile                " So is persistent undo ...
-            set undolevels=1000         " Maximum number of changes that can be undone
-            set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
-        endif
+        " set backup                  " Backups are nice ...
+    if has('persistent_undo')
+        set undofile                " So is persistent undo ...
+        set undolevels=1000         " Maximum number of changes that can be undone
+        set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
+    endif
     " }
 
 " }
 
 " Vim UI {
 "
-    " set tabpagemax=15               " Only show 15 tabs
-    " set showmode                    " Display the current mode
     set nocursorline                    " Highlight current line
-
     set cmdheight=1                 " get rid of the extra useless line at the bottom(if not working, probably a plugin is changing the value)
 
-    if has('cmdline_info')
-        set ruler                   " Show the ruler
-        set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
-        set showcmd                 " Show partial commands in status line and
-    endif
+    " if has('cmdline_info')
+    "     set ruler                   " Show the ruler
+    "     set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
+    "     set showcmd                 " Show partial commands in status line and
+    " endif
 
     set backspace=indent,eol,start  " Backspace for dummies
 
