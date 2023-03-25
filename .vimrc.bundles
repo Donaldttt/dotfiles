@@ -636,9 +636,8 @@ if HasPlug("fzf") && HasPlug("fzf.vim")
     function! FzfAirlineColorSelect(color_name)
         call SetStatusLineTheme(&background, a:color_name)
     endfunction
-    let g:VimrpcFzfColor = function('FzfColorSelect')
-    let g:VimrpcFzfAirline = function('FzfAirlineColorSelect')
-
+    let g:FzfColorComfirmCb = function('FzfColorSelect')
+    let g:FzfAirlineComfirmCb = function('FzfAirlineColorSelect')
     noremap <leader>fr :Rg<CR>
     noremap <leader>ff :Files<CR>
     noremap <leader>ft :CFile<CR>
