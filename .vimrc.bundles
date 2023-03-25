@@ -607,22 +607,28 @@ if HasPlug("fzf") && HasPlug("fzf.vim")
         let g:fzf_preview_window = ['right:50%']
     end
 
-    let g:fzf_colors = {
-        \ 'gutter':      ['bg', 'Normal'],
-        \ }
+    hi! fzfborderhi term=bold cterm=bold ctermbg=236 gui=bold guibg=#272c42
+    hi! fzfqueryhi term=underline cterm=underline gui=underline
 
+    let g:fzf_force_termguicolors = 1
+
+    let g:fzf_colors = { 'gutter': ['bg', 'Normal'], 'bg+': ['bg', 'Normal'], 'bg': ['bg', 'Normal'], 'fg+': ['fg', 'WarningMsg'] }
+
+    let g:fzf_files_options = ['--border-label', 'Files', '--border-label-pos', '9', '--no-scrollbar', '--no-hscroll', '--no-separator']
     " check if ripgrep is installed
-    if ! executable('rg')
-        command! -bang -nargs=* Rg
-          \ call fzf#vim#grep(
-          \   'grep -R --line-number --exclude-dir=".git;.svn" --color=always -- '.shellescape(<q-args>), 1,
-          \   fzf#vim#with_preview(), <bang>0)
-    endif
+    function! FzfRg()
+        if ! executable('rg')
+            let cmd = 'grep -R --line-number --exclude-dir=".git;.svn" --color=always -- '.shellescape('')
+        else
+            let cmd = "rg --column --line-number --no-heading --color=always --smart-case -- ".shellescape('')
+        endif
 
-    command! -bang -nargs=* CFile
-      \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case --vimgrep -- "
-      \ .shellescape(<q-args>). " ".expand('%'),
-      \ 1, fzf#vim#with_preview(), <bang>0)
+        let RgOptions = ['--border-label', 'Grep', '--border-label-pos', '9', '--no-scrollbar', 
+        \ '--no-hscroll', '--no-separator']
+        let with_preview = fzf#vim#with_preview()
+        let with_preview.options = RgOptions + with_preview.options
+        call fzf#vim#grep(cmd, 1, with_preview, 0)
+    endfunction
 
     function! FzfColorSelect(color_name)
         execute("colorscheme " . a:color_name)
@@ -636,13 +642,18 @@ if HasPlug("fzf") && HasPlug("fzf.vim")
     function! FzfAirlineColorSelect(color_name)
         call SetStatusLineTheme(&background, a:color_name)
     endfunction
-    let g:FzfColorComfirmCb = function('FzfColorSelect')
-    let g:FzfAirlineComfirmCb = function('FzfAirlineColorSelect')
-    noremap <leader>fr :Rg<CR>
+
+    noremap <leader>fr :call FzfRg()<CR>
     noremap <leader>ff :Files<CR>
-    noremap <leader>ft :CFile<CR>
-    noremap <leader>fa :AirlinePreview<CR>
-    noremap <leader>fc :ColorsPreview<CR>
+
+    if HasPlug('fzf-color-preview')
+        let g:FzfColorComfirmCb = function('FzfColorSelect')
+        let g:FzfAirlineComfirmCb = function('FzfAirlineColorSelect')
+        noremap <leader>fa :AirlinePreview<CR>
+        noremap <leader>fc :ColorsPreview<CR>
+    else
+        noremap <leader>fc :Colors<CR>
+    endif
 endif
 
 if HasPlug("coc.nvim") && executable('node')

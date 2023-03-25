@@ -221,7 +221,6 @@ local function telescope_config()
                   ["<CR>"] = function(bufnr)
                 local selection = action_state.get_selected_entry()
                 actions.select_default()
-                vim.fn.Theme_persistent(selection.value)
               end,
             },
           },
