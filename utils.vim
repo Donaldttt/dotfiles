@@ -252,16 +252,17 @@ if HasPlug('vim-airline')
         if state == "starting"
             let s:coc_lsp_loading = 1
             return msg . " " . loading[loadidx/(speed/10)] . " "
+        elseif state == "running"
+            if exists('s:coc_lsp_loading')
+                unlet s:coc_lsp_loading
+            endif
+            return msg . " ✔ "
         endif
-        if exists('s:coc_lsp_loading')
-            unlet s:coc_lsp_loading
-        endif
-        return msg . " ✔ "
+        return ''
     endfunction
 
     function! AirlineBufferNumber()
         return len(g:index_to_buffer)
     endfunction
-
 endif
 """ AIRLINE EXTENSIONS END """

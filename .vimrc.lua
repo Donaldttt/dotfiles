@@ -221,6 +221,9 @@ local function telescope_config()
                   ["<CR>"] = function(bufnr)
                 local selection = action_state.get_selected_entry()
                 actions.select_default()
+                local bg = vim.o.background
+                local config = vim.g.my_config
+                vim.fn.SetTheme(bg, selection.value)
               end,
             },
           },
@@ -400,8 +403,10 @@ local function lualine_config()
     local msg = "lsp:" .. id
     if state == "starting" then
       return msg .. " %#CocstatusLoading#" .. loading[math.floor(loadidx / (step * (speed / 100))) + 1]
+    elseif state == "running" then
+      return msg .. " %#CocstatusSucceed#✔"
     end
-    return msg .. " %#CocstatusSucceed#✔"
+    return ''
   end
 
   local function debugstats()

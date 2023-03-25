@@ -543,7 +543,7 @@ if HasPlug("vim-airline")
             :AirlineRefresh!
         endfunction
 
-        autocmd! CursorMoved * call s:airline_refresh(0)
+        " autocmd! CursorMoved * call s:airline_refresh(0)
 
     endfunction
 
