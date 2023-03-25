@@ -10,12 +10,14 @@
     let after_directory = g:mydotfiles_directory . 'config/vi-plugs/coc-theme/after/'
 
     " detect vim type(vim or nvim)
+    let g:vim_v = 0
     if has('nvim')
         let g:vim_type = 'nvim'
         let g:vim_version = matchstr(execute('version'), 'NVIM v\zs[^\n]*')
     else
         let g:vim_type = 'vim'
         let g:vim_version = matchstr(execute('version'), 'Vi IMproved \zs[^\n]*')
+        let g:vim_v = v:version
     endif
 
     " detect operating system (Windows/Linux/Darwin)
@@ -62,61 +64,58 @@
     set hidden                          " Allow buffer switching without saving
     set iskeyword-=.                    " '.' is an end of word designator
     set iskeyword-=#                    " '#' is an end of word designator
-
     set iskeyword+=-
-    " let '-' not be an end of word designator
-    "set iskeyword-=_                    " '_' is an end of word designator
 
-    " Instead of reverting the cursor to the last position in the buffer, we
-    " set it to the first line when editing a git commit message
-    au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+    augroup FileFormat
+        autocmd!
+        autocmd FileType javascript,typescript,lua setlocal tabstop=2 shiftwidth=2 softtabstop=2
+        " autocmd FileType c,cpp,python,java setlocal tabstop=4 shiftwidth=4 softtabstop=4
+        autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
+        autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
+        autocmd FileType vim execute('setlocal iskeyword='.&iskeyword.',:')
+        " Instead of reverting the cursor to the last position in the buffer, we
+        " set it to the first line when editing a git commit message
+        autocmd FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+    augroup END
 
-    " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
-    " Restore cursor to file position in previous editing session
-        function! ResCur()
-            if line("'\"") <= line("$")
-                silent! normal! g`"
-                return 1
-            endif
-        endfunction
+    " " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
+    " " Restore cursor to file position in previous editing session
+    "     function! ResCur()
+    "         if line("'\"") <= line("$")
+    "             silent! normal! g`"
+    "             return 1
+    "         endif
+    "     endfunction
 
-        augroup resCur
-            autocmd!
-            autocmd BufWinEnter * call ResCur()
-        augroup END
+    "     augroup resCur
+    "         autocmd!
+    "         autocmd BufWinEnter * call ResCur()
+    "     augroup END
 
     " Setting up the directories {
-        set backup                  " Backups are nice ...
-        if has('persistent_undo')
-            set undofile                " So is persistent undo ...
-            set undolevels=1000         " Maximum number of changes that can be undone
-            set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
-        endif
+        " set backup                  " Backups are nice ...
+    if has('persistent_undo')
+        set undofile                " So is persistent undo ...
+        set undolevels=1000         " Maximum number of changes that can be undone
+        set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
+    endif
     " }
 
 " }
 
 " Vim UI {
 "
-    " set tabpagemax=15               " Only show 15 tabs
-    " set showmode                    " Display the current mode
-    " set cursorline                    " Highlight current line
-
-    " get rid of current line highlight, instead just highlight the number column
-    augroup CLClear
-        autocmd! ColorScheme * hi clear CursorLine
-    augroup END
-
+    set nocursorline                    " Highlight current line
     set cmdheight=1                 " get rid of the extra useless line at the bottom(if not working, probably a plugin is changing the value)
 
-    if has('cmdline_info')
-        set ruler                   " Show the ruler
-        set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
-        set showcmd                 " Show partial commands in status line and
-    endif
+    " if has('cmdline_info')
+    "     set ruler                   " Show the ruler
+    "     set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
+    "     set showcmd                 " Show partial commands in status line and
+    " endif
 
     set backspace=indent,eol,start  " Backspace for dummies
-
+    set fillchars=eob:\             " it can remove '~' at the end of buffer
     set number                      " Line numbers on
     set showmatch                   " Show matching brackets/parenthesis
     set incsearch                   " Find as you type search
@@ -141,8 +140,7 @@
     set shiftwidth=4                " Use indents of 4 spaces
     set tabstop=4                   " An indentation every four columns
     set softtabstop=4               " Let backspace delete indent
-    autocmd FileType javascript,typescript set tabstop=2 shiftwidth=2 softtabstop=2
-    autocmd FileType c,cpp,python,java set tabstop=4 shiftwidth=4 softtabstop=4
+
     set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
     set splitright                  " Puts new vsplit windows to the right of the current
     set splitbelow                  " Puts new split windows to the bottom of the current
@@ -150,32 +148,12 @@
     set list                        " Display unprintable characters f12 - switches
 
     " stop inserting the current comment leader after hitting 'o' or 'O' in Normal mode
-    au FileType java setlocal formatoptions-=o
+    au FileType * setlocal formatoptions-=o
 
     set listchars=tab:•\ ,trail:•,extends:»,precedes:« " Unprintable chars mapping
 
-    "Remove all trailing whitespace by pressing <leader>ws
-    fun! TrimWhitespace()
-        let l:save = winsaveview()
-        keeppatterns %s/\s\+$//e
-        call winrestview(l:save)
-    endfun
-    nnoremap <leader>ws :call TrimWhitespace()<CR>
     set nospell                     " Spell checking off
-
-
     set matchpairs+=<:>             " Match, to be used with %
-    "set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
-
-    autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
-    autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
-
-    autocmd BufNewFile,BufRead *.coffee set filetype=coffee
-
-    " Workaround vim-commentary for Haskell
-    autocmd FileType haskell setlocal commentstring=--\ %s
-    " Workaround broken colour highlighting in Haskell
-    autocmd FileType haskell,rust setlocal nospell
 
 " }
 
@@ -209,7 +187,7 @@
     vnoremap . :normal .<CR>
 
     " For when you forget to sudo.. Really Write the file.
-    cmap w!! w !sudo tee % >/dev/null
+    " cmap w!! w !sudo tee % >/dev/null
 
     " Adjust viewports to the same size
     map <Leader>= <C-w>=
@@ -326,4 +304,3 @@
         source ~/.vimrc.bundles
     endif
 " }
-

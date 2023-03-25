@@ -1,6 +1,6 @@
 
 " let g:coc_global_extensions = ['coc-pyright', 'coc-rls', 'coc-clangd', 'coc-tsserver', 'coc-html', 'coc-cmake', 'coc-json', 'coc-sh', 'coc-java']
-let g:coc_global_extensions = ['coc-pyright', 'coc-tsserver']
+" let g:coc_global_extensions = ['coc-pyright', 'coc-tsserver']
 
 let g:coc_data_home = g:vim_dir . '/coc'
 let g:coc_config_home = g:vim_dir . '/coc'
@@ -92,3 +92,11 @@ call coc#config("java.jdt.ls.vmargs", '-javaagent:' . g:mydotfiles_directory . '
 call coc#config("java.jdt.ls.lombokSupport.enabled", v:false)
 call coc#config("java.inlayHints.parameterNames.enabled", v:false)
 call coc#config("inlayHint.enable", v:false)
+
+for section in ['suggest', 'diagnostic', 'signature', 'hover']
+    call coc#config(section.'.floatConfig.border', v:true)
+    call coc#config(section.'.floatConfig.rounded', v:true)
+    call coc#config(section.'.floatConfig.highlight', 'Normal')
+    " transparent setting (only for neovim)
+    call coc#config(section.'.floatConfig.winblend', 6)
+endfor
