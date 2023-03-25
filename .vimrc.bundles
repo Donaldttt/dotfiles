@@ -7,7 +7,7 @@
 " KEY_MAPS
 " OTHER_CONFIGS
 
-let g:debug_mode = v:true
+let g:debug_mode = v:false
 let g:high_performence = v:false                 " set true will also disable animation
 let g:autocomplte_enable = v:true
 let g:copilot_enable = v:false
@@ -27,7 +27,7 @@ nmap <leader><leader>t :call SwapWord()<CR>
 
 """""" PLUGIN_INSTALL """"""
 
-let g:mydotfiles_directory = expand('~/.dotfiles/')
+let g:dotfiledir = expand('~/.dotfiles/')
 let g:plugin_dir = expand('~/.vim/plugged/')
 let g:config_file_path = g:vim_dir . ".config.vim"
 call plug#begin(g:plugin_dir)
@@ -37,6 +37,9 @@ call plug#begin(g:plugin_dir)
       return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
     endfunction
     let g:animation_enable = g:high_performence ? v:false : g:animation_enable
+
+    " custom plugin
+    Plug 'Donaldttt/fzf-color-preview', Cond(g:vim_v >= 800)
 
     """" THEME_PLUGINS """"
 
@@ -160,7 +163,7 @@ augroup end
 """""" UTILITIES """"""
 
 " import ultilities functions
-execute('source ' . g:mydotfiles_directory . '/utils.vim')
+execute('source ' . g:dotfiledir . '/utils.vim')
 
 function! SaveConfig()
     let p = ReadVariable(g:config_file_path)
@@ -431,10 +434,10 @@ if HasPlug("vim-bufferline") && HasPlug("vim-airline")
 
     " scrolling with fixed current buffer position
 
-    let g:bufferline_active_buffer_left = ''
-    let g:bufferline_active_buffer_right = ''
-    let g:bufferline_inactive_highlight = 'airline_b_inactive'
-    let g:bufferline_active_highlight = 'airline_b_bold'
+    let g:bufferline_active_buffer_left = '['
+    let g:bufferline_active_buffer_right = ']'
+    let g:bufferline_inactive_highlight = 'airline_c'
+    let g:bufferline_active_highlight = 'airline_c_bold'
 endif
 
 if HasPlug("undotree")
@@ -504,8 +507,10 @@ if HasPlug("vim-airline")
     " TODO
     " 22 is a magic number, it is best it can change as buffer width
     " changing
+
     " This must use my fork version of bufferline
-    let g:bufferline_max_length = &columns - 22
+    " the number of cols bufferline cannot use out of max of screen cols
+    let g:bufferline_forbided_col = 32
     call airline#parts#define_function('bufnum', 'AirlineBufferNumber')
     call airline#parts#define_function('cocstatus', 'AirlineCocStatus')
     call airline#parts#define_accent('cocstatus', 'italic')
@@ -527,9 +532,10 @@ if HasPlug("vim-airline")
         " let g:airline_section_y       = '%{%airline#util#wrap(AirlineCocStatus(), 0)%}'
         let g:airline_section_a       = airline#section#create(['mode'])
         let g:airline_section_b       = ''
-        let g:airline_section_error       = ''
-        let g:airline_section_warning       = ''
-        let g:airline_section_x       = airline#section#create(['bufnum'])
+        let g:airline_section_error   = ''
+        let g:airline_section_warning = ''
+        " let g:airline_section_x       = airline#section#create(['bufnum'])
+        let g:airline_section_x       = ''
         let g:airline_section_y       = _airline_section_y
         let g:airline_section_z       = airline#section#create(['filetype'])
         " see source for current list
@@ -598,7 +604,7 @@ if HasPlug("fzf") && HasPlug("fzf.vim")
     if g:os == 'Windows'
         let g:fzf_preview_window = []
     else
-        let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+        let g:fzf_preview_window = ['right:50%']
     end
 
     let g:fzf_colors = {
@@ -630,22 +636,21 @@ if HasPlug("fzf") && HasPlug("fzf.vim")
     function! FzfAirlineColorSelect(color_name)
         call SetStatusLineTheme(&background, a:color_name)
     endfunction
+    let g:VimrpcFzfColor = function('FzfColorSelect')
+    let g:VimrpcFzfAirline = function('FzfAirlineColorSelect')
 
     noremap <leader>fr :Rg<CR>
     noremap <leader>ff :Files<CR>
     noremap <leader>ft :CFile<CR>
-    noremap <leader>fc :call fzf#vim#colors({
-                            \ 'sink': function('FzfColorSelect')})<CR>
-    noremap <leader>fa :call fzf#run(fzf#wrap({
-                            \ 'source': airline#util#themes(''),
-                            \ 'sink': function('FzfAirlineColorSelect')}))<CR>
+    noremap <leader>fa :AirlinePreview<CR>
+    noremap <leader>fc :ColorsPreview<CR>
 endif
 
 if HasPlug("coc.nvim") && executable('node')
     " coc-clangd: c/c++, may need to install clangd seperatly
 
-    if filereadable(g:mydotfiles_directory . "/coc-nvim-config.vim")
-        exec "source " . g:mydotfiles_directory . "/coc-nvim-config.vim"
+    if filereadable(g:dotfiledir . "/coc-nvim-config.vim")
+        exec "source " . g:dotfiledir . "/coc-nvim-config.vim"
     endif
     " warning that coc work best for vim >= 8.3
     let g:coc_disable_startup_warning = 1
@@ -941,8 +946,8 @@ endif
 """""" OTHERS """"""
 
 " Lua configuration
-if has('nvim') && filereadable(g:mydotfiles_directory . '.vimrc.lua')
-    execute('source ' . g:mydotfiles_directory . '/.vimrc.lua')
+if has('nvim') && filereadable(g:dotfiledir . '.vimrc.lua')
+    execute('source ' . g:dotfiledir . '/.vimrc.lua')
 endif
 
 call s:executeLateInit()

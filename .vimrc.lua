@@ -502,7 +502,7 @@ local function nvim_tree_config()
   vim.g.loaded_netrw = 1
   vim.g.loaded_netrwPlugin = 1
 
-  local api = require('nvim-tree.api') 
+  local api = require('nvim-tree.api')
   local M = {}
 
   function M.print_node_path()
@@ -538,6 +538,9 @@ local function nvim_tree_config()
     },
     filters = {
       dotfiles = false,
+    },
+    git = {
+      ignore = false,
     },
     actions = {
       open_file = {

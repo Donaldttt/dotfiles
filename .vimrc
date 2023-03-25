@@ -115,7 +115,7 @@
     " endif
 
     set backspace=indent,eol,start  " Backspace for dummies
-
+    set fillchars=eob:\             " it can remove '~' at the end of buffer
     set number                      " Line numbers on
     set showmatch                   " Show matching brackets/parenthesis
     set incsearch                   " Find as you type search
