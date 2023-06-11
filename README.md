@@ -24,3 +24,4 @@ To do
 ## Screenshots
 
 ![vim config](https://github.com/Donaldttt/dotfiles/blob/resource/vim-config.gif?raw=true)
+

@@ -5,8 +5,10 @@
 app_name='dotfiles'
 
 [ -z "$APP_PATH" ] && APP_PATH="$HOME/.$app_name"
-[ -z "$REPO_URI" ] && REPO_URI="https://github.com/Donaldttt/$app_name"
-[ -z "$REPO_BRANCH" ] && REPO_BRANCH='dev'
+# [ -z "$REPO_URI" ] && REPO_URI="https://github.com/Donaldttt/$app_name"
+# [ -z "$REPO_BRANCH" ] && REPO_BRANCH='dev'
+[ -z "$REPO_URI" ] && REPO_URI="https://gitlab.com/tangnachuan1208/$app_name"
+[ -z "$REPO_BRANCH" ] && REPO_BRANCH='gitlab'
 [ -z "$VIM_RTPATH" ] && VIM_RTPATH="$HOME/.vim"
 
 
@@ -45,7 +47,7 @@ program_exists() {
 # 2 file not exist
 # when using this function:
 # file path should not be quoted but like this:
-# file_contains 'abc' file_path 
+# file_contains 'abc' file_path
 file_contains(){
     if [ -f "$2" ]; then
         a=`grep "$1" $2`
@@ -95,7 +97,7 @@ backup_file() {
 
 # Usage: sync_repo path url
 #
-# This function try to clone git repo host in @url 
+# This function try to clone git repo host in @url
 # to @path. If @path alreay exsits, it will simply
 # update the repo
 sync_repo() {
@@ -118,6 +120,25 @@ sync_repo() {
     fi
 }
 
+# simply clone a repo
+sync_repo_default() {
+    local repo_uri="$1"
+    local repo_path="$2"
+
+    if [ ! -e "$repo_path" ]; then
+        msg "Trying to clone repo"
+        mkdir -p "$repo_path"
+        git clone "$repo_uri" "$repo_path"
+        ret="$?"
+        success "Successfully cloned repo."
+    else
+        msg "Trying to update repo"
+        cd "$repo_path" && git pull
+        ret="$?"
+        success "Successfully updated repo"
+    fi
+}
+
 setup_vimplug() {
 
     # if vimplug is already installed
@@ -127,7 +148,7 @@ setup_vimplug() {
     #fi
 
     mkdir -p "$VIM_RTPATH/autoload"
-    # setup for vim 
+    # setup for vim
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim > /dev/null 2>&1
 
@@ -162,11 +183,26 @@ source ~/.vimrc" > $nvim_config
     fi
 }
 
+# tmux plugin manager
+set_up_tpm() {
+
+    echo "Install TPM(tmux plugin manager)?('y' install; 'other keys' nope)"
+    read -r respond
+    if [ "$respond" = "y" ] || [ "$respond" = "yes" ]; then
+        local url="https://github.com/tmux-plugins/tpm"
+        sync_repo_default "$url" "$HOME/.tmux/plugins/tpm"
+        success "TPM installed"
+    else
+        fail "TPM not installed"
+    fi
+}
+
 set_up_tmux() {
     if program_exists "tmux"; then
         backup_file "$HOME/.tmux.conf"
         try_symlink "$APP_PATH/.tmux.conf" "$HOME/.tmux.conf" && \
         success "Tmux config setup successed"
+        set_up_tpm
     else
         fail "Tmux config is not setup(tmux not installed)"
     fi
@@ -187,7 +223,7 @@ set_up_vim() {
     backup_file "$HOME/.vimrc"
     backup_file "$HOME/.vimrc.bundles"
 
-    try_symlink "$APP_PATH/.vimrc"         "$HOME/.vimrc" 
+    try_symlink "$APP_PATH/.vimrc"         "$HOME/.vimrc"
     try_symlink "$APP_PATH/.vimrc.bundles" "$HOME/.vimrc.bundles"
 
     success "Setting up symlinks for vim configuration"
@@ -201,33 +237,37 @@ set_up_zoxide_shell_config() {
     local source_cmd_bash='eval "$(zoxide init bash)"'
     if program_exists "zsh"; then
         # if not already contain source command
-        file_contains "$source_cmd_zsh" ~/.zshrc 
+        file_contains "$source_cmd_zsh" ~/.zshrc
         status_code=$?
         if [ "$status_code" != '0' ]; then
-            echo "Install zoxide source command ($source_cmd_zsh) for zsh shell?('y' install; 'q' quit the scrip)"
+            echo "Install zoxide source command ($source_cmd_zsh) for zsh shell?('y' install; others no)"
             read -r respond
             if [ "$respond" = "y" ] || [ "$respond" = "yes" ]; then
                 echo "$source_cmd_zsh" >> $HOME/.zshrc
-            elif [ "$respond" = "q" ]; then
-                exit 0
+                success "add ($source_cmd_zsh) to zsh"
+            else
+                fail "not adding ($source_cmd_zsh) to zsh"
             fi
-            success "add ($source_cmd_zsh) to zsh"
+        else
+            success "($source_cmd_zsh) is already in zsh"
         fi
     fi
 
     if program_exists "bash"; then
         # if not already contain source command
-        file_contains "$source_cmd_bash" ~/.bashrc 
+        file_contains "$source_cmd_bash" ~/.bashrc
         status_code=$?
         if [ "$status_code" != '0' ]; then
-            echo "Install zoxide source command ($source_cmd_bash) for bash shell?('y' install; 'q' quit the scrip)"
+            echo "Install zoxide source command ($source_cmd_bash) for bash shell?('y' install; others no)"
             read -r respond
             if [ "$respond" = "y" ] || [ "$respond" = "yes" ]; then
                 echo "$source_cmd_bash" >> $HOME/.bashrc
-            elif [ "$respond" = "q" ]; then
-                exit 0
+                success "add ($source_cmd_bash) to bash"
+            else
+                fail "not adding ($source_cmd_bash) to bash"
             fi
-            success "add ($source_cmd_bash) to bash"
+        else
+            success "($source_cmd_bash) is already in bash"
         fi
     fi
 }
@@ -241,7 +281,7 @@ set_up_zoxide() {
         return 0
     fi
 
-    echo "Install zoxide (smart cd like autojump)?('y' install; 'q' quit the scrip)"
+    echo "Install zoxide (smart cd like autojump)?('y' install; 'other keys' nope)"
     read -r respond
     if [ "$respond" = "y" ] || [ "$respond" = "yes" ]; then
         program_must_exist "curl"
@@ -249,8 +289,29 @@ set_up_zoxide() {
         curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
         set_up_zoxide_shell_config
 
-    elif [ "$respond" = "q" ]; then
-        exit 0
+    else
+        fail "zoxide is not installed"
+    fi
+}
+set_up_fish(){
+    local source_cmd="source $APP_PATH/config/fish/config.fish"
+    local fish_config="$HOME/.config/fish/config.fish"
+    if program_exists "fish"; then
+        # if not already contain source command
+        file_contains "$source_cmd" $fish_config
+        status_code=$?
+        if [ "$status_code" != '0' ]; then
+            echo "Install fish configuration script for fish shell?('y' install; 'other keys' nope)"
+            read -r respond
+            if [ "$respond" = "y" ] || [ "$respond" = "yes" ]; then
+                echo "$source_cmd" >> $fish_config
+                success "fish configuration is sourced in $fish_config"
+            else
+                fail "Configuration is not sourced in fish"
+            fi
+        else
+            success "fish script is already sourced"
+        fi
     fi
 }
 
@@ -259,41 +320,45 @@ set_up_bash_tool(){
     local source_cmd2="source ~/.$app_name/bash_tools.sh"
     if program_exists "zsh"; then
         # if not already contain source command
-        file_contains "$source_cmd" ~/.zshrc 
+        file_contains "$source_cmd" ~/.zshrc
         status_code=$?
         if [ "$status_code" != '0' ]; then
-            file_contains "$source_cmd2" ~/.zshrc 
+            file_contains "$source_cmd2" ~/.zshrc
             status_code=$?
         fi
         if [ "$status_code" != '0' ]; then
-            echo "Install terminal configuration script for zsh shell?('y' install; 'q' quit the scrip)"
+            echo "Install terminal configuration script for zsh shell?('y' install; 'other keys' nope)"
             read -r respond
             if [ "$respond" = "y" ] || [ "$respond" = "yes" ]; then
                 echo "$source_cmd" >> $HOME/.zshrc
-            elif [ "$respond" = "q" ]; then
-                exit 0
+                success "Terminal configuration is sourced in zsh"
+            else
+                fail "Configuration is not sourced in zsh"
             fi
-            success "Terminal configuration is sourced in zsh"
+        else
+            success "zsh script is already sourced"
         fi
     fi
 
     if program_exists "bash"; then
         # if not already contain source command
-        file_contains "$source_cmd" ~/.bashrc 
+        file_contains "$source_cmd" ~/.bashrc
         status_code=$?
         if [ "$status_code" != '0' ]; then
-            file_contains "$source_cmd2" ~/.bashrc 
+            file_contains "$source_cmd2" ~/.bashrc
             status_code=$?
         fi
         if [ "$status_code" != '0' ]; then
-            echo "Install terminal configuration script for bash shell?('y' install; 'q' quit the scrip)"
+            echo "Install terminal configuration script for bash shell?('y' install; 'other keys' nope)"
             read -r respond
             if [ "$respond" = "y" ] || [ "$respond" = "yes" ]; then
                 echo "$source_cmd" >> $HOME/.bashrc
-            elif [ "$respond" = "q" ]; then
-                exit 0
+                success "Terminal configuration is sourced in bash"
+            else
+                fail "Configuration is not sourced in bash"
             fi
-            success "Terminal configuration is sourced in bash"
+        else
+            success "bash script is already sourced"
         fi
     fi
 }
@@ -304,6 +369,7 @@ env_set "$HOME"
 set_up_vim
 set_up_tmux
 set_up_bash_tool
+set_up_fish
 set_up_zoxide
 
 msg             "\nThanks for installing $app_name."

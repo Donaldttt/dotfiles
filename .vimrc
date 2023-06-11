@@ -1,22 +1,14 @@
-    " get current neovim version
-    let g:vim_version = -1
-
-    " set nocompatible
+    " dotfile location
+    let g:dotfiledir = expand(fnamemodify(resolve(expand('<sfile>:p')), ':h').'/')
     " vim runtime folder
     let g:vim_dir = expand('~/.vim/')
-
-    " dotfile location
-    let g:mydotfiles_directory = expand('~/.dotfiles/')
-    let after_directory = g:mydotfiles_directory . 'config/vi-plugs/coc-theme/after/'
 
     " detect vim type(vim or nvim)
     let g:vim_v = 0
     if has('nvim')
         let g:vim_type = 'nvim'
-        let g:vim_version = matchstr(execute('version'), 'NVIM v\zs[^\n]*')
     else
         let g:vim_type = 'vim'
-        let g:vim_version = matchstr(execute('version'), 'Vi IMproved \zs[^\n]*')
         let g:vim_v = v:version
     endif
 
@@ -31,11 +23,8 @@
         endif
     endif
 
-    let g:vim_version = str2float(g:vim_version)
-    let g:dotfile_path = '~/.dotfiles/'
 
     set runtimepath^=~/.vim runtimepath+=~/.vim/after
-    execute('set runtimepath^=' . after_directory)
     let &packpath=&runtimepath
 
     " The default leader is '\', but many people prefer ',' as it's in a standard
@@ -44,18 +33,13 @@
 
 " General {
 
-    noremap <leader>h :noh<CR>  " turn off highlight
-
     filetype plugin indent on   " Automatically detect file types.
     syntax on                   " Syntax highlighting
+    set belloff=all             " Turn off the annoying bell
     set mouse=a                 " Automatically enable mouse usage
     set mousehide               " Hide the mouse cursor while typing
+    set shortmess+=F            " Don't show the file name when open new file
     " scriptencoding utf-8
-
-    " Most prefer to automatically switch to the current file directory when
-    " a new buffer is opened;
-    " autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
-    " Always switch to the current file directory
 
     set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
     " set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
@@ -72,25 +56,10 @@
         " autocmd FileType c,cpp,python,java setlocal tabstop=4 shiftwidth=4 softtabstop=4
         autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
         autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
-        autocmd FileType vim execute('setlocal iskeyword='.&iskeyword.',:')
         " Instead of reverting the cursor to the last position in the buffer, we
         " set it to the first line when editing a git commit message
         autocmd FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
     augroup END
-
-    " " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
-    " " Restore cursor to file position in previous editing session
-    "     function! ResCur()
-    "         if line("'\"") <= line("$")
-    "             silent! normal! g`"
-    "             return 1
-    "         endif
-    "     endfunction
-
-    "     augroup resCur
-    "         autocmd!
-    "         autocmd BufWinEnter * call ResCur()
-    "     augroup END
 
     " Setting up the directories {
         " set backup                  " Backups are nice ...
@@ -105,17 +74,13 @@
 
 " Vim UI {
 "
-    set nocursorline                    " Highlight current line
+    set noshowmode
+    set cursorline                  " Highlight current line
+    set cursorlineopt=number        " only highlight line number
     set cmdheight=1                 " get rid of the extra useless line at the bottom(if not working, probably a plugin is changing the value)
 
-    " if has('cmdline_info')
-    "     set ruler                   " Show the ruler
-    "     set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
-    "     set showcmd                 " Show partial commands in status line and
-    " endif
-
     set backspace=indent,eol,start  " Backspace for dummies
-    set fillchars=eob:\             " it can remove '~' at the end of buffer
+    set fillchars=eob:\ ,vert:│,stl:\ ,stlnc:\ ,   " it can remove '~' at the end of buffer, and window split line
     set number                      " Line numbers on
     set showmatch                   " Show matching brackets/parenthesis
     set incsearch                   " Find as you type search
@@ -128,19 +93,24 @@
     set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
     set scrolljump=1                " Lines to scroll when cursor leaves screen
     set scrolloff=5                 " Minimum lines to keep above and below cursor
-    set sidescrolloff=5            " Minimum lines to keep at the left or right of the cursor
-
+    set sidescrolloff=5             " Minimum lines to keep at the left or right of the cursor
+    set display=lastline            " don't replace whole long line with @@@
+    augroup cc
+        au!
+        autocmd FileType c,cpp,vim,java,python,lua set colorcolumn=80
+        autocmd FileType help set colorcolumn=
+    augroup END
 
 " }
 
 " Formatting {
-
     set autoindent                  " Indent at the same level of the previous line
     set expandtab                   " Tabs are spaces, not tabs
     set shiftwidth=4                " Use indents of 4 spaces
     set tabstop=4                   " An indentation every four columns
     set softtabstop=4               " Let backspace delete indent
 
+    set conceallevel=0
     set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
     set splitright                  " Puts new vsplit windows to the right of the current
     set splitbelow                  " Puts new split windows to the bottom of the current
@@ -166,13 +136,16 @@
     " Yank from the cursor to the end of the line, to be consistent with C and D.
     nnoremap Y y$
 
-     if has('nvim')
-         set foldmethod=expr
-         set foldexpr=nvim_treesitter#foldexpr()
-     else
-         set foldmethod=syntax
-         autocmd FileType python,vim set foldmethod=indent
-     endif
+    set foldmethod=syntax
+    augroup vimfold
+        autocmd!
+        if has('nvim')
+            " check tree-sitter config
+        else
+            autocmd FileType python set foldmethod=indent
+            autocmd FileType vim set foldmethod=syntax
+        endif
+    augroup END
 
     " so when a buffer open it wouldn't be fold by default
     " set nofoldenable
@@ -233,27 +206,6 @@
     endfunction
     call InitializeDirectories()
 
-    " Shell command
-    " function! s:RunShellCommand(cmdline)
-    "     botright new
-
-    "     setlocal buftype=nofile
-    "     setlocal bufhidden=delete
-    "     setlocal nobuflisted
-    "     setlocal noswapfile
-    "     setlocal nowrap
-    "     setlocal filetype=shell
-    "     setlocal syntax=shell
-
-    "     call setline(1, a:cmdline)
-    "     call setline(2, substitute(a:cmdline, '.', '=', 'g'))
-    "     execute 'silent $read !' . escape(a:cmdline, '%#')
-    "     setlocal nomodifiable
-    " endfunction
-
-    " command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
-    " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
-
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
     vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
@@ -262,32 +214,32 @@
 " Fix file type error for typescript
     autocmd BufNewFile,BufRead *.ts set filetype=typescript
 
-"  These are to cancel the default behavior of d, D, c, C
-"  to put the text they delete in the default register.
-"  Note that this means e.g. "ad won't copy the text into
-"  register a anymore.  You have to explicitly yank it.
-"  TIPS: you can type :registers to view value in each registers
-    " vnoremap y "+y
-    " nnoremap y "+y
-
 "   copy to system
     if g:os == 'Darwin' || g:os == 'Windows'
         set clipboard=unnamed
     else
-        set clipboard=unnamedplus
-        if g:isWSL
-                " will cause freezing of vim, not sure why
-                " function CopyToWin(timer)
-                "     try
-                "         call system('/mnt/c/windows/system32/clip.exe ',@")
-                "     catch
-                "     endtry
-                " endfunction
-                " augroup Yank
-                "     autocmd!
-                "     " autocmd TextYankPost * :call system('/mnt/c/windows/system32/clip.exe ',@")
-                "      autocmd TextYankPost * let _ = timer_start(0, 'CopyToWin', { 'repeat': 1 })
-                " augroup END
+        if g:isWSL && has('nvim')
+            " :h clipboard-wsl
+            set clipboard=unnamedplus
+
+            " cache has to be enabled otherwise cause freeze
+            " obviously wsl without xclip won't work
+            let g:clipboard = {
+                \   'name': 'WSLxclip',
+                \   'copy': {
+                \      '+': 'xclip -quiet -i -selection clipboard',
+                \      '*': 'xclip -quiet -i -selection primary',
+                \    },
+                \   'paste': {
+                \      '+': 'xclip -o -selection clipboard',
+                \      '*': 'xclip -o -selection primary',
+                \   },
+                \   'cache_enabled': 1,
+                \ }
+        elseif g:isWSL
+            set clipboard=unnamedplus
+        else
+            set clipboard=unnamedplus
         endif
     endif
 
@@ -299,8 +251,12 @@
         exec "set t_PE=\e[201~"
     endif
 
+" disable netrw as i am using nerdtree and nvim-tree
+let  g:loaded_netrw = 1
+let  g:loaded_netrwPlugin = 1
+
 " Use bundles config {
-    if filereadable(expand("~/.vimrc.bundles"))
-        source ~/.vimrc.bundles
+    if filereadable(g:dotfiledir."/main.vim")
+        execute('source '.g:dotfiledir.'/main.vim')
     endif
 " }

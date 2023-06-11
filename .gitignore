@@ -4,3 +4,6 @@
 .vim/
 node_modules/
 tags
+.netrwhist
+.vimspector.json
+*.log
