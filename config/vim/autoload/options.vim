@@ -164,6 +164,8 @@ endfunc
 
 function! options#init()
     call options#preSet()
-    command! -nargs=0 Options call options#fzf_options()
-    nnoremap <silent> <leader>fo :Options<CR>
+    if !has('nvim')
+        command! -nargs=0 Options call options#fzf_options()
+        nnoremap <silent> <leader>fo :Options<CR>
+    endif
 endfunction
