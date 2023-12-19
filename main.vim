@@ -7,7 +7,7 @@
 " KEY_MAPS
 " OTHER_CONFIGS
 
-let g:high_performence = v:false
+let g:high_performence = v:true
 let g:autocomplte_enable = v:true
 let g:copilot_enable = v:true
 
@@ -71,7 +71,7 @@ call plug#begin(g:plugin_dir)
 
     Plug 'dstein64/vim-startuptime', Cond(!g:high_performence)
     Plug 'simeji/winresizer', Cond(!g:high_performence)
-    Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
+    " Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
 
     Plug 'rhysd/conflict-marker.vim'
 
@@ -103,7 +103,7 @@ call plug#begin(g:plugin_dir)
         endif
 
         Plug 'airblade/vim-rooter'
-        Plug 'justinmk/vim-sneak'
+        " Plug 'justinmk/vim-sneak'
         Plug 'airblade/vim-gitgutter'
         Plug 'chriskempson/base16-vim'
         " Plug 'Yggdroot/indentLine'
@@ -112,9 +112,9 @@ call plug#begin(g:plugin_dir)
         Plug 'markonm/traces.vim'
         Plug 'voldikss/vim-floaterm', Cond(has('terminal') && g:vim_type == 'vim')
         set encoding=UTF-8
-        Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-        Plug 'junegunn/fzf.vim'
-        Plug 'antoinemadec/coc-fzf', Cond(g:os != 'Windows', {'on': ['CocFzfList']})
+        " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+        " Plug 'junegunn/fzf.vim'
+        " Plug 'antoinemadec/coc-fzf', Cond(g:os != 'Windows', {'on': ['CocFzfList']})
 
         Plug 'Donaldttt/vim-bufferline'
 
@@ -123,7 +123,7 @@ call plug#begin(g:plugin_dir)
         " Plug 'vim-airline/vim-airline-themes'
 
         Plug 'ryanoasis/vim-devicons'
-        Plug 'wfxr/minimap.vim', Cond(executable('code-minimap'), {'on' : ['MinimapToggle']})
+        " Plug 'wfxr/minimap.vim', Cond(executable('code-minimap'), {'on' : ['MinimapToggle']})
     endif
 
     if g:vim_type == 'nvim'
