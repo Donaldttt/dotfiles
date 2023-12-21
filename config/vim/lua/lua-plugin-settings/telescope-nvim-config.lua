@@ -11,6 +11,8 @@ if HasPlug('telescope.nvim') then
                                                                               layout_config)
     local layout = require('telescope.pickers.layout_strategies').horizontal(picker, max_columns, max_lines,
     layout_config)
+    layout.prompt.title = ''
+    layout.results.title = ''
     -- layout.prompt.borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' }
     return layout
   end
