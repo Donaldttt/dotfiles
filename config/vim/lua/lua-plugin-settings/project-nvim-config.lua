@@ -2,7 +2,7 @@
 if HasPlug('project.nvim') then
   require("project_nvim").setup {
     detection_methods = { "lsp", "pattern" },
-    patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "src" },
+    patterns = { ".git" },
 
     -- Don't calculate root dir on specific directories
     -- Ex: { "~/.cargo/*", ... }
@@ -11,7 +11,7 @@ if HasPlug('project.nvim') then
     show_hidden = false,
     -- When set to false, you will get a message when project.nvim changes your
     -- directory.
-    silent_chdir = false,
+    silent_chdir = true,
     -- Path where project.nvim will store the project history for use in
     -- telescope
     datapath = vim.g.vim_dir .. "/.vimproject/"
