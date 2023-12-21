@@ -6,7 +6,7 @@ app_name='dotfiles'
 
 [ -z "$APP_PATH" ] && APP_PATH="$HOME/.$app_name"
 [ -z "$REPO_URI" ] && REPO_URI="https://github.com/Donaldttt/$app_name"
-[ -z "$REPO_BRANCH" ] && REPO_BRANCH='dev'
+[ -z "$REPO_BRANCH" ] && REPO_BRANCH='main'
 # [ -z "$REPO_URI" ] && REPO_URI="https://gitlab.com/tangnachuan1208/$app_name"
 # [ -z "$REPO_BRANCH" ] && REPO_BRANCH='gitlab'
 [ -z "$VIM_RTPATH" ] && VIM_RTPATH="$HOME/.vim"
