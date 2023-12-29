@@ -6,9 +6,3 @@ func! os#getOS()
     endif
 endfunc
 
-function! os#setWindows()
-    set updatetime=50
-    set shell=powershell
-endfunction
-
-

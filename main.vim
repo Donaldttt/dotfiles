@@ -7,7 +7,7 @@
 " KEY_MAPS
 " OTHER_CONFIGS
 
-let g:high_performence = v:true
+let g:high_performence = v:false
 let g:autocomplte_enable = v:true
 let g:copilot_enable = v:true
 
@@ -45,14 +45,12 @@ call plug#begin(g:plugin_dir)
         Plug 'tek256/simple-dark'
         Plug 'sainnhe/everforest'
         Plug 'bluz71/vim-moonfly-colors', { 'as': 'moonfly' }
-        " Plug 'jacoborus/tender.vim'
         Plug 'cocopon/iceberg.vim'
         Plug 'catppuccin/nvim', Cond( has('nvim-0.8.2')  \|\| g:vim_v >= 900  , { 'as': 'catppuccin' })
         Plug 'NLKNguyen/papercolor-theme'
         Plug 'EdenEast/nightfox.nvim', Cond(has('nvim-0.5'))
         Plug 'projekt0n/github-nvim-theme', Cond(has('nvim-0.5'), { 'tag': 'v0.0.7' })
         Plug 'folke/tokyonight.nvim', Cond(g:vim_type == 'nvim', { 'branch': 'main' })
-        " Plug 'junegunn/goyo.vim', { 'on': ['Goyo'] }
         Plug 'andymass/vim-matchup'
     endif
     Plug 'Donaldttt/fuzzyy'

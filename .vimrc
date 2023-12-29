@@ -16,6 +16,13 @@
     let g:isWSL = 0
     if has("win64") || has("win32") || has("win16")
         let g:os = "Windows"
+        set updatetime=50
+        if executable('pwsh')
+            " prefer to use powershell 7
+            set shell=pwsh
+        else
+            set shell=powershell
+        endif
     else
         let g:os = substitute(system('uname'), '\n', '', '')
         if system('uname -r') =~ "icrosoft"
