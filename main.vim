@@ -110,11 +110,11 @@ call plug#begin(g:plugin_dir)
         " Plug 'Donaldttt/fzf-color-preview', Cond(g:vim_v >= 800, { 'on': ['ColorsPreview', 'AirlinePreview'] })
 
         Plug 'markonm/traces.vim'
-        Plug 'voldikss/vim-floaterm', Cond(has('terminal') && g:vim_type == 'vim')
+        " Plug 'voldikss/vim-floaterm', Cond(has('terminal') && g:vim_type == 'vim')
         set encoding=UTF-8
-        Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-        Plug 'junegunn/fzf.vim'
-        Plug 'antoinemadec/coc-fzf', Cond(g:os != 'Windows', {'on': ['CocFzfList']})
+        " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+        " Plug 'junegunn/fzf.vim'
+        " Plug 'antoinemadec/coc-fzf', Cond(g:os != 'Windows', {'on': ['CocFzfList']})
 
         Plug 'Donaldttt/vim-bufferline'
 
@@ -154,7 +154,7 @@ call plug#begin(g:plugin_dir)
             " comment out this plugin if the machine doesn't have required
             " font install
             Plug 'nvim-tree/nvim-web-devicons'
-            Plug 'akinsho/toggleterm.nvim', Cond(g:vim_type == 'nvim', {'tag' : '*'})
+            " Plug 'akinsho/toggleterm.nvim', Cond(g:vim_type == 'nvim', {'tag' : '*'})
 
             Plug 'ggandor/leap.nvim'
         endif
