@@ -13,24 +13,11 @@ if HasPlug('telescope.nvim') then
     layout_config)
     layout.prompt.title = ''
     layout.results.title = ''
-    -- layout.preview.title = ''
     -- layout.prompt.borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' }
     return layout
   end
   telescope.setup {
-    defaults = {
-      hidden = true,
-      vimgrep_arguments = vimgrep_arguments,
-      file_ignore_patterns = {"node_modules/", ".git/"},
-      layout_config = {
-        -- prompt_position = "top",
-      },
-      layout_strategy = "horizontal_merged",
-    },
     pickers = {
-      find_files = {
-        hidden = true,
-      },
       colorscheme = {
         enable_preview = true,
         mappings = {
@@ -44,6 +31,15 @@ if HasPlug('telescope.nvim') then
           },
         },
       }
+    },
+    defaults = {
+      hidden = true,
+      vimgrep_arguments = vimgrep_arguments,
+      file_ignore_patterns = {"^node_modules/", "^.git/"},
+      layout_config = {
+        -- prompt_position = "top",
+      },
+      layout_strategy = "horizontal_merged",
     },
     extensions = {
       fzf = {

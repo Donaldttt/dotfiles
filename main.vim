@@ -45,14 +45,12 @@ call plug#begin(g:plugin_dir)
         Plug 'tek256/simple-dark'
         Plug 'sainnhe/everforest'
         Plug 'bluz71/vim-moonfly-colors', { 'as': 'moonfly' }
-        " Plug 'jacoborus/tender.vim'
         Plug 'cocopon/iceberg.vim'
         Plug 'catppuccin/nvim', Cond( has('nvim-0.8.2')  \|\| g:vim_v >= 900  , { 'as': 'catppuccin' })
         Plug 'NLKNguyen/papercolor-theme'
         Plug 'EdenEast/nightfox.nvim', Cond(has('nvim-0.5'))
         Plug 'projekt0n/github-nvim-theme', Cond(has('nvim-0.5'), { 'tag': 'v0.0.7' })
         Plug 'folke/tokyonight.nvim', Cond(g:vim_type == 'nvim', { 'branch': 'main' })
-        " Plug 'junegunn/goyo.vim', { 'on': ['Goyo'] }
         Plug 'andymass/vim-matchup'
     endif
     Plug 'Donaldttt/fuzzyy'
@@ -71,7 +69,7 @@ call plug#begin(g:plugin_dir)
 
     Plug 'dstein64/vim-startuptime', Cond(!g:high_performence)
     Plug 'simeji/winresizer', Cond(!g:high_performence)
-    Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
+    " Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
 
     Plug 'rhysd/conflict-marker.vim'
 
@@ -103,7 +101,7 @@ call plug#begin(g:plugin_dir)
         endif
 
         Plug 'airblade/vim-rooter'
-        Plug 'justinmk/vim-sneak'
+        " Plug 'justinmk/vim-sneak'
         Plug 'airblade/vim-gitgutter'
         Plug 'chriskempson/base16-vim'
         " Plug 'Yggdroot/indentLine'
@@ -123,7 +121,7 @@ call plug#begin(g:plugin_dir)
         " Plug 'vim-airline/vim-airline-themes'
 
         Plug 'ryanoasis/vim-devicons'
-        Plug 'wfxr/minimap.vim', Cond(executable('code-minimap'), {'on' : ['MinimapToggle']})
+        " Plug 'wfxr/minimap.vim', Cond(executable('code-minimap'), {'on' : ['MinimapToggle']})
     endif
 
     if g:vim_type == 'nvim'

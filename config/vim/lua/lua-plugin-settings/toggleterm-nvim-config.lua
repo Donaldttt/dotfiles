@@ -62,4 +62,18 @@ if HasPlug('toggleterm.nvim') then
   vim.api.nvim_set_keymap("x", "<leader>tl", string.format(":ToggleTermSendVisualSelection %d<CR>", ipythonId),
     { noremap = true, silent = true })
 
+
+  print(vim.o.shell)
+  if vim.o.shell == 'pwsh' or vim.o.shell == 'powershell' then
+    local powershell_options = {
+      shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
+      shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait",
+      shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode",
+      shellquote = "",
+      shellxquote = "",
+    }
+    for option, value in pairs(powershell_options) do
+      vim.opt[option] = value
+    end
+  end
 end
