@@ -54,6 +54,11 @@ call plug#begin(g:plugin_dir)
         Plug 'andymass/vim-matchup'
     endif
     Plug 'Donaldttt/fuzzyy'
+    " Plug '~/repo/PR/fuzzyy-files'
+    " let g:fuzzyy_files_ignore_file = ['configg']
+    " let g:fuzzyy_files_ignore_dir = ['config', '.git']
+    " let g:fuzzyy_files_ignore_file = []
+    " let g:fuzzyy_files_ignore_dir = []
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-surround'

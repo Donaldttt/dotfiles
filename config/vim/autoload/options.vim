@@ -4,7 +4,7 @@
 let s:options = {}
 
 if !has('nvim')
-    import autoload 'utils/selector.vim'
+    import autoload 'fuzzyy/utils/selector.vim'
 endif
 
 " opt is a dictionary with the following keys(* = required):

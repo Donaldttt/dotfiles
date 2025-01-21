@@ -11,7 +11,7 @@ home = expanduser("~")
 app_name = 'dotfiles'
 APP_PATH = join(home, '.' + app_name)
 REPO_URL = 'https://github.com/Donaldttt/' + app_name
-REPO_BRANCH = 'dev'
+REPO_BRANCH = 'main'
 VIM_RTPATH = join(home, '.vim')
 
 def exist(app):
