@@ -181,6 +181,7 @@ call plug#begin(g:plugin_dir)
     Plug g:dotvimdir
 call plug#end()
 
+
 augroup InitConfig
     " Automatically install missing plugins at startup
     autocmd VimEnter *
@@ -219,28 +220,6 @@ function s:executeLateInit()
     endfunction
     autocmd VimEnter * call s:lateInitHelper()
 endfunction
-
-" source all vim specific config eg. gui vim
-for f in split(glob(g:dotvimdir.'/configs/*-config.vim'), '\n')
-    exe 'source' f
-endfor
-
-" source all vim plugin config
-for f in split(glob(g:dotvimdir.'/vim-plugin-settings/*.config.vim'), '\n')
-    exe 'source' f
-endfor
-
-" source all vim9 plugin configs
-if g:vim_v >= 900
-for f in split(glob(g:dotvimdir.'/vim-plugin-settings/vim9/*.config.vim'), '\n')
-    exe 'source' f
-endfor
-endif
-
-" source lua plugins if in neovim
-if has('nvim')
-    lua require('lua-plugin-settings')
-endif
 
 " source lua library
 
@@ -299,5 +278,28 @@ end
 " split window comform with other window management shortcuts
 nnoremap <silent> <C-w>% :vsplit<CR>
 nnoremap <silent> <C-w>" :split<CR>
+
+" source all vim specific config eg. gui vim
+for f in split(glob(g:dotvimdir.'/configs/*-config.vim'), '\n')
+    exe 'source' f
+endfor
+
+" source all vim plugin config
+for f in split(glob(g:dotvimdir.'/vim-plugin-settings/*.config.vim'), '\n')
+    exe 'source' f
+endfor
+
+" source all vim9 plugin configs
+if g:vim_v >= 900
+for f in split(glob(g:dotvimdir.'/vim-plugin-settings/vim9/*.config.vim'), '\n')
+    exe 'source' f
+endfor
+endif
+
+" source lua plugins if in neovim
+if has('nvim')
+    lua require('lua-plugin-settings')
+endif
+
 
 call s:executeLateInit()
